@@ -52,7 +52,7 @@ public abstract class Entity extends GameObject{
 	}
 
 	public Rectangle getBounds(){
-		return new Rectangle(x, y, width, height);
+		return new Rectangle(getX(), getY(), width, height);
 	}
 	
 	public boolean collidesWith(Entity entity){

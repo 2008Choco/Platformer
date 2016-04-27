@@ -12,28 +12,36 @@ import javax.swing.JOptionPane;
 
 import me.choco.game.Game;
 import me.choco.game.menus.GameMenu;
+import me.choco.game.menus.utils.BackgroundHolder;
 import me.choco.game.menus.utils.GUIButton;
 
 public class Window{
+	
 	public Window(int width, int height, String title, Game game){
 		checkJavaVersion(1.8);
 		
 		JFrame frame = new JFrame(title + game.version.replace("Version", ""));
 		
-		frame.setPreferredSize(new Dimension(width, height));
 		frame.setSize(width, height);
+		frame.setMinimumSize(new Dimension(width, height));
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		
 		frame.addComponentListener(new ComponentListener(){
 			public void componentResized(ComponentEvent event){
+				if (event.getComponent().getWidth() == Game.WIDTH && event.getComponent().getHeight() == Game.HEIGHT) return;
 				Game.WIDTH = event.getComponent().getWidth();
 				Game.HEIGHT = event.getComponent().getHeight();
 				
-				for (GameMenu menu : game.getMenuManager().getMenus())
+				for (GameMenu menu : game.getMenuManager().getMenus()){
 					for (GUIButton button : menu.getButtons())
 						button.setX((Game.WIDTH / 2) - (button.getWidth() / 2));
+					
+					if (menu instanceof BackgroundHolder){
+						((BackgroundHolder) menu).getBackground().setPos(0, 0);
+					}
+				}
 			}
 			
 			public void componentHidden(ComponentEvent event) {}

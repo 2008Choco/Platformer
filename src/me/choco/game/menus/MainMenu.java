@@ -6,13 +6,14 @@ import java.awt.event.MouseEvent;
 
 import me.choco.game.Game;
 import me.choco.game.Game.GameState;
+import me.choco.game.menus.utils.BackgroundHolder;
 import me.choco.game.menus.utils.GUIButton;
 import me.choco.game.utils.general.GameFont;
 import me.choco.game.utils.general.NumUtils;
-import me.choco.game.utils.general.Sound;
+import me.choco.game.utils.general.sound.Sound;
 import me.choco.game.utils.tilemaps.Background;
 
-public class MainMenu extends GameMenu{
+public class MainMenu extends GameMenu implements BackgroundHolder{
 	
 	private final Background background;
 	
@@ -66,6 +67,10 @@ public class MainMenu extends GameMenu{
 				}
 			}
 		);
+	}
+	
+	public Background getBackground(){
+		return background;
 	}
 	
 	@Override

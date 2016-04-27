@@ -2,9 +2,11 @@ package me.choco.game.entity;
 
 import java.awt.Graphics;
 
+import me.choco.game.utils.tilemaps.Location;
+
 public abstract class GameObject {
 	
-	protected int x, y;
+	protected Location location;
 	protected ObjectType type;
 	
 	protected GameObject(int x, int y, ObjectType type){
@@ -13,25 +15,28 @@ public abstract class GameObject {
 	}
 	
 	protected GameObject(int x, int y){
-		this.x = x;
-		this.y = y;
+		this.location = new Location(x, y);
 		this.type = ObjectType.UNKNOWN;
 	}
 
 	public int getX() {
-		return x;
+		return location.getX();
 	}
 
 	public void setX(int x) {
-		this.x = x;
+		this.location.setX(x);
 	}
 
 	public int getY() {
-		return y;
+		return location.getY();
 	}
 
 	public void setY(int y) {
-		this.y = y;
+		this.location.setY(y);
+	}
+	
+	public Location getLocation(){
+		return location;
 	}
 
 	public ObjectType getType() {

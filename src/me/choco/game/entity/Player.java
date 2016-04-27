@@ -16,17 +16,17 @@ public class Player extends Entity implements Controllable{
 
 	@Override
 	public void tick(){
-		this.x += velX;
-		this.y += velY;
+		setX(getX() + velX);
+		setY(getY() + velY);
 		
-		this.x = NumUtils.clamp(x, 0, Game.WIDTH - (int)(width*1.25));
-		this.y = NumUtils.clamp(y, 0, Game.HEIGHT - (int)(height*2));
+		setX(NumUtils.clamp(getX(), 0, Game.WIDTH - 47)); // Magic numbers? Not sure why
+		setY(NumUtils.clamp(getY(), 0, Game.HEIGHT - 69)); 
 	}
 
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.BLUE);
-		g.fillRect(x, y, width, height);
+		g.fillRect(location.getX(), location.getY(), width, height);
 		//TODO Render sprite
 	}
 
