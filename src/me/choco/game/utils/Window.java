@@ -14,6 +14,7 @@ import me.choco.game.Game;
 import me.choco.game.menus.GameMenu;
 import me.choco.game.menus.utils.BackgroundHolder;
 import me.choco.game.menus.utils.GUIButton;
+import me.choco.game.utils.general.ImageLoader;
 
 public class Window{
 	
@@ -25,6 +26,7 @@ public class Window{
 		frame.setSize(width, height);
 		frame.setMinimumSize(new Dimension(width, height));
 		frame.setLocationRelativeTo(null);
+		frame.setIconImage(ImageLoader.loadImage("/icon.png"));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		
