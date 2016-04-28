@@ -23,7 +23,7 @@ public abstract class GameMenu {
 	
 	public void onMoveMouse(MouseEvent e){
 		for (GUIButton button : buttons)
-			button.hoverMouse(e);
+			button.moveMouse(e);
 	}
 	
 	public GameState getRequiredGameState(){

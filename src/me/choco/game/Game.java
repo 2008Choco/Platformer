@@ -62,7 +62,7 @@ public class Game extends Canvas implements Runnable{
 	public void init(){
 		/* LOAD OBJECTS, IMAGES, ETC */
 		menuManager.addMenu(new MainMenu(this, new Background(ImageLoader.loadImage("/background.png"), -0.5, 0)));
-		menuManager.addMenu(new OptionsMenu());
+		menuManager.addMenu(new OptionsMenu(this));
 		
 		handler.addObject(new Player(100, 100));
 	}

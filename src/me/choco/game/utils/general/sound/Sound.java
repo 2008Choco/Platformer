@@ -9,7 +9,6 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public enum Sound {
-	TEST("/testAudio.wav"),
 	BUTTON_HOVER("/buttonHover.wav");
 	
 	private String path;

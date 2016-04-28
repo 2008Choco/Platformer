@@ -36,7 +36,7 @@ public class Window{
 				
 				for (GameMenu menu : game.getMenuManager().getMenus()){
 					for (GUIButton button : menu.getButtons())
-						button.setX((Game.WIDTH / 2) - (button.getWidth() / 2));
+						button.onUpdateWindow(event);
 					
 					if (menu instanceof BackgroundHolder){
 						((BackgroundHolder) menu).getBackground().setPos(0, 0);

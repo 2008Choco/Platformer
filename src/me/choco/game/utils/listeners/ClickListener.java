@@ -19,8 +19,10 @@ public class ClickListener implements MouseListener{
 	@Override /* Pressed and unpressed */
 	public void mouseClicked(MouseEvent e){
 		for (GameMenu menu : manager.getMenus()){
-			if (game.getState().equals(menu.getRequiredGameState()))
+			if (game.getState().equals(menu.getRequiredGameState())){
 				menu.onClickMouse(e);
+				break;
+			}
 		}
 	}
 

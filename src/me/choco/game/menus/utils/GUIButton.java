@@ -2,6 +2,7 @@ package me.choco.game.menus.utils;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
 
 public abstract class GUIButton {
@@ -52,8 +53,13 @@ public abstract class GUIButton {
 		return height;
 	}
 	
-	public abstract void hoverMouse(MouseEvent event);
+	public String getText(){
+		return text;
+	}
+	
+	public abstract void moveMouse(MouseEvent event);
 	public abstract void clickMouse(MouseEvent event);
+	public abstract void onUpdateWindow(ComponentEvent event);
 	
 	public void render(Graphics g){
 		g.setColor(hovered ? hoverColour : backgroundColour);
