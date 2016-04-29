@@ -7,9 +7,9 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import me.choco.game.entity.Player;
-import me.choco.game.menus.MainMenu;
 import me.choco.game.menus.MenuManager;
-import me.choco.game.menus.OptionsMenu;
+import me.choco.game.menus.menu.MainMenu;
+import me.choco.game.menus.menu.OptionsMenu;
 import me.choco.game.utils.EntityHandler;
 import me.choco.game.utils.Window;
 import me.choco.game.utils.general.ExceptionHandler;

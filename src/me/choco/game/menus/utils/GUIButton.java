@@ -11,8 +11,8 @@ public abstract class GUIButton {
 	
 	protected int x, y;
 	protected final int width, height;
-	private final String text;
-	private Color backgroundColour, hoverColour, textColour;
+	protected final String text;
+	protected Color backgroundColour, hoverColour, textColour;
 	public GUIButton(int x, int y, int width, int height, String text){
 		this.x = x; this.y = y;
 		this.width = width; this.height = height;
@@ -64,7 +64,10 @@ public abstract class GUIButton {
 	public void render(Graphics g){
 		g.setColor(hovered ? hoverColour : backgroundColour);
 		g.fillRect(x, y, width, height);
-		g.setColor(textColour);
-		g.drawString(text, x + ((width / 2) - (g.getFontMetrics().stringWidth(text) / 2)), y + ((height / 2) + (int)(g.getFontMetrics().getStringBounds(text, g).getHeight() / 4)));
+		
+		if (text != null){
+			g.setColor(textColour);
+			g.drawString(text, x + ((width / 2) - (g.getFontMetrics().stringWidth(text) / 2)), y + ((height / 2) + (int)(g.getFontMetrics().getStringBounds(text, g).getHeight() / 4)));
+		}
 	}
 }

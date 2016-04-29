@@ -1,4 +1,4 @@
-package me.choco.game.menus;
+package me.choco.game.menus.menu;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 
 import me.choco.game.Game;
 import me.choco.game.Game.GameState;
+import me.choco.game.menus.GameMenu;
 import me.choco.game.menus.utils.BackgroundHolder;
 import me.choco.game.menus.utils.GUIButton;
 import me.choco.game.utils.general.GameFont;
