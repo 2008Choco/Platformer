@@ -13,7 +13,6 @@ public class ExceptionHandler implements UncaughtExceptionHandler{
 		System.err.println("Thread:");
 		System.err.println("    Name: " + t.getName());
 		System.err.println("    Id: " + t.getId());
-		System.err.println("    Is Running: " + t.isAlive());
 		System.err.println("----------------------------------------------------");
 		System.err.println("Stacktrace:");
 		e.printStackTrace();

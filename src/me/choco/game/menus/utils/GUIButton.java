@@ -11,7 +11,7 @@ public abstract class GUIButton {
 	
 	protected int x, y;
 	protected final int width, height;
-	protected final String text;
+	protected String text;
 	protected Color backgroundColour, hoverColour, textColour;
 	public GUIButton(int x, int y, int width, int height, String text){
 		this.x = x; this.y = y;
@@ -55,6 +55,10 @@ public abstract class GUIButton {
 	
 	public String getText(){
 		return text;
+	}
+	
+	public void setText(String text){
+		this.text = text;
 	}
 	
 	public abstract void moveMouse(MouseEvent event);
