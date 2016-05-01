@@ -14,15 +14,16 @@ import me.choco.game.utils.EntityHandler;
 import me.choco.game.utils.Window;
 import me.choco.game.utils.general.ExceptionHandler;
 import me.choco.game.utils.general.GameFont;
-import me.choco.game.utils.general.ImageLoader;
+import me.choco.game.utils.general.resources.Texture;
 import me.choco.game.utils.listeners.ClickListener;
 import me.choco.game.utils.listeners.KeyboardListener;
 import me.choco.game.utils.listeners.MovementListener;
 import me.choco.game.utils.tilemaps.Background;
 
 public class Game extends Canvas implements Runnable{
-	public final String version = "Version 0.03 Alpha - Relativity Update";
+	public final String version = "Version 0.04 Alpha - Aesthetic Update";
 	public static int WIDTH = 720, HEIGHT = WIDTH / 9 * 6;
+	public static final String title = "The Game with No Name";
 	
 	private int currentFPS = 0;
 	
@@ -56,12 +57,12 @@ public class Game extends Canvas implements Runnable{
 		this.addMouseListener(mouseListener);
 		this.addMouseMotionListener(movementListener);
 		
-		new Window(WIDTH, HEIGHT, "Platformer", this);
+		new Window(WIDTH, HEIGHT, Game.title, this);
 	}
 	
 	public void init(){
 		/* LOAD OBJECTS, IMAGES, ETC */
-		menuManager.addMenu(new MainMenu(this, new Background(ImageLoader.loadImage("/background.png"), -0.5, 0)));
+		menuManager.addMenu(new MainMenu(this, new Background(Texture.GUI_BACKGROUND_MAIN.getTexture(), -0.5, 0)));
 		menuManager.addMenu(new OptionsMenu(this));
 		
 		handler.addObject(new Player(100, 100));
@@ -127,8 +128,8 @@ public class Game extends Canvas implements Runnable{
 		}
 		menuManager.renderForState(state, graphics);
 		
-		graphics.setFont(GameFont.ARIAL_BOLD_16.getFont());
 		if (debugMode){
+			graphics.setFont(GameFont.ARIAL_BOLD_16.getFont());
 			graphics.setColor(currentFPS > 30 ? Color.YELLOW : Color.RED);
 			graphics.drawString("FPS: " + currentFPS, 5, 16);
 		}

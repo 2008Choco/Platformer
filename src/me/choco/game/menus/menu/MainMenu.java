@@ -9,23 +9,22 @@ import me.choco.game.Game;
 import me.choco.game.Game.GameState;
 import me.choco.game.menus.GameMenu;
 import me.choco.game.menus.utils.BackgroundHolder;
-import me.choco.game.menus.utils.GUIButton;
+import me.choco.game.menus.utils.GraphicGUIButton;
 import me.choco.game.utils.general.GameFont;
 import me.choco.game.utils.general.NumUtils;
-import me.choco.game.utils.general.sound.Sound;
+import me.choco.game.utils.general.resources.Sound;
+import me.choco.game.utils.general.resources.Texture;
 import me.choco.game.utils.tilemaps.Background;
 
 public class MainMenu extends GameMenu implements BackgroundHolder{
 	
 	private final Background background;
 	
-	private final String title = "Game Title";
-	
 	public MainMenu(Game game, Background background){
 		this.background = background;
 		
 		this.registerButtons(
-			new GUIButton(260, 150, 200, 50, "Play"){
+			new GraphicGUIButton(260, 150, 200, 50, "Play", Texture.GUI_BUTTON_BACKGROUND.getTexture(), Texture.GUI_BUTTON_HOVERED.getTexture()){
 				public void moveMouse(MouseEvent e) {
 					if (NumUtils.isWithin(e.getX(), e.getY(), x, y, x + width, y + height)){
 						if (!this.hovered) Sound.playSound(Sound.BUTTON_HOVER);
@@ -44,7 +43,7 @@ public class MainMenu extends GameMenu implements BackgroundHolder{
 				}
 			},
 			
-			new GUIButton(260, 225, 200, 50, "Options"){
+			new GraphicGUIButton(260, 225, 200, 50, "Options", Texture.GUI_BUTTON_BACKGROUND.getTexture(), Texture.GUI_BUTTON_HOVERED.getTexture()){
 				public void moveMouse(MouseEvent e) {
 					if (NumUtils.isWithin(e.getX(), e.getY(), x, y, x + width, y + height)){
 						if (!this.hovered) Sound.playSound(Sound.BUTTON_HOVER);
@@ -63,7 +62,7 @@ public class MainMenu extends GameMenu implements BackgroundHolder{
 				}
 			},
 			
-			new GUIButton(260, 300, 200, 50, "Quit"){
+			new GraphicGUIButton(260, 300, 200, 50, "Quit", Texture.GUI_BUTTON_BACKGROUND.getTexture(), Texture.GUI_BUTTON_HOVERED.getTexture()){
 				public void moveMouse(MouseEvent e) {
 					if (NumUtils.isWithin(e.getX(), e.getY(), x, y, x + width, y + height)){
 						if (!this.hovered) Sound.playSound(Sound.BUTTON_HOVER);
@@ -96,7 +95,7 @@ public class MainMenu extends GameMenu implements BackgroundHolder{
 	public void render(Graphics g){
 		background.render(g);
 		g.setFont(GameFont.COMICSANSMS_BOLD_29.getFont()); g.setColor(Color.WHITE);
-		g.drawString(title, (Game.WIDTH / 2) - (g.getFontMetrics().stringWidth(title) / 2), (Game.HEIGHT / 2) - 125);
+		g.drawString(Game.title, (Game.WIDTH / 2) - (g.getFontMetrics().stringWidth(Game.title) / 2), (Game.HEIGHT / 2) - 125);
 		
 		buttons.forEach(button -> button.render(g));
 	}

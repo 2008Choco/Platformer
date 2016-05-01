@@ -8,18 +8,17 @@ import java.awt.event.MouseEvent;
 import me.choco.game.Game;
 import me.choco.game.Game.GameState;
 import me.choco.game.menus.GameMenu;
-import me.choco.game.menus.utils.GUIButton;
 import me.choco.game.menus.utils.GraphicGUIButton;
 import me.choco.game.utils.general.GameFont;
-import me.choco.game.utils.general.ImageLoader;
 import me.choco.game.utils.general.NumUtils;
-import me.choco.game.utils.general.sound.Sound;
+import me.choco.game.utils.general.resources.Sound;
+import me.choco.game.utils.general.resources.Texture;
 
 public class OptionsMenu extends GameMenu{
 	
 	public OptionsMenu(Game game){
 		registerButtons(
-			new GUIButton(260, 225, 200, 50, "Return"){
+			new GraphicGUIButton(260, 225, 200, 50, "Return", Texture.GUI_BUTTON_BACKGROUND.getTexture(), Texture.GUI_BUTTON_HOVERED.getTexture()){
 				public void moveMouse(MouseEvent e) {
 					if (NumUtils.isWithin(e.getX(), e.getY(), x, y, x + width, y + height)){
 						if (!this.hovered) Sound.playSound(Sound.BUTTON_HOVER);
@@ -35,24 +34,6 @@ public class OptionsMenu extends GameMenu{
 				public void onUpdateWindow(ComponentEvent event) {
 					this.setX((Game.WIDTH / 2) - (this.getWidth() / 2));
 					this.setY((Game.HEIGHT / 2) - (this.getHeight() / 2));
-				}
-			},
-			new GraphicGUIButton(260, 300, 200, 50, ImageLoader.loadImage("/testButton.png"), ImageLoader.loadImage("/testButtonHovered.png")){
-				public void moveMouse(MouseEvent e) {
-					if (NumUtils.isWithin(e.getX(), e.getY(), x, y, x + width, y + height)){
-						if (!this.hovered) Sound.playSound(Sound.BUTTON_HOVER);
-						this.hovered = true;
-					}else{ this.hovered = false; }
-				}
-				public void clickMouse(MouseEvent e) {
-					if (NumUtils.isWithin(e.getX(), e.getY(), x, y, x + width, y + height)){
-						game.setState(GameState.MAIN_MENU);
-						this.hovered = false;
-					}
-				}
-				public void onUpdateWindow(ComponentEvent e) {
-					this.setX((Game.WIDTH / 2) - (this.getWidth() / 2));
-					this.setY((Game.HEIGHT / 2) - (this.getHeight() / 2) + 75);
 				}
 			}
 		);

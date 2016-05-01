@@ -1,4 +1,4 @@
-package me.choco.game.utils.general.sound;
+package me.choco.game.utils.general.resources;
 
 import java.io.IOException;
 import java.net.URL;

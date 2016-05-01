@@ -14,19 +14,19 @@ import me.choco.game.Game;
 import me.choco.game.menus.GameMenu;
 import me.choco.game.menus.utils.BackgroundHolder;
 import me.choco.game.menus.utils.GUIButton;
-import me.choco.game.utils.general.ImageLoader;
+import me.choco.game.utils.general.resources.Texture;
 
 public class Window{
 	
 	public Window(int width, int height, String title, Game game){
 		checkJavaVersion(1.8);
 		
-		JFrame frame = new JFrame(title + game.version.replace("Version", ""));
+		JFrame frame = new JFrame(title + " - " + game.version);
 		
 		frame.setSize(width, height);
 		frame.setMinimumSize(new Dimension(width, height));
 		frame.setLocationRelativeTo(null);
-		frame.setIconImage(ImageLoader.loadImage("/icon.png"));
+		frame.setIconImage(Texture.GENERIC_ICON.getTexture());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		
