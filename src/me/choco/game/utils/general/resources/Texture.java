@@ -5,10 +5,10 @@ import java.awt.image.BufferedImage;
 import me.choco.game.utils.general.ImageLoader;
 
 public enum Texture {
-	GUI_BACKGROUND_MAIN(ImageLoader.loadImage("/background.png")),
-	GUI_BUTTON_BACKGROUND(ImageLoader.loadImage("/woodButton.png")),
-	GUI_BUTTON_HOVERED(ImageLoader.loadImage("/woodButtonHovered.png")),
-	GENERIC_ICON(ImageLoader.loadImage("/icon.png"));
+	GUI_BACKGROUND_MAIN(ImageLoader.loadImage("/gui/background/background.png")),
+	GUI_BUTTON_BACKGROUND(ImageLoader.loadImage("/gui/button/woodButton.png")),
+	GUI_BUTTON_HOVERED(ImageLoader.loadImage("/gui/button/woodButtonHovered.png")),
+	GENERIC_ICON(ImageLoader.loadImage("/generic/icon.png"));
 	
 	BufferedImage texture;
 	Texture(BufferedImage texture){
