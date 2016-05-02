@@ -2,19 +2,21 @@ package me.choco.game.entity;
 
 import java.awt.Rectangle;
 
+import me.choco.game.world.Location;
+
 public abstract class Entity extends GameObject{
 	
 	protected int width, height;
 	protected int velX = 0, velY = 0;
 	
-	protected Entity(int x, int y, int width, int height, ObjectType type) {
-		super(x, y, type);
+	protected Entity(Location location, int width, int height, ObjectType type) {
+		super(location, type);
 		this.width = width;
 		this.height = height;
 	}
 	
-	protected Entity(int x, int y, int width, int height) {
-		super(x, y);
+	protected Entity(Location location, int width, int height) {
+		super(location);
 		this.width = width;
 		this.height = height;
 	}

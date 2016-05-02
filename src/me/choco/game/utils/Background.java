@@ -1,4 +1,4 @@
-package me.choco.game.utils.tilemaps;
+package me.choco.game.utils;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;

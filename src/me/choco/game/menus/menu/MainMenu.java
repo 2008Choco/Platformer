@@ -10,11 +10,11 @@ import me.choco.game.Game.GameState;
 import me.choco.game.menus.GameMenu;
 import me.choco.game.menus.utils.BackgroundHolder;
 import me.choco.game.menus.utils.GraphicGUIButton;
+import me.choco.game.utils.Background;
 import me.choco.game.utils.general.GameFont;
 import me.choco.game.utils.general.NumUtils;
 import me.choco.game.utils.general.resources.Sound;
 import me.choco.game.utils.general.resources.Texture;
-import me.choco.game.utils.tilemaps.Background;
 
 public class MainMenu extends GameMenu implements BackgroundHolder{
 	
@@ -95,7 +95,7 @@ public class MainMenu extends GameMenu implements BackgroundHolder{
 	public void render(Graphics g){
 		background.render(g);
 		g.setFont(GameFont.COMICSANSMS_BOLD_29.getFont()); g.setColor(Color.WHITE);
-		g.drawString(Game.title, (Game.WIDTH / 2) - (g.getFontMetrics().stringWidth(Game.title) / 2), (Game.HEIGHT / 2) - 125);
+		g.drawString(Game.title, (Game.WIDTH / 2) - NumUtils.center(g, Game.title), (Game.HEIGHT / 2) - 125);
 		
 		buttons.forEach(button -> button.render(g));
 	}

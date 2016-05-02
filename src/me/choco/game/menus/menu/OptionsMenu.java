@@ -49,7 +49,7 @@ public class OptionsMenu extends GameMenu{
 		
 		g.setColor(Color.WHITE);
 		g.setFont(GameFont.ARIAL_BOLD_16.getModifiedFont(24F));
-		g.drawString("Options are a work in progress", (Game.WIDTH / 2) - (g.getFontMetrics().stringWidth("Options are a work in progress") / 2), (Game.HEIGHT / 2) - 50);
+		g.drawString("Options are a work in progress", (Game.WIDTH / 2) - NumUtils.center(g, "Options are a work in progress"), (Game.HEIGHT / 2) - 50);
 		
 		g.setFont(GameFont.COMICSANSMS_BOLD_29.getFont());
 		buttons.forEach(button -> button.render(g));

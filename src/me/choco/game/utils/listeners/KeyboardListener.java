@@ -11,7 +11,7 @@ import me.choco.game.utils.EntityHandler;
 
 public class KeyboardListener implements KeyListener{
 	
-	private final boolean[] keys = new boolean[256];
+	private final boolean[] keys = new boolean[1024];
 	
 	private Game game;
 	private EntityHandler handler;
@@ -25,7 +25,7 @@ public class KeyboardListener implements KeyListener{
 		keys[event.getKeyCode()] = true;
 		
 		if (areKeysPressed(KeyEvent.VK_CONTROL, KeyEvent.VK_D)){
-			game.toggleDebugMode();
+			game.setDebugMode(!game.isInDebugMode());
 			return;
 		}
 		

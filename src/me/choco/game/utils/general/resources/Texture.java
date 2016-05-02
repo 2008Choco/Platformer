@@ -16,6 +16,8 @@ public enum Texture {
 	}
 	
 	public BufferedImage getTexture(){
+		if (texture == null)
+			throw new IllegalStateException("Cannot provide null texture");
 		return texture;
 	}
 }

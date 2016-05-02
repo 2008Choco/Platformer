@@ -1,9 +1,6 @@
-package me.choco.game.utils.tilemaps;
+package me.choco.game.world;
 
 import java.awt.Graphics;
-
-import me.choco.game.utils.tilemaps.generator.Tile;
-import me.choco.game.utils.tilemaps.generator.TileGenerator;
 
 public class Level {
 	

@@ -6,27 +6,30 @@ import java.awt.event.KeyEvent;
 
 import me.choco.game.Game;
 import me.choco.game.entity.variants.Controllable;
-import me.choco.game.utils.general.NumUtils;
 import me.choco.game.utils.listeners.KeyboardListener;
+import me.choco.game.world.Location;
 
 public class Player extends Entity implements Controllable{
-	public Player(int x, int y){
-		super(x, y, 30, 30, ObjectType.PLAYER);
+	public Player(Location location){
+		super(location, 30, 30, ObjectType.PLAYER);
 	}
 
 	@Override
 	public void tick(){
-		setX(getX() + velX);
-		setY(getY() + velY);
+		location.setX(getX() + velX);
+		location.setY(getY() + velY);
 		
-		setX(NumUtils.clamp(getX(), 0, Game.WIDTH - 47)); // Magic numbers? Not sure why
-		setY(NumUtils.clamp(getY(), 0, Game.HEIGHT - 69)); 
+		// Bounding limitations
+		if (location.getScreenX() > Game.WIDTH - 47) location.setScreenX(Game.WIDTH - 47);
+		else if (location.getScreenX() < 0) location.setScreenX(0);
+		if (location.getScreenY() > Game.HEIGHT - 69) location.setScreenY(Game.HEIGHT - 69);
+		else if (location.getScreenY() < 0) location.setScreenY(0);
 	}
 
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.BLUE);
-		g.fillRect(location.getX(), location.getY(), width, height);
+		g.fillRect(location.getScreenX(), location.getScreenY(), width, height);
 		//TODO Render sprite
 	}
 

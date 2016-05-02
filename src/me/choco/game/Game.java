@@ -10,15 +10,17 @@ import me.choco.game.entity.Player;
 import me.choco.game.menus.MenuManager;
 import me.choco.game.menus.menu.MainMenu;
 import me.choco.game.menus.menu.OptionsMenu;
+import me.choco.game.utils.Background;
 import me.choco.game.utils.EntityHandler;
 import me.choco.game.utils.Window;
 import me.choco.game.utils.general.ExceptionHandler;
 import me.choco.game.utils.general.GameFont;
+import me.choco.game.utils.general.NumUtils;
 import me.choco.game.utils.general.resources.Texture;
 import me.choco.game.utils.listeners.ClickListener;
 import me.choco.game.utils.listeners.KeyboardListener;
 import me.choco.game.utils.listeners.MovementListener;
-import me.choco.game.utils.tilemaps.Background;
+import me.choco.game.world.Location;
 
 public class Game extends Canvas implements Runnable{
 	public final String version = "Version 0.04 Alpha - Aesthetic Update";
@@ -47,7 +49,7 @@ public class Game extends Canvas implements Runnable{
 	
 	public Game(){
 		setFocusable(true); requestFocus();
-		handler = new EntityHandler();
+		handler = new EntityHandler(this);
 		menuManager = new MenuManager();
 		keyListener = new KeyboardListener(this);
 		mouseListener = new ClickListener(this);
@@ -65,13 +67,12 @@ public class Game extends Canvas implements Runnable{
 		menuManager.addMenu(new MainMenu(this, new Background(Texture.GUI_BACKGROUND_MAIN.getTexture(), -0.5, 0)));
 		menuManager.addMenu(new OptionsMenu(this));
 		
-		handler.addObject(new Player(100, 100));
+		handler.addObject(new Player(new Location(100, 100)));
 	}
 
 	public synchronized void start(){
 		if (thread == null) thread = new Thread(this);
 		thread.start();
-		Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
 		running = true;
 	}
 	
@@ -136,7 +137,7 @@ public class Game extends Canvas implements Runnable{
 		
 		graphics.setFont(graphics.getFont().deriveFont(Font.ITALIC, 10F));
 		graphics.setColor(Color.GRAY);
-		graphics.drawString(version, (WIDTH / 2) - (graphics.getFontMetrics().stringWidth(version) / 2), 10);
+		graphics.drawString(version, (WIDTH / 2) - NumUtils.center(graphics, version), 10);
 		
 		bs.show();
 		graphics.dispose();
@@ -154,8 +155,8 @@ public class Game extends Canvas implements Runnable{
 		return keyListener;
 	}
 	
-	public void toggleDebugMode(){
-		this.debugMode = !debugMode;
+	public void setDebugMode(boolean debugMode){
+		this.debugMode = debugMode;
 	}
 	
 	public boolean isInDebugMode(){
@@ -171,6 +172,8 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	public static void main(String[] args) {
+		Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
+		
 		new Game();
 	}
 }

@@ -4,6 +4,7 @@ public enum ObjectType {
 	
 	PLAYER(),
 	ENEMY(),
+	TILE(),
 	UNKNOWN();
 	
 }

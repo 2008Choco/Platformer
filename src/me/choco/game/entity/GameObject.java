@@ -2,21 +2,21 @@ package me.choco.game.entity;
 
 import java.awt.Graphics;
 
-import me.choco.game.utils.tilemaps.Location;
+import me.choco.game.world.Location;
 
 public abstract class GameObject {
 	
 	protected Location location;
 	protected ObjectType type;
 	
-	protected GameObject(int x, int y, ObjectType type){
-		this(x, y);
-		this.type = type;
+	protected GameObject(Location location){
+		this.location = location;
+		this.type = ObjectType.UNKNOWN;
 	}
 	
-	protected GameObject(int x, int y){
-		this.location = new Location(x, y);
-		this.type = ObjectType.UNKNOWN;
+	protected GameObject(Location location, ObjectType type){
+		this(location);
+		this.type = type;
 	}
 
 	public int getX() {
