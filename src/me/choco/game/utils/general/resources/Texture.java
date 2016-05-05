@@ -8,7 +8,8 @@ public enum Texture {
 	GUI_BACKGROUND_MAIN(ImageLoader.loadImage("/gui/background/background.png")),
 	GUI_BUTTON_BACKGROUND(ImageLoader.loadImage("/gui/button/woodButton.png")),
 	GUI_BUTTON_HOVERED(ImageLoader.loadImage("/gui/button/woodButtonHovered.png")),
-	GENERIC_ICON(ImageLoader.loadImage("/generic/icon.png"));
+	GENERIC_ICON(ImageLoader.loadImage("/generic/icon.png")),
+	GAME_LEVELTEMP(ImageLoader.loadImage("/game/levelTEMP.png"));
 	
 	BufferedImage texture;
 	Texture(BufferedImage texture){

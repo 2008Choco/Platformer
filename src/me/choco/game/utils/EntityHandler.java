@@ -12,6 +12,8 @@ import me.choco.game.entity.GameObject;
 import me.choco.game.entity.ObjectType;
 import me.choco.game.entity.Player;
 import me.choco.game.utils.general.GameFont;
+import me.choco.game.world.Level;
+import me.choco.game.world.TileType;
 
 public class EntityHandler {
 	
@@ -30,10 +32,27 @@ public class EntityHandler {
 			
 			if (object instanceof Entity){
 				Entity entity = (Entity) object;
+				
+				// TODO: Entity collision
 				for (GameObject ob : objects){
-					if (!(ob instanceof Entity)) return;
+					if (!(ob instanceof Entity) || object.equals(ob)) continue;
 					if (entity.collidesWith(((Entity) ob))){
-						//TODO: Collision detected between entities
+						/* THIS IS A PROOF OF CONCEPT!!!! DELETE FOR ACTUAL ENTITY COLLISION LATER */
+						entity.getLocation().setX(entity.getLocation().getX() - entity.getVelX());
+						entity.getLocation().setY(entity.getLocation().getY() - entity.getVelY());
+						
+						entity.setVelX(0); entity.setVelY(0);
+					}
+				}
+				
+				// TODO: Tile collision
+				if (game.getLevelManager().getCurrentLevel() != null){
+					Level level = game.getLevelManager().getCurrentLevel();
+					if (!level.getTileAt(entity.getLocation().getX(), entity.getLocation().getY()).getTileType().equals(TileType.PASSABLE)){
+						entity.getLocation().setX(entity.getLocation().getX() - entity.getVelX());
+						entity.getLocation().setY(entity.getLocation().getY() - entity.getVelY());
+						
+						entity.setVelX(0); entity.setVelY(0);
 					}
 				}
 			}
@@ -50,14 +69,10 @@ public class EntityHandler {
 				g.setColor(Color.YELLOW);
 				
 				 String x = "World X: " + player.getLocation().getX(),
-						y = "World Y: " + player.getLocation().getY(),
-						scX = "Screen X: " + player.getLocation().getScreenX(),
-						scY = "Screen Y: " + player.getLocation().getScreenY();
+						y = "World Y: " + player.getLocation().getY();
 				
 				g.drawString(x, Game.WIDTH - (g.getFontMetrics().stringWidth(x) + 20), 15);
 				g.drawString(y, Game.WIDTH - (g.getFontMetrics().stringWidth(y) + 20), 30);
-				g.drawString(scX, Game.WIDTH - (g.getFontMetrics().stringWidth(scX) + 20), 45);
-				g.drawString(scY, Game.WIDTH - (g.getFontMetrics().stringWidth(scY) + 20), 60);
 			}
 		}
 	}

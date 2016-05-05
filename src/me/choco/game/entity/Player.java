@@ -10,26 +10,28 @@ import me.choco.game.utils.listeners.KeyboardListener;
 import me.choco.game.world.Location;
 
 public class Player extends Entity implements Controllable{
+	
 	public Player(Location location){
 		super(location, 30, 30, ObjectType.PLAYER);
 	}
 
 	@Override
 	public void tick(){
-		location.setX(getX() + velX);
-		location.setY(getY() + velY);
+		location.setX(location.getX() + velX);
+		location.setY(location.getY() + velY);
 		
 		// Bounding limitations
-		if (location.getScreenX() > Game.WIDTH - 47) location.setScreenX(Game.WIDTH - 47);
-		else if (location.getScreenX() < 0) location.setScreenX(0);
-		if (location.getScreenY() > Game.HEIGHT - 69) location.setScreenY(Game.HEIGHT - 69);
-		else if (location.getScreenY() < 0) location.setScreenY(0);
+		if ((location.getX() + 47) - camera.getXOffset() > Game.WIDTH) camera.setXOffset(camera.getXOffset() + 3);
+		else if (location.getX() - camera.getXOffset() < 0) camera.setXOffset(camera.getXOffset() - 3);
+		
+		if ((location.getY() + 69) - camera.getYOffset() > Game.HEIGHT) camera.setYOffset(camera.getYOffset() + 3);
+		else if (location.getY() - camera.getYOffset() < 0) camera.setYOffset(camera.getYOffset() - 3);
 	}
 
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.BLUE);
-		g.fillRect(location.getScreenX(), location.getScreenY(), width, height);
+		g.fillRect(location.getX() - camera.getXOffset(), location.getY() - camera.getYOffset(), width, height);
 		//TODO Render sprite
 	}
 

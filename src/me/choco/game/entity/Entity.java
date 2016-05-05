@@ -52,9 +52,9 @@ public abstract class Entity extends GameObject{
 	public void setVelY(int velY) {
 		this.velY = velY;
 	}
-
+	
 	public Rectangle getBounds(){
-		return new Rectangle(getX(), getY(), width, height);
+		return new Rectangle(location.getX(), location.getY(), width, height);
 	}
 	
 	public boolean collidesWith(Entity entity){

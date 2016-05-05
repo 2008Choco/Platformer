@@ -6,12 +6,15 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import me.choco.game.entity.Enemy;
 import me.choco.game.entity.Player;
 import me.choco.game.menus.MenuManager;
 import me.choco.game.menus.menu.MainMenu;
 import me.choco.game.menus.menu.OptionsMenu;
 import me.choco.game.utils.Background;
+import me.choco.game.utils.Camera;
 import me.choco.game.utils.EntityHandler;
+import me.choco.game.utils.LevelManager;
 import me.choco.game.utils.Window;
 import me.choco.game.utils.general.ExceptionHandler;
 import me.choco.game.utils.general.GameFont;
@@ -23,10 +26,12 @@ import me.choco.game.utils.listeners.MovementListener;
 import me.choco.game.world.Location;
 
 public class Game extends Canvas implements Runnable{
-	public final String version = "Version 0.04 Alpha - Aesthetic Update";
+	public final String version = "Version 0.05 Alpha - Level Design Update";
 	public static int WIDTH = 720, HEIGHT = WIDTH / 9 * 6;
 	public static final String title = "The Game with No Name";
-	
+
+	private static Game instance;
+	private static Camera camera;
 	private int currentFPS = 0;
 	
 	private static final long serialVersionUID = -2568288252169912698L;
@@ -37,6 +42,7 @@ public class Game extends Canvas implements Runnable{
 	private final KeyboardListener keyListener;
 	private final ClickListener mouseListener;
 	private final MovementListener movementListener;
+	private final LevelManager levelManager;
 	
 	private Thread thread;
 	private boolean running;
@@ -49,11 +55,15 @@ public class Game extends Canvas implements Runnable{
 	
 	public Game(){
 		setFocusable(true); requestFocus();
+		instance = this;
+		camera = new Camera(this);
+		
 		handler = new EntityHandler(this);
 		menuManager = new MenuManager();
 		keyListener = new KeyboardListener(this);
 		mouseListener = new ClickListener(this);
 		movementListener = new MovementListener(this);
+		levelManager = new LevelManager();
 		
 		this.addKeyListener(keyListener);
 		this.addMouseListener(mouseListener);
@@ -68,8 +78,9 @@ public class Game extends Canvas implements Runnable{
 		menuManager.addMenu(new OptionsMenu(this));
 		
 		handler.addObject(new Player(new Location(100, 100)));
+		handler.addObject(new Enemy(new Location(200, 200), 30, 30));
 	}
-
+	
 	public synchronized void start(){
 		if (thread == null) thread = new Thread(this);
 		thread.start();
@@ -113,6 +124,7 @@ public class Game extends Canvas implements Runnable{
 	public void tick(){
 		handler.tick();
 		menuManager.tickForState(state);
+		levelManager.tick();
 	}
 	
 	public void render(){
@@ -124,7 +136,9 @@ public class Game extends Canvas implements Runnable{
 		if (state.equals(GameState.GAME)){
 			graphics.setColor(Color.BLACK);
 			graphics.fillRect(0, 0, WIDTH, HEIGHT);
+			graphics.drawImage(Texture.GAME_LEVELTEMP.getTexture(), 0 - camera.getXOffset(), 0 - camera.getYOffset(), null);
 			
+			levelManager.render(graphics);
 			handler.render(graphics);
 		}
 		menuManager.renderForState(state, graphics);
@@ -155,6 +169,10 @@ public class Game extends Canvas implements Runnable{
 		return keyListener;
 	}
 	
+	public LevelManager getLevelManager(){
+		return levelManager;
+	}
+	
 	public void setDebugMode(boolean debugMode){
 		this.debugMode = debugMode;
 	}
@@ -171,9 +189,16 @@ public class Game extends Canvas implements Runnable{
 		return state;
 	}
 	
+	public static Game getGame(){
+		return instance;
+	}
+	
+	public static Camera getCamera(){
+		return camera;
+	}
+	
 	public static void main(String[] args) {
 		Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
-		
 		new Game();
 	}
 }
