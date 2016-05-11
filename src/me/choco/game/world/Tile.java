@@ -3,30 +3,29 @@ package me.choco.game.world;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import me.choco.game.entity.GameObject;
-import me.choco.game.entity.ObjectType;
+import me.choco.game.Game;
+import me.choco.game.utils.Camera;
 
-public class Tile extends GameObject{
+public class Tile {
 	
-	private boolean loaded = false;
+	private static final Camera camera = Game.getCamera();
 	
-	private final TileType type;
+	private TileType type;
 	private final Location location;
 	private final int width, height;
-	private final BufferedImage image;
+	private final BufferedImage texture;
 	public Tile(Location location, int width, int height, TileType type){
-		super(location, ObjectType.TILE);
 		this.location = location;
 		this.width = width; this.height = height;
 		this.type = type;
-		this.image = type.getTexture();
+		this.texture = type.getTexture();
 	}
 	
-	public int getX() {
+	public float getX() {
 		return location.getX();
 	}
 	
-	public int getY() {
+	public float getY() {
 		return location.getY();
 	}
 	
@@ -43,24 +42,25 @@ public class Tile extends GameObject{
 	}
 	
 	public BufferedImage getSprite(){
-		return image;
-	}
-	
-	public void setLoaded(boolean loaded){
-		this.loaded = loaded;
-	}
-	
-	public boolean isLoaded(){
-		return loaded;
+		return texture;
 	}
 	
 	public TileType getTileType(){
 		return type;
 	}
 	
+	public void setTileType(TileType type){
+		this.type = type;
+	}
+	
 	public void tick(){}
 	
 	public void render(Graphics g){
-		g.drawImage(image, location.getX(), location.getY(), width, height, null);
+		g.drawImage(texture, location.getRawX() - camera.getXOffset(), location.getRawY() - camera.getYOffset(), width, height, null);
+	}
+	
+	@Override
+	public String toString() {
+		return "Tile:{x:" + location.getX() + ",y:" + location.getY() + ",type:" + type.name() + "}";
 	}
 }

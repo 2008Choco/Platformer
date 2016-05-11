@@ -1,35 +1,35 @@
 package me.choco.game.world;
 
 import java.awt.Graphics;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Level {
 	
 	private final Location minLocation, maxLocation;
 	private String name;
+	private final int tileSize;
 	
-	private final Tile[][] tiles = new Tile[100][100];
-	private final Tile[][] viewableTiles = new Tile[10][10];
+	private final Map<Location, Tile> tiles = new HashMap<>();
 	
-	private final TileGenerator generator;
-	public Level(TileGenerator generator, String name, int maxX, int maxY){
-		this.generator = generator;
+	public Level(String name, int maxX, int maxY, int tileSize){
 		this.name = name;
+		this.tileSize = tileSize;
 		
 		this.minLocation = new Location(0, 0);
 		this.maxLocation = new Location(maxX, maxY);
 	}
 	
-	public Tile getTileAt(int x, int y){
-		Location location = new Location(x, y);
-		
-		for (Tile[] tiles : this.tiles)
-			for (Tile tile : tiles)
-				if (tile.getLocation().equals(location)) return tile;
-		return null;
+	public Tile getTileAt(Location location){
+		return tiles.get(location);
 	}
 	
-	public TileGenerator getTileGenerator(){
-		return generator;
+	public void setTile(Location location, TileType type){
+		if (tiles.get(location) == null){
+			tiles.put(location, new Tile(location, tileSize, tileSize, type));
+		}else{
+			tiles.get(location);
+		}
 	}
 	
 	public Location getMinLocation(){
@@ -48,13 +48,17 @@ public class Level {
 		this.name = name;
 	}
 	
-	public void tick(){}
+	public int getTileSize(){
+		return tileSize;
+	}
+	
+	public void tick(){
+		for (Tile tile : tiles.values())
+			tile.tick();
+	}
 	
 	public void render(Graphics g){
-		for (Tile[] tiles : this.viewableTiles){
-			for (Tile tile : tiles){
-				tile.render(g);
-			}
-		}
+		for (Tile tile : tiles.values())
+			tile.render(g);
 	}
 }

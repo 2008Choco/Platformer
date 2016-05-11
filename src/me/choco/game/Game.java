@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
-import me.choco.game.entity.Enemy;
 import me.choco.game.entity.Player;
 import me.choco.game.menus.MenuManager;
 import me.choco.game.menus.menu.MainMenu;
@@ -18,6 +17,7 @@ import me.choco.game.utils.LevelManager;
 import me.choco.game.utils.Window;
 import me.choco.game.utils.general.ExceptionHandler;
 import me.choco.game.utils.general.GameFont;
+import me.choco.game.utils.general.ImageUtils;
 import me.choco.game.utils.general.NumUtils;
 import me.choco.game.utils.general.resources.Texture;
 import me.choco.game.utils.listeners.ClickListener;
@@ -32,12 +32,12 @@ public class Game extends Canvas implements Runnable{
 
 	private static Game instance;
 	private static Camera camera;
-	private int currentFPS = 0;
+	public static int currentFPS = 0;
 	
 	private static final long serialVersionUID = -2568288252169912698L;
 	private boolean debugMode = true;
 	
-	private final EntityHandler handler;
+	private final EntityHandler entityHandler;
 	private final MenuManager menuManager;
 	private final KeyboardListener keyListener;
 	private final ClickListener mouseListener;
@@ -58,7 +58,7 @@ public class Game extends Canvas implements Runnable{
 		instance = this;
 		camera = new Camera(this);
 		
-		handler = new EntityHandler(this);
+		entityHandler = new EntityHandler(this);
 		menuManager = new MenuManager();
 		keyListener = new KeyboardListener(this);
 		mouseListener = new ClickListener(this);
@@ -77,8 +77,11 @@ public class Game extends Canvas implements Runnable{
 		menuManager.addMenu(new MainMenu(this, new Background(Texture.GUI_BACKGROUND_MAIN.getTexture(), -0.5, 0)));
 		menuManager.addMenu(new OptionsMenu(this));
 		
-		handler.addObject(new Player(new Location(100, 100)));
-		handler.addObject(new Enemy(new Location(200, 200), 30, 30));
+		levelManager.loadLevel("Level 1", ImageUtils.loadImage("/game/levels/level1.png"));
+		levelManager.setCurrentLevel(0);
+		
+		entityHandler.addObject(new Player(new Location(10, 10)));
+//		entityHandler.addObject(new Enemy(new Location(200, 200), 30, 30));
 	}
 	
 	public synchronized void start(){
@@ -122,7 +125,7 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	public void tick(){
-		handler.tick();
+		entityHandler.tick();
 		menuManager.tickForState(state);
 		levelManager.tick();
 	}
@@ -136,10 +139,9 @@ public class Game extends Canvas implements Runnable{
 		if (state.equals(GameState.GAME)){
 			graphics.setColor(Color.BLACK);
 			graphics.fillRect(0, 0, WIDTH, HEIGHT);
-			graphics.drawImage(Texture.GAME_LEVELTEMP.getTexture(), 0 - camera.getXOffset(), 0 - camera.getYOffset(), null);
 			
 			levelManager.render(graphics);
-			handler.render(graphics);
+			entityHandler.render(graphics);
 		}
 		menuManager.renderForState(state, graphics);
 		
@@ -158,7 +160,7 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	public EntityHandler getEntityHandler(){
-		return handler;
+		return entityHandler;
 	}
 	
 	public MenuManager getMenuManager(){

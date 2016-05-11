@@ -6,41 +6,44 @@ import java.awt.event.KeyEvent;
 
 import me.choco.game.Game;
 import me.choco.game.entity.variants.Controllable;
+import me.choco.game.entity.variants.Gravity;
 import me.choco.game.utils.listeners.KeyboardListener;
 import me.choco.game.world.Location;
 
-public class Player extends Entity implements Controllable{
+public class Player extends Entity implements Controllable, Gravity{
+	
+	private int speed = 3;
 	
 	public Player(Location location){
-		super(location, 30, 30, ObjectType.PLAYER);
+		super(location, 32, 32, ObjectType.PLAYER);
 	}
 
 	@Override
 	public void tick(){
-		location.setX(location.getX() + velX);
-		location.setY(location.getY() + velY);
+		location.setRawX(location.getRawX() + (int) velX);
+		location.setRawY(location.getRawY() + (int) velY);
 		
 		// Bounding limitations
-		if ((location.getX() + 47) - camera.getXOffset() > Game.WIDTH) camera.setXOffset(camera.getXOffset() + 3);
-		else if (location.getX() - camera.getXOffset() < 0) camera.setXOffset(camera.getXOffset() - 3);
+		if ((location.getRawX() + 47) - camera.getXOffset() > Game.WIDTH) camera.setXOffset(camera.getXOffset() + speed);
+		else if (location.getRawX() - camera.getXOffset() < 0) camera.setXOffset(camera.getXOffset() - speed);
 		
-		if ((location.getY() + 69) - camera.getYOffset() > Game.HEIGHT) camera.setYOffset(camera.getYOffset() + 3);
-		else if (location.getY() - camera.getYOffset() < 0) camera.setYOffset(camera.getYOffset() - 3);
+		if ((location.getRawY() + 69) - camera.getYOffset() > Game.HEIGHT) camera.setYOffset(camera.getYOffset() + speed);
+		else if (location.getRawY() - camera.getYOffset() < 0) camera.setYOffset(camera.getYOffset() - speed);
 	}
 
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.BLUE);
-		g.fillRect(location.getX() - camera.getXOffset(), location.getY() - camera.getYOffset(), width, height);
+		g.fillRect(location.getRawX() - camera.getXOffset(), location.getRawY() - camera.getYOffset(), width, height);
 		//TODO Render sprite
 	}
 
 	@Override
 	public void onPressKey(KeyEvent event, KeyboardListener listener) {
-		if (listener.isKeyPressed(KeyEvent.VK_W)){ this.setVelY(-3); }
-		if (listener.isKeyPressed(KeyEvent.VK_A)){ this.setVelX(-3); }
-		if (listener.isKeyPressed(KeyEvent.VK_S)){ this.setVelY(3); }
-		if (listener.isKeyPressed(KeyEvent.VK_D)){ this.setVelX(3); }
+		if (listener.isKeyPressed(KeyEvent.VK_W)){ this.setVelY(-speed); }
+		if (listener.isKeyPressed(KeyEvent.VK_A)){ this.setVelX(-speed); }
+		if (listener.isKeyPressed(KeyEvent.VK_S)){ this.setVelY(speed); }
+		if (listener.isKeyPressed(KeyEvent.VK_D)){ this.setVelX(speed); }
 	}
 
 	@Override
@@ -49,5 +52,10 @@ public class Player extends Entity implements Controllable{
 		if (listener.isKeyReleased(KeyEvent.VK_A)){ this.setVelX(0); onPressKey(event, listener); }
 		if (listener.isKeyReleased(KeyEvent.VK_S)){ this.setVelY(0); onPressKey(event, listener); }
 		if (listener.isKeyReleased(KeyEvent.VK_D)){ this.setVelX(0); onPressKey(event, listener); }
+	}
+
+	@Override
+	public float getGravityValue() {
+		return 1;
 	}
 }

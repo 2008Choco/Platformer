@@ -25,6 +25,6 @@ public class Enemy extends Entity{
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.RED);
-		g.fillRect(location.getX() - camera.getXOffset(), location.getY() - camera.getYOffset(), width, height);
+		g.fillRect((int) location.getX() - camera.getXOffset(), (int) location.getY() - camera.getYOffset(), width, height);
 	}
 }

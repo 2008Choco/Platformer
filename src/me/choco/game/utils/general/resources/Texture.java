@@ -2,14 +2,16 @@ package me.choco.game.utils.general.resources;
 
 import java.awt.image.BufferedImage;
 
-import me.choco.game.utils.general.ImageLoader;
+import me.choco.game.utils.general.ImageUtils;
 
 public enum Texture {
-	GUI_BACKGROUND_MAIN(ImageLoader.loadImage("/gui/background/background.png")),
-	GUI_BUTTON_BACKGROUND(ImageLoader.loadImage("/gui/button/woodButton.png")),
-	GUI_BUTTON_HOVERED(ImageLoader.loadImage("/gui/button/woodButtonHovered.png")),
-	GENERIC_ICON(ImageLoader.loadImage("/generic/icon.png")),
-	GAME_LEVELTEMP(ImageLoader.loadImage("/game/levelTEMP.png"));
+	GUI_BACKGROUND_MAIN(ImageUtils.loadImage("/gui/background/background.png")),
+	GUI_BUTTON_BACKGROUND(ImageUtils.loadImage("/gui/button/woodButton.png")),
+	GUI_BUTTON_HOVERED(ImageUtils.loadImage("/gui/button/woodButtonHovered.png")),
+	
+	GENERIC_ICON(ImageUtils.loadImage("/generic/icon.png")),
+	
+	GAME_TILE_DIRT(ImageUtils.loadImage("/game/tiles/dirt.png"));
 	
 	BufferedImage texture;
 	Texture(BufferedImage texture){

@@ -7,7 +7,7 @@ import me.choco.game.world.Location;
 public abstract class Entity extends GameObject{
 	
 	protected int width, height;
-	protected int velX = 0, velY = 0;
+	protected float velX = 0, velY = 0;
 	
 	protected Entity(Location location, int width, int height, ObjectType type) {
 		super(location, type);
@@ -37,24 +37,24 @@ public abstract class Entity extends GameObject{
 		return height;
 	}
 	
-	public int getVelX() {
+	public float getVelX() {
 		return velX;
 	}
 
-	public void setVelX(int velX) {
+	public void setVelX(float velX) {
 		this.velX = velX;
 	}
 
-	public int getVelY() {
+	public float getVelY() {
 		return velY;
 	}
 
-	public void setVelY(int velY) {
+	public void setVelY(float velY) {
 		this.velY = velY;
 	}
 	
 	public Rectangle getBounds(){
-		return new Rectangle(location.getX(), location.getY(), width, height);
+		return new Rectangle((int) location.getRawX(), (int) location.getRawY(), width, height);
 	}
 	
 	public boolean collidesWith(Entity entity){
