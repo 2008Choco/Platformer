@@ -1,6 +1,7 @@
 package me.choco.game.world;
 
 import java.awt.Graphics;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,6 +51,10 @@ public class Level {
 	
 	public int getTileSize(){
 		return tileSize;
+	}
+	
+	public Collection<Tile> getTiles(){
+		return tiles.values();
 	}
 	
 	public void tick(){

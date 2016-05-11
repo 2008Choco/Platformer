@@ -11,7 +11,8 @@ public enum Texture {
 	
 	GENERIC_ICON(ImageUtils.loadImage("/generic/icon.png")),
 	
-	GAME_TILE_DIRT(ImageUtils.loadImage("/game/tiles/dirt.png"));
+	GAME_TILE_DIRT(ImageUtils.loadImage("/game/tiles/dirt.png")),
+	GAME_TILE_GRASS(ImageUtils.loadImage("/game/tiles/grass.png"));
 	
 	BufferedImage texture;
 	Texture(BufferedImage texture){

@@ -1,9 +1,11 @@
 package me.choco.game.world;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import me.choco.game.Game;
+import me.choco.game.entity.Entity;
 import me.choco.game.utils.Camera;
 
 public class Tile {
@@ -51,6 +53,14 @@ public class Tile {
 	
 	public void setTileType(TileType type){
 		this.type = type;
+	}
+	
+	public Rectangle getBounds(){
+		return new Rectangle(location.getRawX(), location.getRawY(), width, height);
+	}
+	
+	public boolean collidesWith(Entity entity){
+		return entity.getBounds().intersects(getBounds());
 	}
 	
 	public void tick(){}

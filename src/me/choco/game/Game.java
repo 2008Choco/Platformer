@@ -25,6 +25,36 @@ import me.choco.game.utils.listeners.KeyboardListener;
 import me.choco.game.utils.listeners.MovementListener;
 import me.choco.game.world.Location;
 
+/**
+ * This game was written as a school project started in the year of 2016. There is no
+ * intention of releasing the game publicly for playability, nor allowing others to
+ * play the game (excluding those allowed to test it for Alpha, Beta, etc. testing phases)
+ * <br><br>
+ * The intention of the game is to create a type of Platformer with one singular main
+ * character, a couple of enemies that will attempt to kill said player, and varying blocks
+ * or tiles throughout the world. Sub programs may also come bundled with the game to help
+ * with the creation of the game in a much simpler way.
+ * <br>
+ * <br> <b>- Legal Information -</b>
+ * <br>
+ * <br> Copyright (C) 2016 Parker Hawke
+ * <br> 
+ * <br> This program is free software: you can redistribute it and/or modify
+ * <br> it under the terms of the GNU General Public License as published by
+ * <br> the Free Software Foundation, either version 3 of the License, or
+ * <br> (at your option) any later version.
+ * <br> 
+ * <br> This program is distributed in the hope that it will be useful,
+ * <br> but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * <br> MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * <br> GNU General Public License for more details.
+ * <br> 
+ * <br> You should have received a copy of the GNU General Public License
+ * <br> along with this program.  If not, see {@link http://www.gnu.org/licenses/}
+ * 
+ * @author <b>Parker Hawke</b> - Game Developer
+ * @author <b>Jenna Young</b> - Texture Artist
+ */
 public class Game extends Canvas implements Runnable{
 	public final String version = "Version 0.05 Alpha - Level Design Update";
 	public static int WIDTH = 720, HEIGHT = WIDTH / 9 * 6;
@@ -80,7 +110,7 @@ public class Game extends Canvas implements Runnable{
 		levelManager.loadLevel("Level 1", ImageUtils.loadImage("/game/levels/level1.png"));
 		levelManager.setCurrentLevel(0);
 		
-		entityHandler.addObject(new Player(new Location(10, 10)));
+		entityHandler.addObject(new Player(new Location(3, 0)));
 //		entityHandler.addObject(new Enemy(new Location(200, 200), 30, 30));
 	}
 	

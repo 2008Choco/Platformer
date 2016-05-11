@@ -13,6 +13,8 @@ import me.choco.game.entity.GameObject;
 import me.choco.game.entity.ObjectType;
 import me.choco.game.entity.Player;
 import me.choco.game.utils.general.GameFont;
+import me.choco.game.world.Level;
+import me.choco.game.world.Tile;
 
 public class EntityHandler {
 	
@@ -47,7 +49,17 @@ public class EntityHandler {
 				}
 				
 				// TODO: Tile collision
-				if (game.getLevelManager().getCurrentLevel() != null){}
+				Level level = game.getLevelManager().getCurrentLevel();
+				if (level != null){
+					Player player = (Player) getFirst(ObjectType.PLAYER);
+					for (Tile tile : level.getTiles()){
+						if (tile.collidesWith(player)){
+							player.setAirborn(false);
+							player.getLocation().setY(tile.getLocation().getTileY() - 1);
+							player.setVelY(0);
+						}
+					}
+				}
 			}
 		}
 	}
@@ -61,7 +73,7 @@ public class EntityHandler {
 				g.setFont(GameFont.ARIAL_BOLD_16.getFont());
 				g.setColor(Color.YELLOW);
 				
-				 String x = "World X: " + coordFormat.format(player.getLocation().getX()),
+				String x = "World X: " + coordFormat.format(player.getLocation().getX()),
 						y = "World Y: " + coordFormat.format(player.getLocation().getY());
 				
 				g.drawString(x, Game.WIDTH - (g.getFontMetrics().stringWidth(x) + 20), 15);

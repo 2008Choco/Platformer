@@ -24,9 +24,12 @@ public class LevelManager {
 			for (int y = 0; y < height; y++){
 				int pixel = image.getRGB(x, y);
 				
-				if (ImageUtils.isColor(pixel, 255, 255, 255)){
-					level.setTile(new Location(x, y), TileType.DIRT);
-				}
+				/* Tile Colours (Format: "R,G,B")
+				 *     Dirt: 165,85,0
+				 *     Grass: 103,163,0
+				 */
+				if (ImageUtils.isColor(pixel, 165, 85, 0)) level.setTile(new Location(x, y), TileType.DIRT);
+				if (ImageUtils.isColor(pixel, 103, 163, 0)) level.setTile(new Location(x, y), TileType.GRASS);
 			}
 		}
 		levels.add(level);
