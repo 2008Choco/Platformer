@@ -5,14 +5,16 @@ import java.awt.image.BufferedImage;
 import me.choco.game.utils.general.resources.Texture;
 
 public enum TileType {
-	DIRT(0, Texture.GAME_TILE_DIRT.getTexture()),
-	GRASS(1, Texture.GAME_TILE_GRASS.getTexture()),
-	STONE(2, null);
+	DIRT(0, true, Texture.GAME_TILE_DIRT.getTexture()),
+	GRASS(1, true, Texture.GAME_TILE_GRASS.getTexture()),
+	STONE(2, true, null);
 	
 	private int id;
+	private boolean solid = true;
 	private BufferedImage texture;
-	TileType(int id, BufferedImage texture){
+	TileType(int id, boolean solid, BufferedImage texture){
 		this.id = id;
+		this.solid = solid;
 		this.texture = texture;
 	}
 	
@@ -22,6 +24,10 @@ public enum TileType {
 	
 	public int getId(){
 		return id;
+	}
+	
+	public boolean isSolid(){
+		return solid;
 	}
 	
 	public static TileType getById(int id){

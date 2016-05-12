@@ -53,6 +53,8 @@ public class EntityHandler {
 				if (level != null){
 					Player player = (Player) getFirst(ObjectType.PLAYER);
 					for (Tile tile : level.getTiles()){
+						if (!tile.getTileType().isSolid()) continue;
+						
 						if (tile.collidesTop(player)){
 							player.setAirborn(false);
 							player.getLocation().setY(tile.getLocation().getTileY() - 1);
