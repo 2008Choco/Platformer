@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
-import me.choco.game.entity.Player;
 import me.choco.game.menus.MenuManager;
 import me.choco.game.menus.menu.MainMenu;
 import me.choco.game.menus.menu.OptionsMenu;
@@ -23,7 +22,6 @@ import me.choco.game.utils.general.resources.Texture;
 import me.choco.game.utils.listeners.ClickListener;
 import me.choco.game.utils.listeners.KeyboardListener;
 import me.choco.game.utils.listeners.MovementListener;
-import me.choco.game.world.Location;
 
 /**
  * This game was written as a school project started in the year of 2016. There is no
@@ -56,7 +54,7 @@ import me.choco.game.world.Location;
  * @author <b>Jenna Young</b> - Texture Artist
  */
 public class Game extends Canvas implements Runnable{
-	public final String version = "Version 0.05 Alpha - Level Design Update";
+	public final String version = "Version 0.06 Alpha - Tile Collision Update";
 	public static int WIDTH = 720, HEIGHT = WIDTH / 9 * 6;
 	public static final String title = "The Game with No Name";
 
@@ -93,7 +91,7 @@ public class Game extends Canvas implements Runnable{
 		keyListener = new KeyboardListener(this);
 		mouseListener = new ClickListener(this);
 		movementListener = new MovementListener(this);
-		levelManager = new LevelManager();
+		levelManager = new LevelManager(this);
 		
 		this.addKeyListener(keyListener);
 		this.addMouseListener(mouseListener);
@@ -110,7 +108,6 @@ public class Game extends Canvas implements Runnable{
 		levelManager.loadLevel("Level 1", ImageUtils.loadImage("/game/levels/level1.png"));
 		levelManager.setCurrentLevel(0);
 		
-		entityHandler.addObject(new Player(new Location(3, 0)));
 //		entityHandler.addObject(new Enemy(new Location(200, 200), 30, 30));
 	}
 	

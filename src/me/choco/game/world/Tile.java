@@ -5,10 +5,10 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import me.choco.game.Game;
-import me.choco.game.entity.Entity;
+import me.choco.game.entity.variants.Collidable;
 import me.choco.game.utils.Camera;
 
-public class Tile {
+public class Tile implements Collidable{
 	
 	private static final Camera camera = Game.getCamera();
 	
@@ -55,14 +55,6 @@ public class Tile {
 		this.type = type;
 	}
 	
-	public Rectangle getBounds(){
-		return new Rectangle(location.getRawX(), location.getRawY(), width, height);
-	}
-	
-	public boolean collidesWith(Entity entity){
-		return entity.getBounds().intersects(getBounds());
-	}
-	
 	public void tick(){}
 	
 	public void render(Graphics g){
@@ -72,5 +64,50 @@ public class Tile {
 	@Override
 	public String toString() {
 		return "Tile:{x:" + location.getX() + ",y:" + location.getY() + ",type:" + type.name() + "}";
+	}
+	
+	public Rectangle getBounds(){
+		return new Rectangle((int) location.getRawX(), (int) location.getRawY(), width, height);
+	}
+	
+	public Rectangle getBoundsTop(){
+		return new Rectangle((int) location.getRawX() + 5, (int) location.getRawY(), width - 10, 5);
+	}
+	
+	public Rectangle getBoundsLeft(){
+		return new Rectangle((int) location.getRawX(), (int) location.getRawY() + 1, 5, height - 2);
+	}
+	
+	public Rectangle getBoundsRight(){
+		return new Rectangle((int) (location.getRawX() + width) - 5, (int) location.getRawY() + 1, 5, height - 2);
+	}
+	
+	public Rectangle getBoundsDown(){
+		return new Rectangle((int) location.getRawX() + 5, (int) (location.getRawY() + height) - 5, width - 10, 5);
+	}
+	
+	@Override
+	public boolean collidesWith(Collidable entity){
+		return this.getBounds().intersects(entity.getBounds());
+	}
+	
+	@Override
+	public boolean collidesTop(Collidable entity){
+		return this.getBoundsTop().intersects(entity.getBounds());
+	}
+	
+	@Override
+	public boolean collidesLeft(Collidable entity){
+		return this.getBoundsLeft().intersects(entity.getBounds());
+	}
+	
+	@Override
+	public boolean collidesRight(Collidable entity){
+		return this.getBoundsRight().intersects(entity.getBounds());
+	}
+	
+	@Override
+	public boolean collidesDown(Collidable entity){
+		return this.getBoundsDown().intersects(entity.getBounds());
 	}
 }

@@ -1,10 +1,12 @@
+
 package me.choco.game.entity;
 
 import java.awt.Rectangle;
 
+import me.choco.game.entity.variants.Collidable;
 import me.choco.game.world.Location;
 
-public abstract class Entity extends GameObject{
+public abstract class Entity extends GameObject implements Collidable{
 	
 	protected int width, height;
 	protected float velX = 0, velY = 0;
@@ -57,7 +59,39 @@ public abstract class Entity extends GameObject{
 		return new Rectangle((int) location.getRawX(), (int) location.getRawY(), width, height);
 	}
 	
-	public boolean collidesWith(Entity entity){
+	public Rectangle getBoundsTop(){
+		return new Rectangle((int) location.getRawX() + 5, (int) location.getRawY(), width - 10, 5);
+	}
+	
+	public Rectangle getBoundsLeft(){
+		return new Rectangle((int) location.getRawX(), (int) location.getRawY() + 1, 5, height - 2);
+	}
+	
+	public Rectangle getBoundsRight(){
+		return new Rectangle((int) (location.getRawX() + width) - 5, (int) location.getRawY() + 1, 5, height - 2);
+	}
+	
+	public Rectangle getBoundsDown(){
+		return new Rectangle((int) location.getRawX() + 5, (int) (location.getRawY() + height) - 5, width - 10, 5);
+	}
+	
+	public boolean collidesWith(Collidable entity){
 		return this.getBounds().intersects(entity.getBounds());
+	}
+	
+	public boolean collidesTop(Collidable entity){
+		return this.getBoundsTop().intersects(entity.getBounds());
+	}
+	
+	public boolean collidesLeft(Collidable entity){
+		return this.getBoundsLeft().intersects(entity.getBounds());
+	}
+	
+	public boolean collidesRight(Collidable entity){
+		return this.getBoundsRight().intersects(entity.getBounds());
+	}
+	
+	public boolean collidesDown(Collidable entity){
+		return this.getBoundsDown().intersects(entity.getBounds());
 	}
 }

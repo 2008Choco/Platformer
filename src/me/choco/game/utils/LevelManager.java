@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.choco.game.Game;
+import me.choco.game.entity.Player;
 import me.choco.game.utils.general.ImageUtils;
 import me.choco.game.world.Level;
 import me.choco.game.world.Location;
@@ -14,6 +16,11 @@ public class LevelManager {
 	
 	private final List<Level> levels = new ArrayList<>();
 	private Level currentLevel = null;
+	
+	private Game game;
+	public LevelManager(Game game){
+		this.game = game;
+	}
 	
 	public void loadLevel(String name, BufferedImage image){
 		int width = image.getWidth();
@@ -25,11 +32,13 @@ public class LevelManager {
 				int pixel = image.getRGB(x, y);
 				
 				/* Tile Colours (Format: "R,G,B")
+				 *     Player: 0,0,255
 				 *     Dirt: 165,85,0
 				 *     Grass: 103,163,0
 				 */
-				if (ImageUtils.isColor(pixel, 165, 85, 0)) level.setTile(new Location(x, y), TileType.DIRT);
-				if (ImageUtils.isColor(pixel, 103, 163, 0)) level.setTile(new Location(x, y), TileType.GRASS);
+				if (ImageUtils.isColor(pixel, 0, 0, 255)) game.getEntityHandler().addObject(new Player(new Location(x, y)));
+				else if (ImageUtils.isColor(pixel, 165, 85, 0)) level.setTile(new Location(x, y), TileType.DIRT);
+				else if (ImageUtils.isColor(pixel, 103, 163, 0)) level.setTile(new Location(x, y), TileType.GRASS);
 			}
 		}
 		levels.add(level);

@@ -53,10 +53,17 @@ public class EntityHandler {
 				if (level != null){
 					Player player = (Player) getFirst(ObjectType.PLAYER);
 					for (Tile tile : level.getTiles()){
-						if (tile.collidesWith(player)){
+						if (tile.collidesTop(player)){
 							player.setAirborn(false);
 							player.getLocation().setY(tile.getLocation().getTileY() - 1);
 							player.setVelY(0);
+						}else if (tile.collidesDown(player)){
+							player.getLocation().setY(tile.getLocation().getTileY() + 1);
+							player.setVelY(0);
+						}else if (tile.collidesLeft(player)){
+							player.getLocation().setX(tile.getLocation().getTileX() - 1);
+						}else if (tile.collidesRight(player)){
+							player.getLocation().setX(tile.getLocation().getTileX() + 1);
 						}
 					}
 				}
