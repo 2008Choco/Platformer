@@ -25,47 +25,47 @@ public class EntityHandler {
 		this.game = game;
 	}
 	
-	private Set<GameObject> objects = new HashSet<>();
+	private Set<Entity> entities = new HashSet<>();
 	
 	public void tick(){
-		Iterator<GameObject> it = objects.iterator();
-		while (it.hasNext()){
-			GameObject object = it.next();
-			object.tick();
+		for (Entity entity : entities){
+			entity.tick();
 			
-			if (object instanceof Entity){
-				Entity entity = (Entity) object;
+			//Entity Collision
+			for (Entity collidableEntity : entities){
+				if (collidableEntity.equals(entity) || !entity.collidesWith(collidableEntity)) continue;
 				
-				// TODO: Entity collision
-				for (GameObject ob : objects){
-					if (!(ob instanceof Entity) || object.equals(ob)) continue;
-					if (entity.collidesWith(((Entity) ob))){
-						/* THIS IS A PROOF OF CONCEPT!!!! DELETE FOR ACTUAL ENTITY COLLISION LATER */
-						entity.getLocation().setX(entity.getLocation().getX() - entity.getVelX());
-						entity.getLocation().setY(entity.getLocation().getY() - entity.getVelY());
-						
-						entity.setVelX(0); entity.setVelY(0);
-					}
+				if (collidableEntity.collidesTop(entity)){
+					entity.setAirborn(false);
+					entity.getLocation().setY(collidableEntity.getLocation().getY() - 1);
+					entity.setVelY(0);
+				}else if (collidableEntity.collidesDown(entity)){
+					entity.getLocation().setY(collidableEntity.getLocation().getY() + 1);
+					entity.setVelY(0);
+				}else if (collidableEntity.collidesLeft(entity)){
+					entity.getLocation().setX(collidableEntity.getLocation().getX() - 1);
+				}else if (collidableEntity.collidesRight(entity)){
+					entity.getLocation().setX(collidableEntity.getLocation().getX() + 1);
 				}
-				
-				Level level = game.getLevelManager().getCurrentLevel();
-				if (level != null){
-					Player player = (Player) getFirst(ObjectType.PLAYER);
-					for (Tile tile : level.getTiles()){
-						if (!tile.getTileType().isSolid()) continue;
-						
-						if (tile.collidesTop(player)){
-							player.setAirborn(false);
-							player.getLocation().setY(tile.getLocation().getTileY() - 1);
-							player.setVelY(0);
-						}else if (tile.collidesDown(player)){
-							player.getLocation().setY(tile.getLocation().getTileY() + 1);
-							player.setVelY(0);
-						}else if (tile.collidesLeft(player)){
-							player.getLocation().setX(tile.getLocation().getTileX() - 1);
-						}else if (tile.collidesRight(player)){
-							player.getLocation().setX(tile.getLocation().getTileX() + 1);
-						}
+			}
+			
+			// Tile collision
+			Level level = game.getLevelManager().getCurrentLevel();
+			if (level != null){
+				for (Tile tile : level.getTiles()){
+					if (!tile.getTileType().isSolid()) continue;
+					
+					if (tile.collidesTop(entity)){
+						entity.setAirborn(false);
+						entity.getLocation().setY(tile.getLocation().getTileY() - 1);
+						entity.setVelY(0);
+					}else if (tile.collidesDown(entity)){
+						entity.getLocation().setY(tile.getLocation().getTileY() + 1);
+						entity.setVelY(0);
+					}else if (tile.collidesLeft(entity)){
+						entity.getLocation().setX(tile.getLocation().getTileX() - 1);
+					}else if (tile.collidesRight(entity)){
+						entity.getLocation().setX(tile.getLocation().getTileX() + 1);
 					}
 				}
 			}
@@ -73,7 +73,7 @@ public class EntityHandler {
 	}
 	
 	public void render(Graphics g){
-		objects.forEach(o -> o.render(g));
+		entities.forEach(o -> o.render(g));
 		
 		if (game.isInDebugMode()){
 			Player player = (Player) getFirst(ObjectType.PLAYER);
@@ -90,22 +90,22 @@ public class EntityHandler {
 		}
 	}
 	
-	public Set<GameObject> getObjects(){
-		return objects;
+	public Set<Entity> getEntities(){
+		return entities;
 	}
 	
-	public void addObject(GameObject object){
-		objects.add(object);
+	public void addEntity(Entity object){
+		entities.add(object);
 	}
 	
-	public void removeObject(GameObject object){
-		objects.remove(object);
+	public void removeEntity(Entity object){
+		entities.remove(object);
 	}
 	
 	public GameObject getFirst(ObjectType type){
-		Iterator<GameObject> it = objects.iterator();
+		Iterator<Entity> it = entities.iterator();
 		while (it.hasNext()){
-			GameObject object = it.next();
+			Entity object = it.next();
 			if (object.getType().equals(type)) return object;
 		}
 		return null;

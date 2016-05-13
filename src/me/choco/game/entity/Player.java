@@ -13,13 +13,9 @@ public class Player extends Entity implements Controllable, Gravity{
 	
 	private int speed = 3;
 	private float jumpPower = 1.75f;
-	private boolean airborn = false;
-	
-	private final Location spawnLocation;
 	
 	public Player(Location location){
 		super(location, 32, 32, ObjectType.PLAYER);
-		this.spawnLocation = location.clone();
 	}
 	
 	@Override
@@ -28,12 +24,6 @@ public class Player extends Entity implements Controllable, Gravity{
 		
 		location.setRawX(location.getRawX() + (int) velX);
 		location.setRawY(location.getRawY() + (int) velY);
-		
-		if (game.getLevelManager().getCurrentLevel() != null){
-			if (location.getY() > game.getLevelManager().getCurrentLevel().getMaxLocation().getY()){
-				teleport(spawnLocation);
-			}
-		}
 	}
 	
 	@Override
@@ -47,7 +37,7 @@ public class Player extends Entity implements Controllable, Gravity{
 	public void onPressKey(KeyEvent event, KeyboardListener listener) {
 		if (listener.isKeyPressed(KeyEvent.VK_W) && !airborn){ 
 			this.setVelY(-speed * jumpPower);
-			this.setAirborn(true);
+			airborn = true;
 		}
 		
 		if (listener.isKeyPressed(KeyEvent.VK_A)){ this.setVelX(-speed); }
@@ -63,22 +53,5 @@ public class Player extends Entity implements Controllable, Gravity{
 	@Override
 	public float getGravityValue() {
 		return 0.25f;
-	}
-	
-	public void setAirborn(boolean airborn){
-		this.airborn = airborn;
-	}
-	
-	public boolean isAirborn(){
-		return airborn;
-	}
-	
-	public void teleport(Location location){
-		this.location.setX(location.getX());
-		this.location.setY(location.getY());
-	}
-	
-	public Location getSpawnLocation(){
-		return spawnLocation;
 	}
 }

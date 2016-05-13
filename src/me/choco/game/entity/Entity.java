@@ -10,6 +10,7 @@ public abstract class Entity extends GameObject implements Collidable{
 	
 	protected int width, height;
 	protected float velX = 0, velY = 0;
+	protected boolean airborn = true;
 	
 	protected Entity(Location location, int width, int height, ObjectType type) {
 		super(location, type);
@@ -53,6 +54,14 @@ public abstract class Entity extends GameObject implements Collidable{
 
 	public void setVelY(float velY) {
 		this.velY = velY;
+	}
+	
+	public boolean isAirborn(){
+		return this.airborn;
+	}
+	
+	public void setAirborn(boolean airborn){
+		this.airborn = airborn;
 	}
 	
 	public Rectangle getBounds(){

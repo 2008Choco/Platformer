@@ -3,28 +3,31 @@ package me.choco.game.entity;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import me.choco.game.entity.variants.Gravity;
 import me.choco.game.world.Location;
 
-public class Enemy extends Entity{
-	
-//	private double theta = 0;
+public class Enemy extends Entity implements Gravity{
 	
 	public Enemy(Location location, int width, int height) {
 		super(location, width, height, ObjectType.ENEMY);
-		velX = 3;
 	}
 
 	@Override
 	public void tick() {
-		// This is temporary code. Just for testing purposes (The enemy will go in circles)
-//		location.setX(location.getX() + (int)(Math.sin(theta) * 5));
-//		location.setY(location.getY() + (int)(Math.cos(theta) * 5));
-//		theta += 0.05;
+		velY += getGravityValue();
+		
+		location.setRawX(location.getRawX() + (int) velX);
+		location.setRawY(location.getRawY() + (int) velY);
 	}
 	
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.RED);
-		g.fillRect((int) location.getX() - camera.getXOffset(), (int) location.getY() - camera.getYOffset(), width, height);
+		g.fillRect(location.getRawX() - camera.getXOffset(), location.getRawY() - camera.getYOffset(), width, height);
+	}
+
+	@Override
+	public float getGravityValue() {
+		return 0.25f;
 	}
 }

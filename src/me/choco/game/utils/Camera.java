@@ -70,7 +70,7 @@ public class Camera implements Runnable{
 	
 	public Set<GameObject> getVisibleObjects(ObjectType type){
 		Set<GameObject> entities = new HashSet<>();
-		for (GameObject object : game.getEntityHandler().getObjects()){
+		for (GameObject object : game.getEntityHandler().getEntities()){
 			if (!object.getType().equals(type)) continue;
 			
 			Location loc = object.getLocation();

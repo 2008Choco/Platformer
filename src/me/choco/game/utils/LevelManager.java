@@ -36,7 +36,7 @@ public class LevelManager {
 				 *     Dirt: 165,85,0
 				 *     Grass: 103,163,0
 				 */
-				if (ImageUtils.isColor(pixel, 0, 0, 255)) game.getEntityHandler().addObject(new Player(new Location(x, y)));
+				if (ImageUtils.isColor(pixel, 0, 0, 255)) game.getEntityHandler().addEntity(new Player(new Location(x, y)));
 				else if (ImageUtils.isColor(pixel, 165, 85, 0)) level.setTile(new Location(x, y), TileType.DIRT);
 				else if (ImageUtils.isColor(pixel, 103, 163, 0)) level.setTile(new Location(x, y), TileType.GRASS);
 			}

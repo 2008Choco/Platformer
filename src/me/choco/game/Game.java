@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import me.choco.game.entity.Enemy;
 import me.choco.game.menus.MenuManager;
 import me.choco.game.menus.menu.MainMenu;
 import me.choco.game.menus.menu.OptionsMenu;
@@ -22,6 +23,7 @@ import me.choco.game.utils.general.resources.Texture;
 import me.choco.game.utils.listeners.ClickListener;
 import me.choco.game.utils.listeners.KeyboardListener;
 import me.choco.game.utils.listeners.MovementListener;
+import me.choco.game.world.Location;
 
 /**
  * This game was written as a school project started in the year of 2016. There is no
@@ -60,7 +62,7 @@ public class Game extends Canvas implements Runnable{
 
 	private static Game instance;
 	private static Camera camera;
-	public static int currentFPS = 0;
+	public static int currentFPS = 0, currentTPS = 0;
 	
 	private static final long serialVersionUID = -2568288252169912698L;
 	private boolean debugMode = true;
@@ -110,7 +112,7 @@ public class Game extends Canvas implements Runnable{
 		
 		camera.start();
 		
-//		entityHandler.addObject(new Enemy(new Location(200, 200), 30, 30));
+		entityHandler.addEntity(new Enemy(new Location(4, 0), 32, 32));
 	}
 	
 	public synchronized void start(){
@@ -129,16 +131,17 @@ public class Game extends Canvas implements Runnable{
 	public void run(){
 		init();
 		long lastTime = System.nanoTime();
-		double delta = 0, amountOfTicks = 60.0;
-		double ns = 1_000_000_000 / amountOfTicks;
+		double delta = 0, ticksPerSecond = 60.0;
+		double ns = 1_000_000_000 / ticksPerSecond;
 		long timer = System.currentTimeMillis();
-		int frames = 0;
+		int frames = 0, ticks = 0;
 		while (running){
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
 			while (delta >= 1) {
 				tick();
+				ticks++;
 				delta--;
 			}
 			if (running) render();
@@ -146,8 +149,9 @@ public class Game extends Canvas implements Runnable{
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
 				/* System.out.println("FPS: " + frames) - Print out FPS to console */
-				currentFPS = frames;
-				frames = 0;
+				/* System.out.println("TPS: " + ticks) - Print out TPS to console */
+				currentFPS = frames; frames = 0;
+				currentTPS = ticks; ticks = 0;
 			}
 		}
 		stop();
@@ -178,6 +182,9 @@ public class Game extends Canvas implements Runnable{
 			graphics.setFont(GameFont.ARIAL_BOLD_16.getFont());
 			graphics.setColor(currentFPS > 30 ? Color.YELLOW : Color.RED);
 			graphics.drawString("FPS: " + currentFPS, 5, 16);
+			
+			graphics.setColor(Color.YELLOW);
+			graphics.drawString("TPS: " + currentTPS, 5, 32);
 		}
 		
 		graphics.setFont(graphics.getFont().deriveFont(Font.ITALIC, 10F));

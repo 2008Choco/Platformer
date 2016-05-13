@@ -36,7 +36,7 @@ public class KeyboardListener implements KeyListener{
 			return;
 		}
 		
-		for (GameObject object : handler.getObjects()){
+		for (GameObject object : handler.getEntities()){
 			if (!game.getState().equals(GameState.GAME)) return;
 			if (object instanceof Controllable)
 				((Controllable) object).onPressKey(event, this);
@@ -47,7 +47,7 @@ public class KeyboardListener implements KeyListener{
 	public void keyReleased(KeyEvent event) {
 		keys[event.getKeyCode()] = false;
 		
-		for (GameObject object : handler.getObjects()){
+		for (GameObject object : handler.getEntities()){
 			if (!game.getState().equals(GameState.GAME)) return;
 			if (object instanceof Controllable)
 				((Controllable) object).onReleaseKey(event, this);
