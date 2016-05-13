@@ -48,7 +48,6 @@ public class EntityHandler {
 					}
 				}
 				
-				// TODO: Tile collision
 				Level level = game.getLevelManager().getCurrentLevel();
 				if (level != null){
 					Player player = (Player) getFirst(ObjectType.PLAYER);

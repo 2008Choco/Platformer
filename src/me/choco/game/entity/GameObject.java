@@ -11,6 +11,7 @@ public abstract class GameObject {
 	
 	protected static final Camera camera = Game.getCamera();
 	protected static final Random random = new Random();
+	protected static final Game game = Game.getGame();
 	
 	protected Location location;
 	protected ObjectType type;

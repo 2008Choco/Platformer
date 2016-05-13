@@ -108,6 +108,8 @@ public class Game extends Canvas implements Runnable{
 		levelManager.loadLevel("Level 1", ImageUtils.loadImage("/game/levels/level1.png"));
 		levelManager.setCurrentLevel(0);
 		
+		camera.start();
+		
 //		entityHandler.addObject(new Enemy(new Location(200, 200), 30, 30));
 	}
 	
@@ -186,6 +188,10 @@ public class Game extends Canvas implements Runnable{
 		graphics.dispose();
 	}
 	
+	public Thread getMainThread(){
+		return thread;
+	}
+	
 	public EntityHandler getEntityHandler(){
 		return entityHandler;
 	}
@@ -208,6 +214,10 @@ public class Game extends Canvas implements Runnable{
 	
 	public boolean isInDebugMode(){
 		return debugMode;
+	}
+	
+	public boolean isRunning(){
+		return running;
 	}
 	
 	public void setState(GameState state){

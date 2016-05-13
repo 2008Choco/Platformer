@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
-import me.choco.game.Game;
 import me.choco.game.entity.variants.Controllable;
 import me.choco.game.entity.variants.Gravity;
 import me.choco.game.utils.listeners.KeyboardListener;
@@ -16,8 +15,11 @@ public class Player extends Entity implements Controllable, Gravity{
 	private float jumpPower = 1.75f;
 	private boolean airborn = false;
 	
+	private final Location spawnLocation;
+	
 	public Player(Location location){
 		super(location, 32, 32, ObjectType.PLAYER);
+		this.spawnLocation = location.clone();
 	}
 	
 	@Override
@@ -27,12 +29,11 @@ public class Player extends Entity implements Controllable, Gravity{
 		location.setRawX(location.getRawX() + (int) velX);
 		location.setRawY(location.getRawY() + (int) velY);
 		
-		// Bounding limitations
-		if ((location.getRawX() + 47) - camera.getXOffset() > Game.WIDTH) camera.setXOffset(camera.getXOffset() + speed);
-		else if (location.getRawX() - camera.getXOffset() < 0) camera.setXOffset(camera.getXOffset() - speed);
-		
-		if ((location.getRawY() + 69) - camera.getYOffset() > Game.HEIGHT) camera.setYOffset(camera.getYOffset() + speed);
-		else if (location.getRawY() - camera.getYOffset() < 0) camera.setYOffset(camera.getYOffset() - speed);
+		if (game.getLevelManager().getCurrentLevel() != null){
+			if (location.getY() > game.getLevelManager().getCurrentLevel().getMaxLocation().getY()){
+				teleport(spawnLocation);
+			}
+		}
 	}
 	
 	@Override
@@ -70,5 +71,14 @@ public class Player extends Entity implements Controllable, Gravity{
 	
 	public boolean isAirborn(){
 		return airborn;
+	}
+	
+	public void teleport(Location location){
+		this.location.setX(location.getX());
+		this.location.setY(location.getY());
+	}
+	
+	public Location getSpawnLocation(){
+		return spawnLocation;
 	}
 }

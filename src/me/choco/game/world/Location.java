@@ -71,4 +71,9 @@ public class Location {
 		Location loc = (Location) object;
 		return (x == loc.getX() && y == loc.getY());
 	}
+	
+	@Override
+	public String toString() {
+		return "Location:{x:" + getX() + ",y:" + getY() + ",rawX:" + getRawX() + ",rawY:" + getRawY() + "}";
+	}
 }
