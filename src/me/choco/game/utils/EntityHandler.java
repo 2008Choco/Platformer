@@ -12,6 +12,7 @@ import me.choco.game.entity.Entity;
 import me.choco.game.entity.GameObject;
 import me.choco.game.entity.ObjectType;
 import me.choco.game.entity.Player;
+import me.choco.game.entity.variants.Gravitational;
 import me.choco.game.utils.general.GameFont;
 import me.choco.game.world.Level;
 import me.choco.game.world.Tile;
@@ -25,13 +26,17 @@ public class EntityHandler {
 		this.game = game;
 	}
 	
-	private Set<Entity> entities = new HashSet<>();
+	private final Set<Entity> entities = new HashSet<>();
 	
 	public void tick(){
 		for (Entity entity : entities){
 			entity.tick();
 			
-			//Entity Collision
+			// Gravity abstraction
+			if (entity instanceof Gravitational)
+				entity.setVelY(entity.getVelY() + ((Gravitational) entity).getGravityValue());
+			
+			// Entity Collision
 			for (Entity collidableEntity : entities){
 				if (collidableEntity.equals(entity) || !entity.collidesWith(collidableEntity)) continue;
 				

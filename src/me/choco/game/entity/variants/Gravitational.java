@@ -1,6 +1,6 @@
 package me.choco.game.entity.variants;
 
-public interface Gravity {
+public interface Gravitational {
 	
 	public float getGravityValue();
 	

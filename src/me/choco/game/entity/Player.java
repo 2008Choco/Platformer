@@ -5,11 +5,11 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 import me.choco.game.entity.variants.Controllable;
-import me.choco.game.entity.variants.Gravity;
+import me.choco.game.entity.variants.Gravitational;
 import me.choco.game.utils.listeners.KeyboardListener;
 import me.choco.game.world.Location;
 
-public class Player extends Entity implements Controllable, Gravity{
+public class Player extends Entity implements Controllable, Gravitational{
 	
 	private int speed = 3;
 	private float jumpPower = 1.75f;
@@ -20,8 +20,6 @@ public class Player extends Entity implements Controllable, Gravity{
 	
 	@Override
 	public void tick(){
-		velY += getGravityValue();
-		
 		location.setRawX(location.getRawX() + (int) velX);
 		location.setRawY(location.getRawY() + (int) velY);
 	}
