@@ -8,8 +8,8 @@ import me.choco.game.world.Location;
 
 public class Enemy extends Entity implements Gravitational{
 	
-	public Enemy(Location location, int width, int height) {
-		super(location, width, height, ObjectType.ENEMY);
+	public Enemy(Location location) {
+		super(location, Location.PIXEL_RATIO, Location.PIXEL_RATIO, ObjectType.ENEMY);
 	}
 
 	@Override

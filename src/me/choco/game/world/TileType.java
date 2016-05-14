@@ -7,7 +7,7 @@ import me.choco.game.utils.general.resources.Texture;
 public enum TileType {
 	DIRT(0, true, Texture.GAME_TILE_DIRT.getTexture()),
 	GRASS(1, true, Texture.GAME_TILE_GRASS.getTexture()),
-	STONE(2, true, null);
+	STONE(2, true, Texture.GAME_TILE_STONE.getTexture());
 	
 	private int id;
 	private boolean solid = true;

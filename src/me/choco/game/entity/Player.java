@@ -15,7 +15,7 @@ public class Player extends Entity implements Controllable, Gravitational{
 	private float jumpPower = 1.75f;
 	
 	public Player(Location location){
-		super(location, 32, 32, ObjectType.PLAYER);
+		super(location, Location.PIXEL_RATIO, Location.PIXEL_RATIO, ObjectType.PLAYER);
 	}
 	
 	@Override

@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
-import me.choco.game.entity.Enemy;
 import me.choco.game.menus.MenuManager;
 import me.choco.game.menus.menu.MainMenu;
 import me.choco.game.menus.menu.OptionsMenu;
@@ -23,7 +22,6 @@ import me.choco.game.utils.general.resources.Texture;
 import me.choco.game.utils.listeners.ClickListener;
 import me.choco.game.utils.listeners.KeyboardListener;
 import me.choco.game.utils.listeners.MovementListener;
-import me.choco.game.world.Location;
 
 /**
  * This game was written as a school project started in the year of 2016. There is no
@@ -99,20 +97,19 @@ public class Game extends Canvas implements Runnable{
 		this.addMouseListener(mouseListener);
 		this.addMouseMotionListener(movementListener);
 		
-		new Window(WIDTH, HEIGHT, Game.title, this);
+		new Window(WIDTH, HEIGHT, title, this);
 	}
 	
 	public void init(){
-		/* LOAD OBJECTS, IMAGES, ETC */
+		/* LOAD MENUS, LEVELS, ETC */
 		menuManager.addMenu(new MainMenu(this, new Background(Texture.GUI_BACKGROUND_MAIN.getTexture(), -0.5, 0)));
 		menuManager.addMenu(new OptionsMenu(this));
 		
 		levelManager.loadLevel("Level 1", ImageUtils.loadImage("/game/levels/level1.png"));
 		levelManager.setCurrentLevel(0);
 		
+		// Start any exteral threads after this line
 		camera.start();
-		
-		entityHandler.addEntity(new Enemy(new Location(4, 0), 32, 32));
 	}
 	
 	public synchronized void start(){

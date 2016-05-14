@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.choco.game.Game;
+import me.choco.game.entity.Enemy;
 import me.choco.game.entity.Player;
 import me.choco.game.utils.general.ImageUtils;
 import me.choco.game.world.Level;
@@ -33,12 +34,16 @@ public class LevelManager {
 				
 				/* Tile Colours (Format: "R,G,B")
 				 *     Player: 0,0,255
+				 *     Enemy: 255,0,0
 				 *     Dirt: 165,85,0
 				 *     Grass: 103,163,0
+				 *     Stone: 97,93,89
 				 */
 				if (ImageUtils.isColor(pixel, 0, 0, 255)) game.getEntityHandler().addEntity(new Player(new Location(x, y)));
+				else if (ImageUtils.isColor(pixel, 255, 0, 0)) game.getEntityHandler().addEntity(new Enemy(new Location(x, y)));
 				else if (ImageUtils.isColor(pixel, 165, 85, 0)) level.setTile(new Location(x, y), TileType.DIRT);
 				else if (ImageUtils.isColor(pixel, 103, 163, 0)) level.setTile(new Location(x, y), TileType.GRASS);
+				else if (ImageUtils.isColor(pixel, 97, 93, 89)) level.setTile(new Location(x, y), TileType.STONE);
 			}
 		}
 		levels.add(level);
