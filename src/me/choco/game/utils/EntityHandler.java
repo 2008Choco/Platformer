@@ -17,6 +17,7 @@ import me.choco.game.entity.Player;
 import me.choco.game.entity.variants.Gravitational;
 import me.choco.game.utils.general.GameFont;
 import me.choco.game.world.Level;
+import me.choco.game.world.Location;
 import me.choco.game.world.Tile;
 
 public class EntityHandler {
@@ -45,13 +46,13 @@ public class EntityHandler {
 				
 				if (collidableEntity.collidesTop(entity)){
 					entity.setAirborn(false);
-					entity.getLocation().setY(collidableEntity.getLocation().getY() - 1);
+					entity.getLocation().setY(collidableEntity.getLocation().getY() - ((float) entity.getHeight() / (float) Location.PIXEL_RATIO));
 					entity.setVelY(0);
 				}else if (collidableEntity.collidesDown(entity)){
 					entity.getLocation().setY(collidableEntity.getLocation().getY() + 1);
 					entity.setVelY(0);
 				}else if (collidableEntity.collidesLeft(entity)){
-					entity.getLocation().setX(collidableEntity.getLocation().getX() - 1);
+					entity.getLocation().setX(collidableEntity.getLocation().getX() - ((float) entity.getWidth() / (float) Location.PIXEL_RATIO));
 				}else if (collidableEntity.collidesRight(entity)){
 					entity.getLocation().setX(collidableEntity.getLocation().getX() + 1);
 				}
@@ -65,13 +66,13 @@ public class EntityHandler {
 					
 					if (tile.collidesTop(entity)){
 						entity.setAirborn(false);
-						entity.getLocation().setY(tile.getLocation().getTileY() - 1);
+						entity.getLocation().setY(tile.getLocation().getTileY() - ((float) entity.getHeight() / (float) Location.PIXEL_RATIO));
 						entity.setVelY(0);
 					}else if (tile.collidesDown(entity)){
 						entity.getLocation().setY(tile.getLocation().getTileY() + 1);
 						entity.setVelY(0);
 					}else if (tile.collidesLeft(entity)){
-						entity.getLocation().setX(tile.getLocation().getTileX() - 1);
+						entity.getLocation().setX(tile.getLocation().getTileX() - ((float) entity.getWidth() / (float) Location.PIXEL_RATIO));
 					}else if (tile.collidesRight(entity)){
 						entity.getLocation().setX(tile.getLocation().getTileX() + 1);
 					}
