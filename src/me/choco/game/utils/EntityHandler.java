@@ -2,12 +2,14 @@ package me.choco.game.utils;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
 import me.choco.game.Game;
+import me.choco.game.Game.Debug;
 import me.choco.game.entity.Entity;
 import me.choco.game.entity.GameObject;
 import me.choco.game.entity.ObjectType;
@@ -20,6 +22,7 @@ import me.choco.game.world.Tile;
 public class EntityHandler {
 	
 	private static final DecimalFormat coordFormat = new DecimalFormat("0.00");
+	private static final Camera camera = Game.getCamera();
 	
 	private Game game;
 	public EntityHandler(Game game){
@@ -78,9 +81,19 @@ public class EntityHandler {
 	}
 	
 	public void render(Graphics g){
-		entities.forEach(o -> o.render(g));
+		for (Entity entity : entities){
+			entity.render(g);
+			
+			if (Debug.SHOW_HITBOXES){
+				Graphics2D g2 = (Graphics2D) g;
+				g2.setColor(Color.MAGENTA); g2.drawRect((int) entity.getBoundsTop().getMinX() - camera.getXOffset(), (int) entity.getBoundsTop().getMinY() - camera.getYOffset(), (int) entity.getBoundsTop().getWidth(), (int) entity.getBoundsTop().getHeight());
+				g2.setColor(Color.YELLOW); g2.drawRect((int) entity.getBoundsRight().getMinX() - camera.getXOffset(), (int) entity.getBoundsRight().getMinY() - camera.getYOffset(), (int) entity.getBoundsRight().getWidth(), (int) entity.getBoundsRight().getHeight());
+				g2.setColor(Color.ORANGE); g2.drawRect((int) entity.getBoundsDown().getMinX() - camera.getXOffset(), (int) entity.getBoundsDown().getMinY() - camera.getYOffset(), (int) entity.getBoundsDown().getWidth(), (int) entity.getBoundsDown().getHeight());
+				g2.setColor(Color.GREEN); g2.drawRect((int) entity.getBoundsLeft().getMinX() - camera.getXOffset(), (int) entity.getBoundsLeft().getMinY() - camera.getYOffset(), (int) entity.getBoundsLeft().getWidth(), (int) entity.getBoundsLeft().getHeight());
+			}
+		}
 		
-		if (game.isInDebugMode()){
+		if (Debug.GENERAL_DEBUG){
 			Player player = (Player) getFirst(ObjectType.PLAYER);
 			if (player != null){
 				g.setFont(GameFont.ARIAL_BOLD_16.getFont());

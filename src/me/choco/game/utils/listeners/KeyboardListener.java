@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import me.choco.game.Game;
+import me.choco.game.Game.Debug;
 import me.choco.game.Game.GameState;
 import me.choco.game.entity.GameObject;
 import me.choco.game.entity.variants.Controllable;
@@ -25,21 +26,28 @@ public class KeyboardListener implements KeyListener{
 		keys[event.getKeyCode()] = true;
 		
 		if (areKeysPressed(KeyEvent.VK_CONTROL, KeyEvent.VK_D)){
-			game.setDebugMode(!game.isInDebugMode());
+			Debug.GENERAL_DEBUG = !Debug.GENERAL_DEBUG;
 			return;
 		}
 		
-		if (isKeyPressed(KeyEvent.VK_ESCAPE)){
+		else if (areKeysPressed(KeyEvent.VK_CONTROL, KeyEvent.VK_B)){
+			Debug.SHOW_HITBOXES = !Debug.SHOW_HITBOXES;
+			return;
+		}
+		
+		else if (isKeyPressed(KeyEvent.VK_ESCAPE)){
 			if (game.getState().equals(Game.GameState.GAME)) game.setState(Game.GameState.MAIN_MENU);
 			else if (game.getState().equals(Game.GameState.MAIN_MENU)) game.setState(Game.GameState.GAME);
 			else game.setState(GameState.MAIN_MENU);
 			return;
 		}
 		
-		for (GameObject object : handler.getEntities()){
-			if (!game.getState().equals(GameState.GAME)) return;
-			if (object instanceof Controllable)
-				((Controllable) object).onPressKey(event, this);
+		else{
+			for (GameObject object : handler.getEntities()){
+				if (!game.getState().equals(GameState.GAME)) return;
+				if (object instanceof Controllable)
+					((Controllable) object).onPressKey(event, this);
+			}
 		}
 	}
 	

@@ -63,7 +63,6 @@ public class Game extends Canvas implements Runnable{
 	public static int currentFPS = 0, currentTPS = 0;
 	
 	private static final long serialVersionUID = -2568288252169912698L;
-	private boolean debugMode = true;
 	
 	private final EntityHandler entityHandler;
 	private final MenuManager menuManager;
@@ -175,7 +174,7 @@ public class Game extends Canvas implements Runnable{
 		}
 		menuManager.renderForState(state, graphics);
 		
-		if (debugMode){
+		if (Debug.GENERAL_DEBUG){
 			graphics.setFont(GameFont.ARIAL_BOLD_16.getFont());
 			graphics.setColor(currentFPS > 30 ? Color.YELLOW : Color.RED);
 			graphics.drawString("FPS: " + currentFPS, 5, 16);
@@ -212,14 +211,6 @@ public class Game extends Canvas implements Runnable{
 		return levelManager;
 	}
 	
-	public void setDebugMode(boolean debugMode){
-		this.debugMode = debugMode;
-	}
-	
-	public boolean isInDebugMode(){
-		return debugMode;
-	}
-	
 	public boolean isRunning(){
 		return running;
 	}
@@ -243,5 +234,10 @@ public class Game extends Canvas implements Runnable{
 	public static void main(String[] args) {
 		Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
 		new Game();
+	}
+	
+	public static class Debug{
+		public static boolean GENERAL_DEBUG = true;
+		public static boolean SHOW_HITBOXES = false;
 	}
 }

@@ -59,6 +59,9 @@ public class Animation {
 		if (tickTimer >= tickDelay)
 			nextFrame();
 		
+		// Render current animation frame
+		if (sprites[currentFrame] == null) return;
+		
 		if (inverted){ g.drawImage(sprites[currentFrame], x + spriteWidth, y, -spriteWidth, spriteHeight, null); }
 		else{ g.drawImage(sprites[currentFrame], x, y, spriteWidth, spriteHeight, null); }
 	}

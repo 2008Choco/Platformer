@@ -53,8 +53,18 @@ public class LevelManager {
 		return levels.get(index);
 	}
 	
+	public Level getLevel(String name){
+		for (Level level : levels)
+			if (level.getName() == name) return level;
+		return null;
+	}
+	
 	public void setCurrentLevel(int index){
 		setCurrentLevel(getLevel(index));
+	}
+	
+	public void setCurrentLevel(String name){
+		setCurrentLevel(getLevel(name));
 	}
 	
 	public void setCurrentLevel(Level level){
