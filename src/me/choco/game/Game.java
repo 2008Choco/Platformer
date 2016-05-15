@@ -54,7 +54,7 @@ import me.choco.game.utils.listeners.MovementListener;
  * @author <b>Jenna Young</b> - Texture Artist
  */
 public class Game extends Canvas implements Runnable{
-	public final String version = "Version 0.06 Alpha - Tile Collision Update";
+	public final String version = "Version 0.07 Alpha - Animation Update";
 	public static int WIDTH = 720, HEIGHT = WIDTH / 9 * 6;
 	public static final String title = "The Game with No Name";
 

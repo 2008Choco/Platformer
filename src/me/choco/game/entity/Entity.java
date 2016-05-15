@@ -4,6 +4,7 @@ package me.choco.game.entity;
 import java.awt.Rectangle;
 
 import me.choco.game.entity.variants.Collidable;
+import me.choco.game.entity.variants.Direction;
 import me.choco.game.world.Location;
 
 public abstract class Entity extends GameObject implements Collidable{
@@ -11,6 +12,8 @@ public abstract class Entity extends GameObject implements Collidable{
 	protected int width, height;
 	protected float velX = 0, velY = 0;
 	protected boolean airborn = true;
+	
+	protected Direction direction = Direction.NEITHER;
 	
 	protected Entity(Location location, int width, int height, ObjectType type) {
 		super(location, type);
@@ -62,6 +65,10 @@ public abstract class Entity extends GameObject implements Collidable{
 	
 	public void setAirborn(boolean airborn){
 		this.airborn = airborn;
+	}
+	
+	public Direction getDirection(){
+		return direction;
 	}
 	
 	public Rectangle getBounds(){
