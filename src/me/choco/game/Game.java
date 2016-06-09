@@ -105,7 +105,8 @@ public class Game extends Canvas implements Runnable{
 		menuManager.addMenu(new OptionsMenu(this));
 		
 		levelManager.loadLevel("Level 1", ImageUtils.loadImage("/game/levels/level1.png"));
-		levelManager.setCurrentLevel(0);
+		levelManager.loadLevel("Camera Test", ImageUtils.loadImage("/game/levels/level2.png"));
+		levelManager.setCurrentLevel("Camera Test");
 		
 		// Start any exteral threads after this line
 		camera.start();

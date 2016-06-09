@@ -44,7 +44,15 @@ public class Camera implements Runnable{
 			
 			synchronized (game.getMainThread()){
 				xOffset = center.getLocation().getRawX() - (Game.WIDTH / 2) + (center.getWidth() / 2);
-				// yOffset = center.getLocation().getRawY() - (Game.HEIGHT / 2) + (center.getHeight() / 2);
+				
+				if (center.getLocation().getScreenY() > ((Game.HEIGHT / 10) * 7)){
+					yOffset += center.getVelY();
+				}
+				
+				else if (center.getLocation().getScreenY() < (Game.HEIGHT / 10) * 3){
+					if (yOffset <= 0) yOffset = 0;
+					else yOffset -= center.getVelY();
+				}
 			}
 		}
 		

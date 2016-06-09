@@ -1,10 +1,14 @@
 
 package me.choco.game.world;
 
+import me.choco.game.Game;
+import me.choco.game.utils.Camera;
+
 public class Location {
 	
 	// Every "x" pixels is 1 coordinate
 	public static final int PIXEL_RATIO = 32;
+	private static final Camera camera = Game.getCamera();
 	
 	/* =- Variables -=
 	 *     x: X position relative to the world
@@ -55,6 +59,14 @@ public class Location {
 	
 	public int getTileY(){
 		return (int) Math.floor(getY());
+	}
+	
+	public int getScreenX(){
+		return (int) (x - camera.getXOffset());
+	}
+	
+	public int getScreenY(){
+		return (int) (y - camera.getYOffset());
 	}
 	
 	public Location clone(){
