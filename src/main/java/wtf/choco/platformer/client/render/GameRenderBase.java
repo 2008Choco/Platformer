@@ -15,7 +15,6 @@ import java.text.DecimalFormat;
 
 import wtf.choco.platformer.Game;
 import wtf.choco.platformer.client.Window;
-import wtf.choco.platformer.menu.GameMenu;
 import wtf.choco.platformer.utils.Location;
 import wtf.choco.platformer.utils.NumberUtils;
 
@@ -57,12 +56,12 @@ public class GameRenderBase extends Canvas {
         BufferStrategy bufferStrategy = getBufferStrategy();
         Graphics graphics = bufferStrategy.getDrawGraphics();
 
-        this.game.getLevelManager().render(graphics);
-        this.game.getEntityHandler().render(graphics);
+        if (game.level != null) {
+            this.game.level.render(graphics);
+        }
 
-        GameMenu activeMenu = game.getActiveMenu();
-        if (activeMenu != null) {
-            activeMenu.render(graphics);
+        if (game.activeMenu != null) {
+            this.game.activeMenu.render(graphics);
         }
 
         if (Game.Debug.debugInformation) {

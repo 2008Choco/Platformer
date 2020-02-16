@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import wtf.choco.platformer.Game;
-import wtf.choco.platformer.menu.GameMenu;
 import wtf.choco.platformer.menu.gui.MainMenu;
 import wtf.choco.platformer.menu.gui.OptionsMenu;
 
@@ -19,10 +18,9 @@ public class KeybindRegistry {
     public static final Keybind KEYBIND_SHOW_HITBOXES = new Keybind(KeyEvent.VK_B, InputEvent.CTRL_DOWN_MASK).onPress(() -> Game.Debug.showHitboxes = !Game.Debug.showHitboxes);
     public static final Keybind KEYBIND_ESCAPE_MENU = new Keybind(KeyEvent.VK_ESCAPE).onPress(() -> {
         Game game = Game.get();
-        GameMenu activeMenu = game.getActiveMenu();
-        if (activeMenu == null || activeMenu instanceof OptionsMenu) {
-            game.setActiveMenu(MainMenu.create(game));
-            game.getLevelManager().setCurrentLevel(null);
+        if (game.activeMenu == null || game.activeMenu instanceof OptionsMenu) {
+            game.activeMenu = MainMenu.create(game);
+            game.level = null;
         }
     });
 

@@ -32,7 +32,7 @@ public class OptionsMenu extends GameMenu {
 
 			    @Override
                 public void onPress(int mouseX, int mouseY, int mouseButton) {
-			        game.setActiveMenu(MainMenu.create(game));
+			        game.activeMenu = MainMenu.create(game);
 			    }
 
 			    @Override

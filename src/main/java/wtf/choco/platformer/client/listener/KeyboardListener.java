@@ -25,8 +25,8 @@ public class KeyboardListener implements KeyListener {
 		KeybindRegistry.forAllMatchingKeybinds(event.getKeyCode(), event.getModifiersEx(), Keybind::press);
 
 		// TODO: Move this somewhere else
-		if (game.getActiveMenu() == null) {
-			for (Entity entity : game.getEntityHandler().getEntities()) {
+		if (game.level != null) {
+			for (Entity entity : game.level.getEntityTracker()) {
 				if (entity instanceof Controllable) {
 				    ((Controllable) entity).onPressKey(event, this);
 				}
@@ -40,8 +40,8 @@ public class KeyboardListener implements KeyListener {
 		KeybindRegistry.forAllMatchingKeybinds(event.getKeyCode(), event.getModifiersEx(), Keybind::release);
 
 		// TODO: Move this somewhere else
-		if (game.getActiveMenu() == null) {
-		    for (Entity entity : game.getEntityHandler().getEntities()) {
+		if (game.level != null) {
+		    for (Entity entity : game.level.getEntityTracker()) {
 	            if (entity instanceof Controllable) {
 	                ((Controllable) entity).onReleaseKey(event, this);
 	            }

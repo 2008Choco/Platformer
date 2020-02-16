@@ -11,7 +11,6 @@ import javax.swing.WindowConstants;
 import wtf.choco.platformer.Game;
 import wtf.choco.platformer.client.render.GameRenderBase;
 import wtf.choco.platformer.client.render.texture.Texture;
-import wtf.choco.platformer.menu.GameMenu;
 
 public class Window {
 
@@ -43,9 +42,8 @@ public class Window {
                     return;
                 }
 
-                GameMenu activeMenu = game.getActiveMenu();
-                if (activeMenu != null) {
-                    activeMenu.onUpdateWindow(Window.this, Window.this.width, Window.this.height, width, height);
+                if (game.activeMenu != null) {
+                    game.activeMenu.onUpdateWindow(Window.this, Window.this.width, Window.this.height, width, height);
                 }
 
                 // Update width and height

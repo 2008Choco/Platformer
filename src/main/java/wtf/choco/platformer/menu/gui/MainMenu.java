@@ -7,7 +7,7 @@ import wtf.choco.platformer.Game;
 import wtf.choco.platformer.client.Window;
 import wtf.choco.platformer.client.render.GameFont;
 import wtf.choco.platformer.client.render.texture.Texture;
-import wtf.choco.platformer.level.LevelManager;
+import wtf.choco.platformer.level.Level;
 import wtf.choco.platformer.menu.Background;
 import wtf.choco.platformer.menu.GameMenu;
 import wtf.choco.platformer.menu.button.GraphicGUIButton;
@@ -35,10 +35,8 @@ public class MainMenu extends GameMenu {
 
             @Override
             public void onPress(int mouseX, int mouseY, int mouseButton) {
-                game.setActiveMenu(null);
-
-                LevelManager levelManager = game.getLevelManager();
-                levelManager.setCurrentLevel(levelManager.getLevel("level_1"));
+                game.activeMenu = null;
+                game.level = Level.getByName("level_1");
             }
 
             @Override
@@ -59,7 +57,7 @@ public class MainMenu extends GameMenu {
 
             @Override
             public void onPress(int mouseX, int mouseY, int mouseButton) {
-                game.setActiveMenu(new OptionsMenu(game));
+                game.activeMenu = new OptionsMenu(game);
             }
 
             @Override

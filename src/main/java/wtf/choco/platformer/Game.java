@@ -5,9 +5,8 @@ import wtf.choco.platformer.client.keybind.KeybindRegistry;
 import wtf.choco.platformer.client.listener.CursorListener;
 import wtf.choco.platformer.client.listener.KeyboardListener;
 import wtf.choco.platformer.client.render.GameRenderBase;
-import wtf.choco.platformer.entity.EntityHandler;
 import wtf.choco.platformer.entity.Player;
-import wtf.choco.platformer.level.LevelManager;
+import wtf.choco.platformer.level.Level;
 import wtf.choco.platformer.menu.GameMenu;
 import wtf.choco.platformer.menu.gui.MainMenu;
 import wtf.choco.platformer.sound.Sound;
@@ -21,6 +20,8 @@ public final class Game {
     private static final int MAX_FPS = 120, MAX_TPS = 60;
 
     public Player player;
+    public Level level;
+    public GameMenu activeMenu;
 
     private static Game instance;
 
@@ -28,19 +29,11 @@ public final class Game {
     private boolean running;
     private int tps = 0;
 
-    private GameMenu activeMenu;
-
-    private final EntityHandler entityHandler;
-    private final LevelManager levelManager;
-
     private final Window window;
     private final GameRenderBase gameRenderer;
 
     private Game() {
         Runtime.getRuntime().addShutdownHook(new Thread(this::onShutdown));
-
-        this.entityHandler = new EntityHandler(this);
-        this.levelManager = new LevelManager(this);
 
         CursorListener mouseListener = new CursorListener(this);
 
@@ -57,8 +50,9 @@ public final class Game {
     private void init() {
         KeybindRegistry.init();
         this.gameRenderer.init();
-        this.setActiveMenu(MainMenu.create(this));
-        this.levelManager.loadLevel("level_1", ImageUtils.loadImage("/textures/levels/level.png"));
+        this.activeMenu = MainMenu.create(this);
+
+        Level.create("level_1", ImageUtils.loadImage("/textures/levels/level.png"));
     }
 
     public void start() {
@@ -123,8 +117,9 @@ public final class Game {
     }
 
     private void tick() {
-        this.entityHandler.tick();
-        this.levelManager.tick();
+        if (level != null) {
+            this.level.tick();
+        }
 
         if (activeMenu != null) {
             this.activeMenu.tick();
@@ -137,22 +132,6 @@ public final class Game {
 
     public GameRenderBase getGameRenderer() {
         return gameRenderer;
-    }
-
-    public void setActiveMenu(GameMenu activeMenu) {
-        this.activeMenu = activeMenu;
-    }
-
-    public GameMenu getActiveMenu() {
-        return activeMenu;
-    }
-
-    public EntityHandler getEntityHandler() {
-        return entityHandler;
-    }
-
-    public LevelManager getLevelManager() {
-        return levelManager;
     }
 
     public int getTPS() {
