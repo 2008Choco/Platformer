@@ -80,8 +80,8 @@ public class Level {
                 int pixel = levelImage.getRGB(x, y);
 
                 /*
-                 * Tile Colours (Format: "R,G,B") Player: 0,0,255 Enemy: 255,0,0
-                 * Dirt: 165,85,0 Grass: 103,163,0 Stone: 97,93,89
+                 * Tile Colours Player: (0, 0, 255) Enemy: (255, 0, 0)
+                 * Dirt: (165, 85, 0) Grass: (103, 163, 0) Stone: (97, 93, 89) Bush: (0, 105, 5)
                  */
                 if (ImageUtils.isColor(pixel, 0, 0, 255)) {
                     level.entityTracker.addEntity(new Player(new Location(x, y)));
@@ -97,6 +97,8 @@ public class Level {
                 }
                 else if (ImageUtils.isColor(pixel, 97, 93, 89)) {
                     level.setTile(x, y, Tiles.STONE);
+                } else if (ImageUtils.isColor(pixel, 0, 105, 5)) {
+                    level.setTile(x, y, Tiles.BUSH);
                 }
             }
         }
