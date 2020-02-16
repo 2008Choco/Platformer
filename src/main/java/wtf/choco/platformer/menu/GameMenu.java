@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import wtf.choco.platformer.client.GameState;
 import wtf.choco.platformer.client.Window;
 import wtf.choco.platformer.menu.button.Button;
 
@@ -50,10 +49,6 @@ public abstract class GameMenu {
                 button.onMouseExit(mouseX, mouseY, deltaX, deltaY);
             }
         }
-    }
-
-    public GameState getRequiredGameState() {
-        return GameState.MAIN_MENU;
     }
 
     public void onUpdateWindow(Window window, int oldSizeX, int oldSizeY, int newSizeX, int newSizeY) {

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import wtf.choco.platformer.Game;
-import wtf.choco.platformer.client.GameState;
 import wtf.choco.platformer.client.Window;
 import wtf.choco.platformer.client.render.GameFont;
 import wtf.choco.platformer.client.render.texture.Texture;
@@ -113,11 +112,6 @@ public class MainMenu extends GameMenu {
         graphics.setColor(Color.WHITE);
 
         graphics.drawString(Game.TITLE, (game.getWindow().getWidth() / 2) - NumberUtils.center(graphics, Game.TITLE), (game.getWindow().getHeight() / 2) - 125);
-    }
-
-    @Override
-    public GameState getRequiredGameState() {
-        return GameState.MAIN_MENU;
     }
 
     @Override

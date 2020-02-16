@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import wtf.choco.platformer.Game;
-import wtf.choco.platformer.client.GameState;
 import wtf.choco.platformer.client.Window;
 import wtf.choco.platformer.client.render.GameFont;
 import wtf.choco.platformer.client.render.texture.Texture;
@@ -63,11 +62,6 @@ public class OptionsMenu extends GameMenu {
 
         String string = "Options are a work in progress";
         graphics.drawString(string, (window.getWidth() / 2) - NumberUtils.center(graphics, string), (window.getHeight() / 2) - 50);
-	}
-
-	@Override
-	public GameState getRequiredGameState() {
-		return GameState.OPTIONS_MENU;
 	}
 
 }
