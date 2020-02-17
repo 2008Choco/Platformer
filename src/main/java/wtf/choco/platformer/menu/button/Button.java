@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
 import wtf.choco.platformer.client.Window;
-import wtf.choco.platformer.client.render.GameFont;
+import wtf.choco.platformer.client.render.RenderManager;
 
 public abstract class Button {
 
@@ -81,9 +81,7 @@ public abstract class Button {
      *   <li>{@link MouseEvent#BUTTON3}
      * </ul>
      */
-    public void onPress(int mouseX, int mouseY, int mouseButton) {
-
-    }
+    public void onPress(int mouseX, int mouseY, int mouseButton) { }
 
     /**
      * Called once when the cursor has entered the bounds of this button.
@@ -131,16 +129,14 @@ public abstract class Button {
      * @param width the new window width
      * @param height the new window height
      */
-    public void onWindowUpdate(Window window, int oldWidth, int oldHeight, int width, int height) {
-
-    }
+    public void onWindowUpdate(Window window, int oldWidth, int oldHeight, int width, int height) { }
 
     public void render(Graphics graphics) {
         graphics.setColor(hovered ? hoverColour : backgroundColour);
         graphics.fillRect(x, y, width, height);
 
         if (text != null) {
-            graphics.setFont(GameFont.COMICSANSMS_BOLD_29.getFont());
+            graphics.setFont(RenderManager.FONT_COMICSANSMS_BOLD_29);
             graphics.setColor(textColour);
             graphics.drawString(text, x + ((width / 2) - (graphics.getFontMetrics().stringWidth(text) / 2)), y + ((height / 2) + (int) (graphics.getFontMetrics().getStringBounds(text, graphics).getHeight() / 4)));
         }

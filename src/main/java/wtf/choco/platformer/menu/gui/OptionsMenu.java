@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 import wtf.choco.platformer.Game;
 import wtf.choco.platformer.client.Window;
-import wtf.choco.platformer.client.render.GameFont;
+import wtf.choco.platformer.client.render.RenderManager;
 import wtf.choco.platformer.client.render.texture.Texture;
 import wtf.choco.platformer.menu.GameMenu;
 import wtf.choco.platformer.menu.button.GraphicGUIButton;
@@ -58,7 +58,7 @@ public class OptionsMenu extends GameMenu {
 	    Window window = game.getWindow();
 
         graphics.setColor(Color.WHITE);
-        graphics.setFont(GameFont.ARIAL_BOLD_16.getModifiedFont(24F));
+        graphics.setFont(RenderManager.FONT_ARIAL_BOLD_16.deriveFont(24F));
 
         String string = "Options are a work in progress";
         graphics.drawString(string, (window.getWidth() / 2) - NumberUtils.center(graphics, string), (window.getHeight() / 2) - 50);

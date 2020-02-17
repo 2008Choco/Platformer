@@ -53,10 +53,13 @@ public class Window {
 
             @Override
             public void componentHidden(ComponentEvent event) { }
+
             @Override
             public void componentMoved(ComponentEvent event) { }
+
             @Override
             public void componentShown(ComponentEvent event) { }
+
         });
     }
 

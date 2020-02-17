@@ -15,34 +15,35 @@ public class Player extends Entity implements Controllable {
 //	private static Animation walking = new Animation(5, new SpriteSheet(ImageUtils.loadImage("Sprite-Sheet-Directory.png"), 32, 32)),
 // 							standing = new Animation(5, new SpriteSheet(ImageUtils.loadImage("Sprite-Sheet-Directory.png"), 32, 32));
 
-	public Player(Location location){
+	public Player(Location location) {
 		super(location, 1, 1);
 		this.setColour(new Color(0, 0, 255));
 	}
 
+	// TODO: Move elsewhere
 	@Override
 	public void onPressKey(KeyEvent event, KeyboardListener listener) {
-		if (listener.isKeyPressed(KeyEvent.VK_W) && !airborn){
-			this.setVelY(-speed * jumpPower);
-			airborn = true;
+		if (listener.isKeyPressed(KeyEvent.VK_W) && !isAirborn()){
+			this.setVelocityY(-speed * jumpPower);
+			this.setAirborn(true);
 		}
 
 		if (listener.isKeyPressed(KeyEvent.VK_A)){
-			this.setVelX(-speed);
+			this.setVelocityX(-speed);
 		}
 		if (listener.isKeyPressed(KeyEvent.VK_D)){
-			this.setVelX(speed);
+			this.setVelocityX(speed);
 		}
 	}
 
 	@Override
 	public void onReleaseKey(KeyEvent event, KeyboardListener listener) {
 		if (listener.isKeyReleased(KeyEvent.VK_A)){
-			this.setVelX(0);
+			this.setVelocityX(0);
 			onPressKey(event, listener);
 		}
 		if (listener.isKeyReleased(KeyEvent.VK_D)){
-			this.setVelX(0);
+			this.setVelocityX(0);
 			onPressKey(event, listener);
 		}
 	}

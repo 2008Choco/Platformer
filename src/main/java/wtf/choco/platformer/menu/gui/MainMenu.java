@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 import wtf.choco.platformer.Game;
 import wtf.choco.platformer.client.Window;
-import wtf.choco.platformer.client.render.GameFont;
+import wtf.choco.platformer.client.render.RenderManager;
 import wtf.choco.platformer.client.render.texture.Texture;
 import wtf.choco.platformer.level.Level;
 import wtf.choco.platformer.menu.Background;
@@ -106,7 +106,7 @@ public class MainMenu extends GameMenu {
 
     @Override
     protected void renderForeground(Graphics graphics) {
-        graphics.setFont(GameFont.COMICSANSMS_BOLD_29.getFont());
+        graphics.setFont(RenderManager.FONT_COMICSANSMS_BOLD_29);
         graphics.setColor(Color.WHITE);
 
         graphics.drawString(Game.TITLE, (game.getWindow().getWidth() / 2) - NumberUtils.center(graphics, Game.TITLE), (game.getWindow().getHeight() / 2) - 125);
@@ -115,7 +115,7 @@ public class MainMenu extends GameMenu {
     @Override
     public void onUpdateWindow(Window window, int oldSizeX, int oldSizeY, int newSizeX, int newSizeY) {
         super.onUpdateWindow(window, oldSizeX, oldSizeY, newSizeX, newSizeY);
-        this.background.setPos(0, 0);
+        this.background.reset();
     }
 
     public static MainMenu create(Game game) {

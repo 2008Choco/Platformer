@@ -7,12 +7,12 @@ import wtf.choco.platformer.utils.Location;
 
 public abstract class Entity {
 
-    protected Location location;
+    private Location location;
 
-    protected int width, height;
-    protected float velX = 0, velY = 0;
-    protected boolean airborn = true;
-    protected Color colour = new Color(0xFFFFFF);
+    private int width, height;
+    private float velocityX = 0, velocityY = 0;
+    private boolean airborn = true;
+    private Color colour = new Color(0xFFFFFF);
 
     private final Rectangle bounds;
 
@@ -47,28 +47,33 @@ public abstract class Entity {
         return height;
     }
 
-    public float getVelX() {
-        return velX;
+    public void setVelocity(float x, float y) {
+        this.velocityX = x;
+        this.velocityY = y;
     }
 
-    public void setVelX(float velX) {
-        this.velX = velX;
+    public void setVelocityX(float x) {
+        this.velocityX = x;
     }
 
-    public float getVelY() {
-        return velY;
+    public float getVelocityX() {
+        return velocityX;
     }
 
-    public void setVelY(float velY) {
-        this.velY = velY;
+    public void setVelocityY(float y) {
+        this.velocityY = y;
     }
 
-    public boolean isAirborn() {
-        return this.airborn;
+    public float getVelocityY() {
+        return velocityY;
     }
 
     public void setAirborn(boolean airborn) {
         this.airborn = airborn;
+    }
+
+    public boolean isAirborn() {
+        return this.airborn;
     }
 
     public void setColour(Color colour) {
@@ -87,8 +92,6 @@ public abstract class Entity {
         return 0.25F;
     }
 
-    public void tick() {
-        this.location = location.offset(velX, velY);
-    }
+    public void tick() { }
 
 }

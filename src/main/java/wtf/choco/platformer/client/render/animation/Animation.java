@@ -7,64 +7,43 @@ import wtf.choco.platformer.client.render.texture.SpriteSheet;
 
 public class Animation {
 
-	private BufferedImage[] sprites;
-	private int tickDelay = 1;
-	private int spriteWidth, spriteHeight;
+	private int spriteIndex = 0;
+    private int frameTimer = 0;
 
-	private int currentFrame = 0;
+	private final BufferedImage[] sprites;
+    private final int spriteWidth, spriteHeight;
+    private final int frameInterval;
 
-	public Animation(int tickDelay, SpriteSheet sheet){
+	public Animation(int frameInterval, SpriteSheet sheet) {
 		this.sprites = sheet.getAllSprites();
-		this.tickDelay = tickDelay;
+		for (BufferedImage sprite : sprites) {
+		    if (sprite == null) {
+		        throw new IllegalArgumentException("Sprite sheet container null sprite. Failed to parse?");
+		    }
+		}
 
 		this.spriteWidth = sheet.getSpriteWidth();
 		this.spriteHeight = sheet.getSpriteHeight();
+		this.frameInterval = Math.max(1, frameInterval);
 	}
 
-	@Deprecated
-	public Animation(int tickDelay, BufferedImage... sprites){
-		if (sprites == null)
-			throw new IllegalArgumentException("Cannot have null sprites in an animation");
-
-		this.sprites = sprites;
-		this.tickDelay = tickDelay;
-
-		this.spriteWidth = sprites[0].getWidth();
-		this.spriteHeight = sprites[0].getHeight();
+	public float getTickDelay() {
+		return frameInterval;
 	}
 
-	public void setTickDelay(int delay){
-		this.tickDelay = delay;
+	private void nextFrame() {
+		if (++spriteIndex >= sprites.length) {
+			this.spriteIndex = 0;
+		}
 	}
 
-	public float getTickDelay(){
-		return tickDelay;
+	public void render(Graphics graphics, int x, int y) {
+		this.frameTimer++;
+		if (frameTimer >= frameInterval) {
+			this.nextFrame();
+		}
+
+		graphics.drawImage(sprites[spriteIndex], x, y, spriteWidth, spriteHeight, null);
 	}
 
-	public int getCurrentAnimationFrame(){
-		return currentFrame;
-	}
-
-	private void nextFrame(){
-		currentFrame++;
-		if (currentFrame >= sprites.length)
-			currentFrame = 0;
-	}
-
-	private int tickTimer = 0;
-	public void render(Graphics g, int x, int y){
-		render(g, x, y, false);
-	}
-
-	public void render(Graphics g, int x, int y, boolean inverted){
-		tickTimer++;
-		if (tickTimer >= tickDelay)
-			nextFrame();
-
-		// Render current animation frame
-		if (sprites[currentFrame] == null) return;
-
-		if (inverted){ g.drawImage(sprites[currentFrame], x + spriteWidth, y, -spriteWidth, spriteHeight, null); }
-		else{ g.drawImage(sprites[currentFrame], x, y, spriteWidth, spriteHeight, null); }
-	}
 }

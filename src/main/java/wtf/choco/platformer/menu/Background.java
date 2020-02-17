@@ -10,9 +10,9 @@ public class Background {
 
 	private double x, y;
 
+	private final Game game;
 	private final BufferedImage backgroundImage;
 	private final double deltaX, deltaY;
-	private final Game game;
 
 	public Background(Game game, BufferedImage backgroundImage, double xVector, double yVector) {
 	    this.game = game;
@@ -21,9 +21,8 @@ public class Background {
 		this.deltaY = yVector;
 	}
 
-	public void setPos(int x, int y) {
-		this.x = x;
-		this.y = y;
+	public void reset() {
+	    this.x = y = 0;
 	}
 
 	public void tick() {
@@ -44,16 +43,11 @@ public class Background {
         int width = window.getWidth(), height = window.getHeight();
 
 		graphics.drawImage(backgroundImage, (int) x, (int) y, width, height, null);
-		if (x < 0) {
-		    graphics.drawImage(backgroundImage, (int) x + width, (int) y, width, height, null);
-		} else if (x > 0) {
-		    graphics.drawImage(backgroundImage, (int) x - width, (int) y, width, height, null);
+		if (x != 0) {
+		    graphics.drawImage(backgroundImage, (int) (x < 0 ? x + width : x - width), (int) y, width, height, null);
 		}
-
-		if (y < 0) {
-		    graphics.drawImage(backgroundImage, (int) x, (int) y + height, width, height, null);
-		} else if (y > 0) {
-		    graphics.drawImage(backgroundImage, (int) x, (int) y - height, width, height, null);
+		if (x != 0) {
+		    graphics.drawImage(backgroundImage, (int) x, (int) (y < 0 ? y + height : y - height), width, height, null);
 		}
 	}
 }

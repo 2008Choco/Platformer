@@ -65,7 +65,7 @@ public class GameRenderBase extends Canvas {
         }
 
         if (Game.Debug.debugInformation) {
-            graphics.setFont(GameFont.ARIAL_BOLD_16.getFont());
+            graphics.setFont(RenderManager.FONT_ARIAL_BOLD_16);
             graphics.setColor(fps >= 60 ? Color.GREEN : (fps >= 30 ? Color.YELLOW : Color.RED));
             graphics.drawString("FPS: " + fps, 5, 16);
 
@@ -74,7 +74,7 @@ public class GameRenderBase extends Canvas {
 
             // Player debug information
             if (game.player != null) {
-                graphics.setFont(GameFont.ARIAL_BOLD_16.getFont());
+                graphics.setFont(RenderManager.FONT_ARIAL_BOLD_16);
                 graphics.setColor(Color.YELLOW);
 
                 Location location = game.player.getLocation();

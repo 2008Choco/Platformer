@@ -3,11 +3,12 @@ package wtf.choco.platformer.client.render.tile;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import wtf.choco.platformer.client.render.IRenderer;
 import wtf.choco.platformer.client.render.texture.Texture;
 import wtf.choco.platformer.tile.Tile;
 import wtf.choco.platformer.utils.TilePos;
 
-public class BasicTileRenderer implements ITileRenderer {
+public class BasicTileRenderer implements IRenderer<TilePos> {
 
     // TODO: This needs to be done more properly... a transformation matrix or something...
     private static final int PIXEL_RATIO = 32;

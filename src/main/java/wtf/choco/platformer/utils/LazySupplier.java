@@ -2,7 +2,7 @@ package wtf.choco.platformer.utils;
 
 import java.util.function.Supplier;
 
-public class LazySupplier<T> {
+public final class LazySupplier<T> {
 
     private T value;
     private boolean fetched = false;

@@ -40,20 +40,20 @@ public class Level {
         return entityTracker;
     }
 
+    public void setTile(TilePos pos, Tile tile) {
+        this.tiles.put(pos, tile);
+    }
+
+    public void setTile(int x, int y, Tile tile) {
+        this.setTile(new TilePos(x, y), tile);
+    }
+
 	public Tile getTileAt(TilePos pos) {
 		return tiles.getOrDefault(pos, Tiles.AIR);
 	}
 
 	public Tile getTileAt(int x, int y) {
 	    return getTileAt(new TilePos(x, y));
-	}
-
-	public void setTile(TilePos pos, Tile tile) {
-	    this.tiles.put(pos, tile);
-	}
-
-	public void setTile(int x, int y, Tile tile) {
-	    this.setTile(new TilePos(x, y), tile);
 	}
 
     public void render(Graphics graphics) {
@@ -66,9 +66,10 @@ public class Level {
 
 	    for (Entity entity : entityTracker) {
             entity.tick();
-            entity.setVelY(entity.getVelY() + entity.getGravity());
+            entity.setVelocityY(entity.getVelocityY() + entity.getGravity());
 
             // TODO: COLLISION
+            //    - if collision is not available, offset the player according to their velocity
 	    }
 	}
 
@@ -97,7 +98,8 @@ public class Level {
                 }
                 else if (ImageUtils.isColor(pixel, 97, 93, 89)) {
                     level.setTile(x, y, Tiles.STONE);
-                } else if (ImageUtils.isColor(pixel, 0, 105, 5)) {
+                }
+                else if (ImageUtils.isColor(pixel, 0, 105, 5)) {
                     level.setTile(x, y, Tiles.BUSH);
                 }
             }

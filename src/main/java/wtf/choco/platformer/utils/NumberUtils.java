@@ -16,8 +16,8 @@ public final class NumberUtils {
 		return x > minX && x < maxX && y > minY && y < maxY;
 	}
 
-	public static int center(Graphics g, String text) {
-		return g.getFontMetrics().stringWidth(text) / 2;
+	public static int center(Graphics graphics, String text) {
+		return graphics.getFontMetrics().stringWidth(text) / 2;
 	}
 
 }
