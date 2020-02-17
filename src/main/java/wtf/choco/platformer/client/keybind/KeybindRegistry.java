@@ -1,54 +1,58 @@
 package wtf.choco.platformer.client.keybind;
 
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
-import wtf.choco.platformer.Game;
-import wtf.choco.platformer.menu.gui.MainMenu;
-import wtf.choco.platformer.menu.gui.OptionsMenu;
+import wtf.choco.platformer.client.listener.KeybindListenerGameplay;
+import wtf.choco.platformer.client.listener.KeybindListenerMisc;
 
 public class KeybindRegistry {
 
     private static final List<Keybind> KEYBINDS = new ArrayList<>();
+    private static final List<KeybindListener> LISTENERS = new ArrayList<>();
 
-    public static final Keybind KEYBIND_SHOW_DEBUG_INFO = new Keybind(KeyEvent.VK_D, InputEvent.CTRL_DOWN_MASK).onPress(() -> Game.Debug.debugInformation = !Game.Debug.debugInformation);
-    public static final Keybind KEYBIND_SHOW_HITBOXES = new Keybind(KeyEvent.VK_B, InputEvent.CTRL_DOWN_MASK).onPress(() -> Game.Debug.showHitboxes = !Game.Debug.showHitboxes);
-    public static final Keybind KEYBIND_ESCAPE_MENU = new Keybind(KeyEvent.VK_ESCAPE).onPress(() -> {
-        Game game = Game.get();
-        if (game.activeMenu == null || game.activeMenu instanceof OptionsMenu) {
-            game.activeMenu = MainMenu.create(game);
-            game.level = null;
-        }
-    });
+    public static final Keybind KEYBIND_SHOW_DEBUG_INFO = register(new Keybind(KeyEvent.VK_D, KeyEvent.VK_CONTROL));
+    public static final Keybind KEYBIND_SHOW_HITBOXES = register(new Keybind(KeyEvent.VK_B, KeyEvent.VK_CONTROL));
+    public static final Keybind KEYBIND_ESCAPE_MENU = register(new Keybind(KeyEvent.VK_ESCAPE));
+
+    public static final Keybind KEYBIND_JUMP = register(new Keybind(KeyEvent.VK_W));
+    public static final Keybind KEYBIND_DOWN = register(new Keybind(KeyEvent.VK_S));
+    public static final Keybind KEYBIND_LEFT = register(new Keybind(KeyEvent.VK_A));
+    public static final Keybind KEYBIND_RIGHT = register(new Keybind(KeyEvent.VK_D));
 
 
-    public static void register(Keybind keybind) {
+    public static Keybind register(Keybind keybind) {
         if (keybind == null) {
             throw new IllegalArgumentException("Attempted to register null keybind");
         }
 
         KEYBINDS.add(keybind);
+        return keybind;
     }
 
-    public static void forAllKeybinds(Consumer<Keybind> action) {
-        KEYBINDS.forEach(action);
-    }
-
-    public static void forAllMatchingKeybinds(int key, int modifiers, Consumer<Keybind> action) {
-        KEYBINDS.forEach(keybind -> {
-            if (keybind.matches(key, modifiers)) {
-                action.accept(keybind);
+    public static void pollInput() {
+        KEYBINDS.forEach(k -> {
+            if (Keyboard.arePressed(k.getKeys())) {
+                k.callListeners(); // Call key-specific listeners first
+                LISTENERS.forEach(l -> l.onPress(k));
             }
         });
     }
 
+    public static void addListener(KeybindListener listener) {
+        LISTENERS.add(listener);
+    }
+
+    public static void addListener(KeybindListener listener, Keybind... keybinds) {
+        for (Keybind keybind : keybinds) {
+            keybind.addListener(listener);
+        }
+    }
+
     public static void init() {
-        register(KEYBIND_SHOW_DEBUG_INFO);
-        register(KEYBIND_SHOW_HITBOXES);
-        register(KEYBIND_ESCAPE_MENU);
+        KeybindRegistry.addListener(KeybindListenerMisc.INSTANCE);
+        KeybindRegistry.addListener(KeybindListenerGameplay.INSTANCE, KEYBIND_JUMP, KEYBIND_DOWN, KEYBIND_LEFT, KEYBIND_RIGHT);
     }
 
 }

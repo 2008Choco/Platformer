@@ -2,8 +2,8 @@ package wtf.choco.platformer;
 
 import wtf.choco.platformer.client.Window;
 import wtf.choco.platformer.client.keybind.KeybindRegistry;
+import wtf.choco.platformer.client.keybind.Keyboard;
 import wtf.choco.platformer.client.listener.CursorListener;
-import wtf.choco.platformer.client.listener.KeyboardListener;
 import wtf.choco.platformer.client.render.GameRenderBase;
 import wtf.choco.platformer.entity.Player;
 import wtf.choco.platformer.level.Level;
@@ -39,7 +39,7 @@ public final class Game {
 
         this.window = new Window(this, TITLE, 1080, 720);
         this.gameRenderer = new GameRenderBase(this, window);
-        this.gameRenderer.addKeyListener(new KeyboardListener(this));
+        this.gameRenderer.addKeyListener(new Keyboard.Listener());
         this.gameRenderer.addMouseListener(mouseListener);
         this.gameRenderer.addMouseMotionListener(mouseListener);
         this.window.bindRenderer(gameRenderer);
@@ -86,6 +86,7 @@ public final class Game {
 
         while (running) {
             long now = System.nanoTime();
+            KeybindRegistry.pollInput();
 
             // Ticks
             deltaTPS += (now - lastTime) / nsTPS;
@@ -132,6 +133,11 @@ public final class Game {
 
     public GameRenderBase getGameRenderer() {
         return gameRenderer;
+    }
+
+    public void loadLevel(Level level) {
+        this.level = level;
+        this.player = level.getPlayer();
     }
 
     public int getTPS() {

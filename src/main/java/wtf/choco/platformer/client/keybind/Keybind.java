@@ -1,71 +1,37 @@
 package wtf.choco.platformer.client.keybind;
 
-import java.awt.event.InputEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Keybind {
 
-    private final int key;
-    private final int modifiers;
+    private final int[] keys;
+    private final List<KeybindListener> listeners;
 
-    private Runnable pressCallback, releaseCallback;
+    public Keybind(int... keys) {
+        if (keys.length == 0) {
+            throw new IllegalArgumentException("Attempted to created keybind with no keys");
+        }
 
-    public Keybind(int key, int modifiers) {
-        this.key = key;
-        this.modifiers = modifiers;
+        this.keys = keys;
+        this.listeners = new ArrayList<>();
     }
 
-    public Keybind(int key) {
-        this(key, 0);
+    public int[] getKeys() {
+        return keys;
     }
 
-    public Keybind onPress(Runnable callback) {
-        this.pressCallback = callback;
+    public Keybind addListener(KeybindListener listener) {
+        this.listeners.add(listener);
         return this;
     }
 
-    public Keybind onRelease(Runnable callback) {
-        this.releaseCallback = callback;
-        return this;
+    public void removeListener(KeybindListener listener) {
+        this.listeners.remove(listener);
     }
 
-    public int getKey() {
-        return key;
-    }
-
-    public int getModifiers() {
-        return modifiers;
-    }
-
-    public boolean requiresShift() {
-        return (modifiers & InputEvent.SHIFT_DOWN_MASK) != 0;
-    }
-
-    public boolean requiresCtrl() {
-        return (modifiers & InputEvent.CTRL_DOWN_MASK) != 0;
-    }
-
-    public boolean requiresMeta() {
-        return (modifiers & InputEvent.META_DOWN_MASK) != 0;
-    }
-
-    public boolean requiresAlt() {
-        return (modifiers & InputEvent.ALT_DOWN_MASK) != 0;
-    }
-
-    public boolean matches(int key, int modifiers) {
-        return this.key == key && this.modifiers == modifiers;
-    }
-
-    public void press() {
-        if (pressCallback != null) {
-            this.pressCallback.run();
-        }
-    }
-
-    public void release() {
-        if (releaseCallback != null) {
-            this.releaseCallback.run();
-        }
+    public void callListeners() {
+        this.listeners.forEach(l -> l.onPress(this));
     }
 
 }

@@ -20,6 +20,8 @@ public class Level {
 
     private static final Map<String, Level> LEVELS = new HashMap<>();
 
+    private Player player;
+
     public final Random random;
 
 	private final String name;
@@ -56,6 +58,10 @@ public class Level {
 	    return getTileAt(new TilePos(x, y));
 	}
 
+	public Player getPlayer() {
+        return player;
+    }
+
     public void render(Graphics graphics) {
         this.tiles.forEach((pos, tile) -> RenderManager.getRenderer(tile).render(graphics, pos));
         this.entityTracker.forEach(e -> RenderManager.getRenderer(e.getClass()).render(graphics, e));
@@ -66,10 +72,15 @@ public class Level {
 
 	    for (Entity entity : entityTracker) {
             entity.tick();
-            entity.setVelocityY(entity.getVelocityY() + entity.getGravity());
+//            entity.setVelocityY(entity.getVelocityY() + entity.getGravity());
 
             // TODO: COLLISION
             //    - if collision is not available, offset the player according to their velocity
+            // else {
+            entity.setLocation(entity.getLocation().offset(entity.getVelocityX(), entity.getVelocityY()));
+            // }
+
+            entity.setVelocity(0, 0);
 	    }
 	}
 
@@ -85,7 +96,7 @@ public class Level {
                  * Dirt: (165, 85, 0) Grass: (103, 163, 0) Stone: (97, 93, 89) Bush: (0, 105, 5)
                  */
                 if (ImageUtils.isColor(pixel, 0, 0, 255)) {
-                    level.entityTracker.addEntity(new Player(new Location(x, y)));
+                    level.entityTracker.addEntity(level.player = new Player(new Location(x, y)));
                 }
                 else if (ImageUtils.isColor(pixel, 255, 0, 0)) {
                     level.entityTracker.addEntity(new Enemy(new Location(x, y)));

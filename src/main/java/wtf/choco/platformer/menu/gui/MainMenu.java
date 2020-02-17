@@ -36,7 +36,7 @@ public class MainMenu extends GameMenu {
             @Override
             public void onPress(int mouseX, int mouseY, int mouseButton) {
                 game.activeMenu = null;
-                game.level = Level.getByName("level_1");
+                game.loadLevel(Level.getByName("level_1"));
             }
 
             @Override
