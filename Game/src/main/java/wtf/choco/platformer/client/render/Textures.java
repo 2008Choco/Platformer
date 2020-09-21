@@ -1,6 +1,6 @@
 package wtf.choco.platformer.client.render;
 
-import wtf.choco.platformer.engine.client.render.texture.Texture;
+import wtf.choco.platformer.engine.client.texture.Texture;
 
 public final class Textures {
 

@@ -3,10 +3,8 @@ package wtf.choco.platformer.engine.client.render;
 import java.awt.Graphics;
 import java.util.function.Supplier;
 
-import wtf.choco.platformer.client.Window;
-
 /**
- * A primary renderer for a {@link Window}.
+ * A primary renderer for a window.
  *
  * @param <T> the type of render context
  */

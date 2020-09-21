@@ -1,4 +1,4 @@
-package wtf.choco.platformer.utils;
+package wtf.choco.platformer.engine.util;
 
 import java.util.function.Supplier;
 

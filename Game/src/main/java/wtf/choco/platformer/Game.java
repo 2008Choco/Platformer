@@ -5,12 +5,12 @@ import wtf.choco.platformer.client.keybind.KeybindRegistry;
 import wtf.choco.platformer.client.keybind.Keyboard;
 import wtf.choco.platformer.client.listener.CursorListener;
 import wtf.choco.platformer.client.render.PrimaryGameRenderer;
+import wtf.choco.platformer.engine.util.ImageUtils;
 import wtf.choco.platformer.entity.Player;
 import wtf.choco.platformer.level.Level;
 import wtf.choco.platformer.menu.GameMenu;
 import wtf.choco.platformer.menu.gui.MainMenu;
 import wtf.choco.platformer.sound.Sound;
-import wtf.choco.platformer.utils.ImageUtils;
 
 public final class Game {
 

@@ -3,7 +3,7 @@ package wtf.choco.platformer.client.render.animation;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import wtf.choco.platformer.engine.client.render.texture.SpriteSheet;
+import wtf.choco.platformer.engine.client.texture.SpriteSheet;
 
 public class Animation {
 

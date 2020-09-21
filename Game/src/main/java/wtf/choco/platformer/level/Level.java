@@ -7,12 +7,12 @@ import java.util.Map;
 import java.util.Random;
 
 import wtf.choco.platformer.client.render.PrimaryRenderingContext;
+import wtf.choco.platformer.engine.util.ImageUtils;
 import wtf.choco.platformer.entity.Enemy;
 import wtf.choco.platformer.entity.Entity;
 import wtf.choco.platformer.entity.Player;
 import wtf.choco.platformer.tile.Tile;
 import wtf.choco.platformer.tile.Tiles;
-import wtf.choco.platformer.utils.ImageUtils;
 import wtf.choco.platformer.utils.Location;
 import wtf.choco.platformer.utils.TilePos;
 

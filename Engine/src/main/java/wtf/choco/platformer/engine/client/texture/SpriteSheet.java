@@ -1,4 +1,4 @@
-package wtf.choco.platformer.engine.client.render.texture;
+package wtf.choco.platformer.engine.client.texture;
 
 import java.awt.image.BufferedImage;
 

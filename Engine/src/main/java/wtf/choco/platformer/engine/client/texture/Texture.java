@@ -1,11 +1,11 @@
-package wtf.choco.platformer.engine.client.render.texture;
+package wtf.choco.platformer.engine.client.texture;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
-import wtf.choco.platformer.utils.ImageUtils;
-import wtf.choco.platformer.utils.LazySupplier;
+import wtf.choco.platformer.engine.util.ImageUtils;
+import wtf.choco.platformer.engine.util.LazySupplier;
 
 /**
  * Represents a localized texture file.
