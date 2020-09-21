@@ -1,9 +1,11 @@
 package wtf.choco.platformer.entity;
 
 import java.awt.Color;
-import java.awt.Rectangle;
 
+import wtf.choco.platformer.level.Level;
+import wtf.choco.platformer.utils.BoundingBox;
 import wtf.choco.platformer.utils.Location;
+import wtf.choco.platformer.utils.TilePos;
 
 public abstract class Entity {
 
@@ -14,13 +16,19 @@ public abstract class Entity {
     private boolean airborn = true;
     private Color colour = new Color(0xFFFFFF);
 
-    private final Rectangle bounds;
+    private final BoundingBox boundingBox;
+    private final Level level;
 
-    protected Entity(Location location, int width, int height) {
+    protected Entity(Level level, Location location, int width, int height) {
+        this.level = level;
         this.location = location;
         this.width = width;
         this.height = height;
-        this.bounds = new Rectangle(width, height);
+        this.boundingBox = new BoundingBox(width, height);
+    }
+
+    public Level getLevel() {
+        return level;
     }
 
     public void setLocation(Location location) {
@@ -84,12 +92,20 @@ public abstract class Entity {
         return colour;
     }
 
-    public Rectangle getBounds() {
-        return bounds;
+    public BoundingBox getBounds(Location location) {
+        return boundingBox.move(location.getX(), location.getY());
+    }
+
+    public BoundingBox getBounds(TilePos position) {
+        return boundingBox.move(position.getX(), position.getY());
+    }
+
+    public BoundingBox getBounds() {
+        return boundingBox;
     }
 
     public float getGravity() {
-        return 0.25F;
+        return 2.5F;
     }
 
     public void tick() { }

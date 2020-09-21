@@ -20,12 +20,27 @@ public class Tile {
         return id;
     }
 
+    public final boolean isEmpty() {
+        return this == Tiles.AIR;
+    }
+
     public boolean isCollidable() {
-        return true;
+        return this != Tiles.AIR;
     }
 
     public Rectangle getBounds() {
         return CUBOID;
+    }
+
+    public Rectangle getBounds(int xOffset, int yOffset) {
+        Rectangle bounds = (Rectangle) getBounds().clone();
+        bounds.x += xOffset;
+        bounds.y += yOffset;
+        return bounds;
+    }
+
+    public Rectangle getBounds(TilePos location) {
+        return getBounds(location.getX(), location.getY());
     }
 
     /**

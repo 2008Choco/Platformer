@@ -10,9 +10,6 @@ import wtf.choco.platformer.utils.TilePos;
 
 public class BasicTileRenderer implements IRenderer<TilePos> {
 
-    // TODO: This needs to be done more properly... a transformation matrix or something...
-    private static final int PIXEL_RATIO = 32;
-
     private final Tile tile;
     private final Texture texture;
 

@@ -9,8 +9,8 @@ public final class KeybindListenerGameplay implements KeybindListener {
 
     public static final KeybindListener INSTANCE = new KeybindListenerGameplay();
 
-    private static final float JUMP_POWER = 0.5F;
-    private static final float SPEED = 0.25F;
+    private static final float JUMP_POWER = 40.0F;
+    private static final float SPEED = 8.0F;
 
     private KeybindListenerGameplay() { }
 
@@ -21,8 +21,8 @@ public final class KeybindListenerGameplay implements KeybindListener {
             return;
         }
 
-        if (keybind == KeybindRegistry.KEYBIND_JUMP && game.player.getVelocityY() >= -0.01 && game.player.getVelocityY() <= 0.01) {
-            game.player.setVelocityY(-SPEED * JUMP_POWER);
+        if (keybind == KeybindRegistry.KEYBIND_JUMP && !game.player.isAirborn()) {
+            game.player.setVelocityY(-JUMP_POWER);
         }
 
         if (keybind == KeybindRegistry.KEYBIND_LEFT) {

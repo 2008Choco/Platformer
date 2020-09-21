@@ -71,15 +71,38 @@ public class Level {
 	    this.tiles.forEach((pos, tile) -> tile.tick(this, pos));
 
 	    for (Entity entity : entityTracker) {
+	        entity.setVelocityY(entity.getVelocityY() + entity.getGravity());
             entity.tick();
-//            entity.setVelocityY(entity.getVelocityY() + entity.getGravity());
 
-            // TODO: COLLISION
-            //    - if collision is not available, offset the player according to their velocity
-            // else {
-            entity.setLocation(entity.getLocation().offset(entity.getVelocityX(), entity.getVelocityY()));
-            // }
+            Location currentLocation = entity.getLocation();
+            Location futureLocation = currentLocation.offset(entity.getVelocityX() / 32.0F, entity.getVelocityY()  / 32.0F);
+            TilePos topLeft = futureLocation.toTilePos();
+            TilePos topRight = new TilePos((int) (futureLocation.getX() + 1.0 - (1 / 32.0)), (int) futureLocation.getY());
+            TilePos bottomLeft = new TilePos((int) futureLocation.getX(), (int) (futureLocation.getY() + 1.0 - (1 / 32.0)));
+            TilePos bottomRight = new TilePos((int) (futureLocation.getX() + 1.0 - (1 / 32.0)), (int) (futureLocation.getY() + 1.0 - (1 / 32.0)));
+            Tile topLeftTile = getTileAt(topLeft);
+            Tile topRightTile = getTileAt(topRight);
+            Tile bottomLeftTile = getTileAt(bottomLeft);
+            Tile bottomRightTile = getTileAt(bottomRight);
 
+            if ((bottomLeftTile.isCollidable() || bottomRightTile.isCollidable())) { // Downwards collision
+                futureLocation.setY((float) Math.min(bottomLeftTile.getBounds(bottomLeft).getY(), bottomRightTile.getBounds(bottomRight).getY()) - 1F);
+                entity.setAirborn(false);
+            } else {
+                entity.setAirborn(true);
+            }
+
+            if (entity.isAirborn() && (topLeftTile.isCollidable() || topRightTile.isCollidable())) { // Upwards collision
+                futureLocation.setY((float) Math.max(topLeftTile.getBounds(topLeft).getY(), topRightTile.getBounds(topLeft).getY()) + 1F);
+            } else {
+                if ((entity.isAirborn() && bottomLeftTile.isCollidable()) || topLeftTile.isCollidable()) { // Leftwards collision
+                    futureLocation.setX((float) Math.max(topLeftTile.getBounds(topLeft).getX(), bottomLeftTile.getBounds(bottomLeft).getX()) + 1);
+                } else if ((entity.isAirborn() && bottomRightTile.isCollidable()) || topRightTile.isCollidable()) { // Rightwards collision
+                    futureLocation.setX((float) Math.max(topRightTile.getBounds(topRight).getX(), bottomRightTile.getBounds(bottomRight).getX()) - 1);
+                }
+            }
+
+            entity.setLocation(futureLocation);
             entity.setVelocity(0, 0);
 	    }
 	}
@@ -96,10 +119,10 @@ public class Level {
                  * Dirt: (165, 85, 0) Grass: (103, 163, 0) Stone: (97, 93, 89) Bush: (0, 105, 5)
                  */
                 if (ImageUtils.isColor(pixel, 0, 0, 255)) {
-                    level.entityTracker.addEntity(level.player = new Player(new Location(x, y)));
+                    level.entityTracker.addEntity(level.player = new Player(level, new Location(x, y)));
                 }
                 else if (ImageUtils.isColor(pixel, 255, 0, 0)) {
-                    level.entityTracker.addEntity(new Enemy(new Location(x, y)));
+                    level.entityTracker.addEntity(new Enemy(level, new Location(x, y)));
                 }
                 else if (ImageUtils.isColor(pixel, 165, 85, 0)) {
                     level.setTile(x, y, Tiles.DIRT);
