@@ -4,7 +4,7 @@ import wtf.choco.platformer.client.Keybinds;
 import wtf.choco.platformer.client.listener.CursorListener;
 import wtf.choco.platformer.client.render.PrimaryGameRenderer;
 import wtf.choco.platformer.client.render.PrimaryRenderingContext;
-import wtf.choco.platformer.engine.client.Window;
+import wtf.choco.platformer.engine.client.RenderableWindow;
 import wtf.choco.platformer.engine.client.keyboard.KeybindRegistry;
 import wtf.choco.platformer.engine.client.keyboard.Keyboard;
 import wtf.choco.platformer.engine.util.ImageUtils;
@@ -31,14 +31,14 @@ public final class Game {
     private boolean running;
     private int tps = 0;
 
-    private final Window<PrimaryRenderingContext, PrimaryGameRenderer> window;
+    private final RenderableWindow<PrimaryRenderingContext, PrimaryGameRenderer> window;
 
     private Game() {
         Runtime.getRuntime().addShutdownHook(new Thread(this::onShutdown));
 
         CursorListener mouseListener = new CursorListener(this);
 
-        this.window = new Window<>(TITLE + " - " + Game.VERSION, 1080, 720, new PrimaryGameRenderer(this));
+        this.window = new RenderableWindow<>(TITLE + " - " + Game.VERSION, 1080, 720, new PrimaryGameRenderer(this));
         this.window.acceptListeners(component -> {
             component.addKeyListener(new Keyboard.Listener());
             component.addMouseListener(mouseListener);
@@ -135,7 +135,7 @@ public final class Game {
         }
     }
 
-    public Window<PrimaryRenderingContext, PrimaryGameRenderer> getWindow() {
+    public RenderableWindow<PrimaryRenderingContext, PrimaryGameRenderer> getWindow() {
         return window;
     }
 

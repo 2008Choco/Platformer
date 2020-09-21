@@ -7,7 +7,7 @@ import wtf.choco.platformer.Game;
 import wtf.choco.platformer.client.render.PrimaryGameRenderer;
 import wtf.choco.platformer.client.render.PrimaryRenderingContext;
 import wtf.choco.platformer.client.render.Textures;
-import wtf.choco.platformer.engine.client.Window;
+import wtf.choco.platformer.engine.client.RenderableWindow;
 import wtf.choco.platformer.level.Level;
 import wtf.choco.platformer.menu.Background;
 import wtf.choco.platformer.menu.GameMenu;
@@ -41,7 +41,7 @@ public class MainMenu extends GameMenu {
             }
 
             @Override
-            public void onWindowUpdate(Window<PrimaryRenderingContext, PrimaryGameRenderer> window, int oldWidth, int oldHeight, int width, int height) {
+            public void onWindowUpdate(RenderableWindow<PrimaryRenderingContext, PrimaryGameRenderer> window, int oldWidth, int oldHeight, int width, int height) {
                 this.setX((width / 2) - (getWidth() / 2));
                 this.setY((height / 2) - (getHeight() / 2) - 75);
             }
@@ -62,7 +62,7 @@ public class MainMenu extends GameMenu {
             }
 
             @Override
-            public void onWindowUpdate(Window<PrimaryRenderingContext, PrimaryGameRenderer> window, int oldWidth, int oldHeight, int width, int height) {
+            public void onWindowUpdate(RenderableWindow<PrimaryRenderingContext, PrimaryGameRenderer> window, int oldWidth, int oldHeight, int width, int height) {
                 this.setX((width / 2) - (getWidth() / 2));
                 this.setY((height / 2) - (getHeight() / 2));
             }
@@ -83,7 +83,7 @@ public class MainMenu extends GameMenu {
             }
 
             @Override
-            public void onWindowUpdate(Window<PrimaryRenderingContext, PrimaryGameRenderer> window, int oldWidth, int oldHeight, int width, int height) {
+            public void onWindowUpdate(RenderableWindow<PrimaryRenderingContext, PrimaryGameRenderer> window, int oldWidth, int oldHeight, int width, int height) {
                 this.setX((width / 2) - (getWidth() / 2));
                 this.setY((height / 2) - (getHeight() / 2) + 75);
             }
@@ -114,7 +114,7 @@ public class MainMenu extends GameMenu {
     }
 
     @Override
-    public void onUpdateWindow(Window<PrimaryRenderingContext, PrimaryGameRenderer> window, int oldSizeX, int oldSizeY, int newSizeX, int newSizeY) {
+    public void onUpdateWindow(RenderableWindow<PrimaryRenderingContext, PrimaryGameRenderer> window, int oldSizeX, int oldSizeY, int newSizeX, int newSizeY) {
         super.onUpdateWindow(window, oldSizeX, oldSizeY, newSizeX, newSizeY);
         this.background.reset();
     }

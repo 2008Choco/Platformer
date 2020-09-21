@@ -21,7 +21,7 @@ import javax.swing.WindowConstants;
 import wtf.choco.platformer.engine.client.render.IPrimaryRenderer;
 import wtf.choco.platformer.engine.client.render.IRenderContext;
 
-public class Window<C extends IRenderContext<C>, R extends IPrimaryRenderer<C>> {
+public class RenderableWindow<C extends IRenderContext<C>, R extends IPrimaryRenderer<C>> {
 
     private String title;
     private int width, height;
@@ -36,7 +36,7 @@ public class Window<C extends IRenderContext<C>, R extends IPrimaryRenderer<C>> 
     private final JFrame frame;
     private final Canvas canvas;
 
-    public Window(String title, int width, int height, R renderer) {
+    public RenderableWindow(String title, int width, int height, R renderer) {
         this.title = title;
         this.width = width;
         this.height = height;
@@ -54,17 +54,17 @@ public class Window<C extends IRenderContext<C>, R extends IPrimaryRenderer<C>> 
             public void componentResized(ComponentEvent event) {
                 Component component = event.getComponent();
                 int width = component.getWidth(), height = component.getHeight();
-                if (width == Window.this.width && height == Window.this.height) {
+                if (width == RenderableWindow.this.width && height == RenderableWindow.this.height) {
                     return;
                 }
 
                 if (resizeCallback != null) {
-                    Window.this.resizeCallback.resize(Window.this.width, Window.this.height, width, height);
+                    RenderableWindow.this.resizeCallback.resize(RenderableWindow.this.width, RenderableWindow.this.height, width, height);
                 }
 
                 // Update width and height
-                Window.this.width = width;
-                Window.this.height = height;
+                RenderableWindow.this.width = width;
+                RenderableWindow.this.height = height;
             }
 
             @Override

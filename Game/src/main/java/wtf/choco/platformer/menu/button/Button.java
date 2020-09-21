@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 
 import wtf.choco.platformer.client.render.PrimaryGameRenderer;
 import wtf.choco.platformer.client.render.PrimaryRenderingContext;
-import wtf.choco.platformer.engine.client.Window;
+import wtf.choco.platformer.engine.client.RenderableWindow;
 
 public abstract class Button {
 
@@ -130,7 +130,7 @@ public abstract class Button {
      * @param width the new window width
      * @param height the new window height
      */
-    public void onWindowUpdate(Window<PrimaryRenderingContext, PrimaryGameRenderer> window, int oldWidth, int oldHeight, int width, int height) { }
+    public void onWindowUpdate(RenderableWindow<PrimaryRenderingContext, PrimaryGameRenderer> window, int oldWidth, int oldHeight, int width, int height) { }
 
     public void render(Graphics graphics) {
         graphics.setColor(hovered ? hoverColour : backgroundColour);

@@ -6,7 +6,7 @@ import java.util.List;
 
 import wtf.choco.platformer.client.render.PrimaryGameRenderer;
 import wtf.choco.platformer.client.render.PrimaryRenderingContext;
-import wtf.choco.platformer.engine.client.Window;
+import wtf.choco.platformer.engine.client.RenderableWindow;
 import wtf.choco.platformer.menu.button.Button;
 
 public abstract class GameMenu {
@@ -53,7 +53,7 @@ public abstract class GameMenu {
         }
     }
 
-    public void onUpdateWindow(Window<PrimaryRenderingContext, PrimaryGameRenderer> window, int oldSizeX, int oldSizeY, int newSizeX, int newSizeY) {
+    public void onUpdateWindow(RenderableWindow<PrimaryRenderingContext, PrimaryGameRenderer> window, int oldSizeX, int oldSizeY, int newSizeX, int newSizeY) {
         this.buttons.forEach(b -> b.onWindowUpdate(window, oldSizeX, oldSizeY, newSizeX, newSizeY));
     }
 
