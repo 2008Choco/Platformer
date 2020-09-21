@@ -8,7 +8,6 @@ import java.text.DecimalFormat;
 import java.util.function.Supplier;
 
 import wtf.choco.platformer.Game;
-import wtf.choco.platformer.client.Window;
 import wtf.choco.platformer.engine.client.render.IPrimaryRenderer;
 import wtf.choco.platformer.utils.Location;
 import wtf.choco.platformer.utils.NumberUtils;
@@ -21,11 +20,9 @@ public final class PrimaryGameRenderer implements IPrimaryRenderer<PrimaryRender
     private static final DecimalFormat COORDINATE_FORMAT = new DecimalFormat("0.00");
 
     private final Game game;
-    private final Window window;
 
-    public PrimaryGameRenderer(Game game, Window window) {
+    public PrimaryGameRenderer(Game game) {
         this.game = game;
-        this.window = window;
     }
 
     @Override
@@ -35,6 +32,8 @@ public final class PrimaryGameRenderer implements IPrimaryRenderer<PrimaryRender
 
     @Override
     public void render(Graphics graphics, PrimaryRenderingContext context) {
+        var window = game.getWindow();
+
         if (game.level != null) {
             this.game.level.render(graphics, context);
         }

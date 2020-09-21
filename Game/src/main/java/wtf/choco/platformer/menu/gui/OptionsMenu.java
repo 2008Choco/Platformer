@@ -4,9 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import wtf.choco.platformer.Game;
-import wtf.choco.platformer.client.Window;
 import wtf.choco.platformer.client.render.PrimaryGameRenderer;
+import wtf.choco.platformer.client.render.PrimaryRenderingContext;
 import wtf.choco.platformer.client.render.Textures;
+import wtf.choco.platformer.engine.client.Window;
 import wtf.choco.platformer.menu.GameMenu;
 import wtf.choco.platformer.menu.button.GraphicGUIButton;
 import wtf.choco.platformer.sound.Sound;
@@ -19,7 +20,7 @@ public class OptionsMenu extends GameMenu {
 	public OptionsMenu(Game game) {
 	    this.game = game;
 
-	    Window window = game.getWindow();
+	    var window = game.getWindow();
 
 	    this.addButton(
 			new GraphicGUIButton((window.getWidth() / 2) - 100, (window.getHeight() / 2) - 25, 200, 50, "Return", Textures.GUI_BUTTON_BACKGROUND.asImage(), Textures.GUI_BUTTON_HOVERED.asImage()) {
@@ -36,7 +37,7 @@ public class OptionsMenu extends GameMenu {
 			    }
 
 			    @Override
-                public void onWindowUpdate(Window window, int oldWidth, int oldHeight, int width, int height) {
+                public void onWindowUpdate(Window<PrimaryRenderingContext, PrimaryGameRenderer> window, int oldWidth, int oldHeight, int width, int height) {
 			        this.setX((width / 2) - (getWidth() / 2));
 			        this.setY((height / 2) - (getHeight() / 2));
 			    }
@@ -47,7 +48,7 @@ public class OptionsMenu extends GameMenu {
 
 	@Override
 	protected void renderBackground(Graphics graphics) {
-	    Window window = game.getWindow();
+	    var window = game.getWindow();
 
         graphics.setColor(Color.BLACK);
         graphics.fillRect(0, 0, window.getWidth(), window.getHeight());
@@ -55,7 +56,7 @@ public class OptionsMenu extends GameMenu {
 
 	@Override
 	protected void renderForeground(Graphics graphics) {
-	    Window window = game.getWindow();
+	    var window = game.getWindow();
 
         graphics.setColor(Color.WHITE);
         graphics.setFont(PrimaryGameRenderer.FONT_ARIAL_BOLD_16.deriveFont(24F));

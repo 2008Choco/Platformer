@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import wtf.choco.platformer.Game;
-import wtf.choco.platformer.client.Window;
 
 public class Background {
 
@@ -29,7 +28,7 @@ public class Background {
 		this.x += deltaX;
 		this.y += deltaY;
 
-		Window window = game.getWindow();
+		var window = game.getWindow();
 		if (x >= window.getWidth() || x <= -window.getWidth()) {
 		    this.x = 0;
 		}
@@ -39,7 +38,7 @@ public class Background {
 	}
 
 	public void render(Graphics graphics) {
-        Window window = game.getWindow();
+        var window = game.getWindow();
         int width = window.getWidth(), height = window.getHeight();
 
 		graphics.drawImage(backgroundImage, (int) x, (int) y, width, height, null);

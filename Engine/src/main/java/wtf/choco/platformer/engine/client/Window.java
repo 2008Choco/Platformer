@@ -1,4 +1,4 @@
-package wtf.choco.platformer.client;
+package wtf.choco.platformer.engine.client;
 
 import java.awt.AWTException;
 import java.awt.BufferCapabilities;
@@ -18,35 +18,34 @@ import java.util.function.Consumer;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import wtf.choco.platformer.Game;
-import wtf.choco.platformer.client.render.PrimaryRenderingContext;
-import wtf.choco.platformer.client.render.Textures;
 import wtf.choco.platformer.engine.client.render.IPrimaryRenderer;
+import wtf.choco.platformer.engine.client.render.IRenderContext;
 
-public class Window {
+public class Window<C extends IRenderContext<C>, R extends IPrimaryRenderer<C>> {
 
     private String title;
     private int width, height;
 
     private int fps, localFPS;
 
-    private IPrimaryRenderer<PrimaryRenderingContext> renderer;
-    private PrimaryRenderingContext renderingContext;
+    private R renderer;
+    private C renderingContext;
+
+    private WindowResizeCallback resizeCallback;
 
     private final JFrame frame;
     private final Canvas canvas;
 
-    public Window(Game game, String title, int width, int height) {
+    public Window(String title, int width, int height, R renderer) {
         this.title = title;
         this.width = width;
         this.height = height;
 
-        this.frame = new JFrame(title + " - " + Game.VERSION);
+        this.frame = new JFrame(title);
 
         this.frame.setSize(width, height);
         this.frame.setMinimumSize(new Dimension(width, height));
         this.frame.setLocationRelativeTo(null);
-        this.frame.setIconImage(Textures.GENERIC_ICON.asImage());
         this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.frame.setVisible(true);
 
@@ -59,8 +58,8 @@ public class Window {
                     return;
                 }
 
-                if (game.activeMenu != null) {
-                    game.activeMenu.onUpdateWindow(Window.this, Window.this.width, Window.this.height, width, height);
+                if (resizeCallback != null) {
+                    Window.this.resizeCallback.resize(Window.this.width, Window.this.height, width, height);
                 }
 
                 // Update width and height
@@ -96,9 +95,7 @@ public class Window {
         }
 
         this.canvas.setBackground(Color.BLACK);
-    }
 
-    public void bindRenderer(IPrimaryRenderer<PrimaryRenderingContext> renderer) {
         this.renderer = renderer;
         this.renderingContext = renderer.getContextSupplier().get();
     }
@@ -122,6 +119,10 @@ public class Window {
 
     public void acceptListeners(Consumer<Component> consumer) {
         consumer.accept(canvas);
+    }
+
+    public void setResizeCallback(WindowResizeCallback resizeCallback) {
+        this.resizeCallback = resizeCallback;
     }
 
     public String getTitle() {

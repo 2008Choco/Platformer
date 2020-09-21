@@ -1,10 +1,11 @@
 package wtf.choco.platformer;
 
-import wtf.choco.platformer.client.Window;
 import wtf.choco.platformer.client.keybind.KeybindRegistry;
 import wtf.choco.platformer.client.keybind.Keyboard;
 import wtf.choco.platformer.client.listener.CursorListener;
 import wtf.choco.platformer.client.render.PrimaryGameRenderer;
+import wtf.choco.platformer.client.render.PrimaryRenderingContext;
+import wtf.choco.platformer.engine.client.Window;
 import wtf.choco.platformer.engine.util.ImageUtils;
 import wtf.choco.platformer.entity.Player;
 import wtf.choco.platformer.level.Level;
@@ -29,20 +30,25 @@ public final class Game {
     private boolean running;
     private int tps = 0;
 
-    private final Window window;
+    private final Window<PrimaryRenderingContext, PrimaryGameRenderer> window;
 
     private Game() {
         Runtime.getRuntime().addShutdownHook(new Thread(this::onShutdown));
 
         CursorListener mouseListener = new CursorListener(this);
 
-        this.window = new Window(this, TITLE, 1080, 720);
-        PrimaryGameRenderer renderer = new PrimaryGameRenderer(this, window);
-        this.window.bindRenderer(renderer);
+        this.window = new Window<>(TITLE + " - " + Game.VERSION, 1080, 720, new PrimaryGameRenderer(this));
         this.window.acceptListeners(component -> {
             component.addKeyListener(new Keyboard.Listener());
             component.addMouseListener(mouseListener);
             component.addMouseMotionListener(mouseListener);
+        });
+        this.window.setResizeCallback((width, height, newWidth, newHeight) -> {
+            if (this.activeMenu == null) {
+                return;
+            }
+
+            this.activeMenu.onUpdateWindow(window, width, height, newWidth, newHeight);
         });
 
         this.start();
@@ -128,7 +134,7 @@ public final class Game {
         }
     }
 
-    public Window getWindow() {
+    public Window<PrimaryRenderingContext, PrimaryGameRenderer> getWindow() {
         return window;
     }
 
