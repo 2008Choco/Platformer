@@ -1,9 +1,9 @@
 package wtf.choco.platformer.client.listener;
 
 import wtf.choco.platformer.Game;
-import wtf.choco.platformer.client.keybind.Keybind;
-import wtf.choco.platformer.client.keybind.KeybindListener;
-import wtf.choco.platformer.client.keybind.KeybindRegistry;
+import wtf.choco.platformer.client.Keybinds;
+import wtf.choco.platformer.engine.client.keyboard.Keybind;
+import wtf.choco.platformer.engine.client.keyboard.KeybindListener;
 
 public final class KeybindListenerGameplay implements KeybindListener {
 
@@ -21,15 +21,15 @@ public final class KeybindListenerGameplay implements KeybindListener {
             return;
         }
 
-        if (keybind == KeybindRegistry.KEYBIND_JUMP && !game.player.isAirborn()) {
+        if (keybind == Keybinds.KEYBIND_JUMP && !game.player.isAirborn()) {
             game.player.setVelocityY(-JUMP_POWER);
         }
 
-        if (keybind == KeybindRegistry.KEYBIND_LEFT) {
+        if (keybind == Keybinds.KEYBIND_LEFT) {
             game.player.setVelocityX(-SPEED);
         }
 
-        if (keybind == KeybindRegistry.KEYBIND_RIGHT) {
+        if (keybind == Keybinds.KEYBIND_RIGHT) {
             game.player.setVelocityX(SPEED);
         }
     }

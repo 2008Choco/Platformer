@@ -1,4 +1,4 @@
-package wtf.choco.platformer.client.keybind;
+package wtf.choco.platformer.engine.client.keyboard;
 
 import java.util.ArrayList;
 import java.util.List;

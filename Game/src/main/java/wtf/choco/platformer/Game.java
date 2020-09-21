@@ -1,11 +1,12 @@
 package wtf.choco.platformer;
 
-import wtf.choco.platformer.client.keybind.KeybindRegistry;
-import wtf.choco.platformer.client.keybind.Keyboard;
+import wtf.choco.platformer.client.Keybinds;
 import wtf.choco.platformer.client.listener.CursorListener;
 import wtf.choco.platformer.client.render.PrimaryGameRenderer;
 import wtf.choco.platformer.client.render.PrimaryRenderingContext;
 import wtf.choco.platformer.engine.client.Window;
+import wtf.choco.platformer.engine.client.keyboard.KeybindRegistry;
+import wtf.choco.platformer.engine.client.keyboard.Keyboard;
 import wtf.choco.platformer.engine.util.ImageUtils;
 import wtf.choco.platformer.entity.Player;
 import wtf.choco.platformer.level.Level;
@@ -55,7 +56,7 @@ public final class Game {
     }
 
     private void init() {
-        KeybindRegistry.init();
+        Keybinds.init();
         this.window.init();
         this.activeMenu = MainMenu.create(this);
 
