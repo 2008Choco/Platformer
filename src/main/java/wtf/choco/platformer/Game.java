@@ -5,7 +5,6 @@ import wtf.choco.platformer.client.keybind.KeybindRegistry;
 import wtf.choco.platformer.client.keybind.Keyboard;
 import wtf.choco.platformer.client.listener.CursorListener;
 import wtf.choco.platformer.client.render.PrimaryGameRenderer;
-import wtf.choco.platformer.engine.client.render.IPrimaryRenderer;
 import wtf.choco.platformer.entity.Player;
 import wtf.choco.platformer.level.Level;
 import wtf.choco.platformer.menu.GameMenu;
@@ -38,7 +37,7 @@ public final class Game {
         CursorListener mouseListener = new CursorListener(this);
 
         this.window = new Window(this, TITLE, 1080, 720);
-        IPrimaryRenderer renderer = new PrimaryGameRenderer(this, window);
+        PrimaryGameRenderer renderer = new PrimaryGameRenderer(this, window);
         this.window.bindRenderer(renderer);
         this.window.acceptListeners(component -> {
             component.addKeyListener(new Keyboard.Listener());
@@ -51,6 +50,7 @@ public final class Game {
 
     private void init() {
         KeybindRegistry.init();
+        this.window.init();
         this.activeMenu = MainMenu.create(this);
 
         Level.create("level_1", ImageUtils.loadImage("/textures/levels/level.png"));

@@ -1,23 +1,32 @@
-package wtf.choco.platformer.engine.client.render;
+package wtf.choco.platformer.client.render;
 
 import java.util.IdentityHashMap;
 import java.util.Map;
 
 import wtf.choco.platformer.client.render.entity.BasicEntityRenderer;
 import wtf.choco.platformer.client.render.tile.BasicTileRenderer;
+import wtf.choco.platformer.engine.client.render.IPrimaryRenderer;
+import wtf.choco.platformer.engine.client.render.IRenderContext;
+import wtf.choco.platformer.engine.client.render.IRenderer;
 import wtf.choco.platformer.entity.Entity;
 import wtf.choco.platformer.tile.Tile;
 import wtf.choco.platformer.utils.TilePos;
 
-/**
- * Represents a context to map objects to individual {@link IRenderer IRenderers}
- */
-public class RenderingContext {
-
-    // TODO: This all needs to be abstracted out of the engine
+public class PrimaryRenderingContext implements IRenderContext<PrimaryRenderingContext> {
 
     private final Map<Tile, IRenderer<TilePos>> tileRenderers = new IdentityHashMap<>();
     private final Map<Class<? extends Entity>, IRenderer<Entity>> entityRenderers = new IdentityHashMap<>();
+
+    private final PrimaryGameRenderer renderer;
+
+    PrimaryRenderingContext(PrimaryGameRenderer renderer) {
+        this.renderer = renderer;
+    }
+
+    @Override
+    public IPrimaryRenderer<PrimaryRenderingContext> getRenderer() {
+        return renderer;
+    }
 
     public void bindRenderer(Tile tile, IRenderer<TilePos> renderer) {
         this.tileRenderers.put(tile, renderer);

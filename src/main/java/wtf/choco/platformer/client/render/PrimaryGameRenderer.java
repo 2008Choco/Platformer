@@ -5,15 +5,15 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.text.DecimalFormat;
+import java.util.function.Supplier;
 
 import wtf.choco.platformer.Game;
 import wtf.choco.platformer.client.Window;
 import wtf.choco.platformer.engine.client.render.IPrimaryRenderer;
-import wtf.choco.platformer.engine.client.render.RenderingContext;
 import wtf.choco.platformer.utils.Location;
 import wtf.choco.platformer.utils.NumberUtils;
 
-public final class PrimaryGameRenderer implements IPrimaryRenderer {
+public final class PrimaryGameRenderer implements IPrimaryRenderer<PrimaryRenderingContext> {
 
     public static final Font FONT_ARIAL_BOLD_16 = new Font("Arial", Font.BOLD, 16);
     public static final Font FONT_COMICSANSMS_BOLD_29 = new Font("Comic Sans MS", Font.BOLD, 29);
@@ -29,12 +29,12 @@ public final class PrimaryGameRenderer implements IPrimaryRenderer {
     }
 
     @Override
-    public void init(RenderingContext context) {
+    public void init(PrimaryRenderingContext context) {
         // Here, you would register custom renderers to the rendering context
     }
 
     @Override
-    public void render(Graphics graphics, RenderingContext context) {
+    public void render(Graphics graphics, PrimaryRenderingContext context) {
         if (game.level != null) {
             this.game.level.render(graphics, context);
         }
@@ -70,6 +70,11 @@ public final class PrimaryGameRenderer implements IPrimaryRenderer {
         graphics.setFont(graphics.getFont().deriveFont(Font.ITALIC, 10F));
         graphics.setColor(Color.GRAY);
         graphics.drawString(Game.VERSION, (window.getWidth() / 2) - NumberUtils.center(graphics, Game.VERSION), 10);
+    }
+
+    @Override
+    public Supplier<PrimaryRenderingContext> getContextSupplier() {
+        return () -> new PrimaryRenderingContext(this);
     }
 
 }

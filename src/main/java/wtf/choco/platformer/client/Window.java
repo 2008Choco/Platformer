@@ -19,9 +19,9 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import wtf.choco.platformer.Game;
+import wtf.choco.platformer.client.render.PrimaryRenderingContext;
 import wtf.choco.platformer.client.render.Textures;
 import wtf.choco.platformer.engine.client.render.IPrimaryRenderer;
-import wtf.choco.platformer.engine.client.render.RenderingContext;
 
 public class Window {
 
@@ -30,8 +30,8 @@ public class Window {
 
     private int fps, localFPS;
 
-    private IPrimaryRenderer renderer;
-    private RenderingContext renderingContext;
+    private IPrimaryRenderer<PrimaryRenderingContext> renderer;
+    private PrimaryRenderingContext renderingContext;
 
     private final JFrame frame;
     private final Canvas canvas;
@@ -98,7 +98,7 @@ public class Window {
         this.canvas.setBackground(Color.BLACK);
     }
 
-    public void bindRenderer(IPrimaryRenderer renderer) {
+    public void bindRenderer(IPrimaryRenderer<PrimaryRenderingContext> renderer) {
         this.renderer = renderer;
         this.renderingContext = renderer.getContextSupplier().get();
     }

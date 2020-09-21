@@ -7,15 +7,17 @@ import wtf.choco.platformer.client.Window;
 
 /**
  * A primary renderer for a {@link Window}.
+ *
+ * @param <T> the type of render context
  */
-public interface IPrimaryRenderer {
+public interface IPrimaryRenderer<T extends IRenderContext<T>> {
 
     /**
      * Initialize the rendering context for this renderer.
      *
      * @param context the context to initialize
      */
-    public void init(RenderingContext context);
+    public void init(T context);
 
     /**
      * Invoke a render call on the given graphics object.
@@ -23,15 +25,13 @@ public interface IPrimaryRenderer {
      * @param graphics the graphics with which to draw
      * @param context this renderer's context
      */
-    public void render(Graphics graphics, RenderingContext context);
+    public void render(Graphics graphics, T context);
 
     /**
      * Get a supplier to generate a rendering context for this renderer.
      *
      * @return the rendering context supplier
      */
-    public default Supplier<RenderingContext> getContextSupplier() {
-        return RenderingContext::new;
-    }
+    public Supplier<T> getContextSupplier();
 
 }
