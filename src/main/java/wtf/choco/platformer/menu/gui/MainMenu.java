@@ -5,8 +5,8 @@ import java.awt.Graphics;
 
 import wtf.choco.platformer.Game;
 import wtf.choco.platformer.client.Window;
-import wtf.choco.platformer.client.render.RenderManager;
-import wtf.choco.platformer.client.render.texture.Texture;
+import wtf.choco.platformer.client.render.PrimaryGameRenderer;
+import wtf.choco.platformer.client.render.Textures;
 import wtf.choco.platformer.level.Level;
 import wtf.choco.platformer.menu.Background;
 import wtf.choco.platformer.menu.GameMenu;
@@ -25,7 +25,7 @@ public class MainMenu extends GameMenu {
 
         Window window = game.getWindow();
 
-        this.addButton(new GraphicGUIButton((window.getWidth() / 2) - 100, (window.getHeight() / 2) - 75, 200, 50, "Play", Texture.GUI_BUTTON_BACKGROUND.asImage(), Texture.GUI_BUTTON_HOVERED.asImage()) {
+        this.addButton(new GraphicGUIButton((window.getWidth() / 2) - 100, (window.getHeight() / 2) - 75, 200, 50, "Play", Textures.GUI_BUTTON_BACKGROUND.asImage(), Textures.GUI_BUTTON_HOVERED.asImage()) {
 
             @Override
             public void onMouseEnter(int mouseX, int mouseY, float deltaX, float deltaY) {
@@ -47,7 +47,7 @@ public class MainMenu extends GameMenu {
 
         });
 
-        this.addButton(new GraphicGUIButton((window.getWidth() / 2) - 100, window.getHeight() / 2, 200, 50, "Options", Texture.GUI_BUTTON_BACKGROUND.asImage(), Texture.GUI_BUTTON_HOVERED.asImage()) {
+        this.addButton(new GraphicGUIButton((window.getWidth() / 2) - 100, window.getHeight() / 2, 200, 50, "Options", Textures.GUI_BUTTON_BACKGROUND.asImage(), Textures.GUI_BUTTON_HOVERED.asImage()) {
 
             @Override
             public void onMouseEnter(int mouseX, int mouseY, float deltaX, float deltaY) {
@@ -68,7 +68,7 @@ public class MainMenu extends GameMenu {
 
         });
 
-        this.addButton(new GraphicGUIButton((window.getWidth() / 2) - 100, (window.getHeight() / 2) + 75, 200, 50, "Quit", Texture.GUI_BUTTON_BACKGROUND.asImage(), Texture.GUI_BUTTON_HOVERED.asImage()) {
+        this.addButton(new GraphicGUIButton((window.getWidth() / 2) - 100, (window.getHeight() / 2) + 75, 200, 50, "Quit", Textures.GUI_BUTTON_BACKGROUND.asImage(), Textures.GUI_BUTTON_HOVERED.asImage()) {
 
             @Override
             public void onMouseEnter(int mouseX, int mouseY, float deltaX, float deltaY) {
@@ -106,7 +106,7 @@ public class MainMenu extends GameMenu {
 
     @Override
     protected void renderForeground(Graphics graphics) {
-        graphics.setFont(RenderManager.FONT_COMICSANSMS_BOLD_29);
+        graphics.setFont(PrimaryGameRenderer.FONT_COMICSANSMS_BOLD_29);
         graphics.setColor(Color.WHITE);
 
         graphics.drawString(Game.TITLE, (game.getWindow().getWidth() / 2) - NumberUtils.center(graphics, Game.TITLE), (game.getWindow().getHeight() / 2) - 125);
@@ -119,7 +119,7 @@ public class MainMenu extends GameMenu {
     }
 
     public static MainMenu create(Game game) {
-        return new MainMenu(game, new Background(game, Texture.GUI_BACKGROUND_MAIN.asImage(), -0.5F, 0.0F));
+        return new MainMenu(game, new Background(game, Textures.GUI_BACKGROUND_MAIN.asImage(), -0.5F, 0.0F));
     }
 
 }

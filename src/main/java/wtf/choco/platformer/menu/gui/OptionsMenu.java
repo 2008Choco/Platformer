@@ -5,8 +5,8 @@ import java.awt.Graphics;
 
 import wtf.choco.platformer.Game;
 import wtf.choco.platformer.client.Window;
-import wtf.choco.platformer.client.render.RenderManager;
-import wtf.choco.platformer.client.render.texture.Texture;
+import wtf.choco.platformer.client.render.PrimaryGameRenderer;
+import wtf.choco.platformer.client.render.Textures;
 import wtf.choco.platformer.menu.GameMenu;
 import wtf.choco.platformer.menu.button.GraphicGUIButton;
 import wtf.choco.platformer.sound.Sound;
@@ -22,7 +22,7 @@ public class OptionsMenu extends GameMenu {
 	    Window window = game.getWindow();
 
 	    this.addButton(
-			new GraphicGUIButton((window.getWidth() / 2) - 100, (window.getHeight() / 2) - 25, 200, 50, "Return", Texture.GUI_BUTTON_BACKGROUND.asImage(), Texture.GUI_BUTTON_HOVERED.asImage()) {
+			new GraphicGUIButton((window.getWidth() / 2) - 100, (window.getHeight() / 2) - 25, 200, 50, "Return", Textures.GUI_BUTTON_BACKGROUND.asImage(), Textures.GUI_BUTTON_HOVERED.asImage()) {
 
 			    @Override
                 public void onMouseEnter(int mouseX, int mouseY, float deltaX, float deltaY) {
@@ -58,7 +58,7 @@ public class OptionsMenu extends GameMenu {
 	    Window window = game.getWindow();
 
         graphics.setColor(Color.WHITE);
-        graphics.setFont(RenderManager.FONT_ARIAL_BOLD_16.deriveFont(24F));
+        graphics.setFont(PrimaryGameRenderer.FONT_ARIAL_BOLD_16.deriveFont(24F));
 
         String string = "Options are a work in progress";
         graphics.drawString(string, (window.getWidth() / 2) - NumberUtils.center(graphics, string), (window.getHeight() / 2) - 50);

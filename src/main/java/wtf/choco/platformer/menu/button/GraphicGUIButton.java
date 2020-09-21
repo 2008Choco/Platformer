@@ -3,7 +3,7 @@ package wtf.choco.platformer.menu.button;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import wtf.choco.platformer.client.render.RenderManager;
+import wtf.choco.platformer.client.render.PrimaryGameRenderer;
 
 public abstract class GraphicGUIButton extends Button {
 
@@ -29,7 +29,7 @@ public abstract class GraphicGUIButton extends Button {
         graphics.drawImage((hovered ? hoveredDisplay : display), x, y, width, height, null);
 
         if (text != null) {
-            graphics.setFont(RenderManager.FONT_COMICSANSMS_BOLD_29);
+            graphics.setFont(PrimaryGameRenderer.FONT_COMICSANSMS_BOLD_29);
             graphics.setColor(textColour);
             graphics.drawString(text, x + ((width / 2) - (graphics.getFontMetrics().stringWidth(text) / 2)), y + ((height / 2) + (int) (graphics.getFontMetrics().getStringBounds(text, graphics).getHeight() / 4)));
         }

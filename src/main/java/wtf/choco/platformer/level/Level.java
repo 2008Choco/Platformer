@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import wtf.choco.platformer.client.render.RenderManager;
+import wtf.choco.platformer.engine.client.render.RenderingContext;
 import wtf.choco.platformer.entity.Enemy;
 import wtf.choco.platformer.entity.Entity;
 import wtf.choco.platformer.entity.Player;
@@ -62,9 +62,9 @@ public class Level {
         return player;
     }
 
-    public void render(Graphics graphics) {
-        this.tiles.forEach((pos, tile) -> RenderManager.getRenderer(tile).render(graphics, pos));
-        this.entityTracker.forEach(e -> RenderManager.getRenderer(e.getClass()).render(graphics, e));
+    public void render(Graphics graphics, RenderingContext context) {
+        this.tiles.forEach((pos, tile) -> context.getRenderer(tile).render(graphics, pos));
+        this.entityTracker.forEach(e -> context.getRenderer(e.getClass()).render(graphics, e));
     }
 
 	public void tick() {

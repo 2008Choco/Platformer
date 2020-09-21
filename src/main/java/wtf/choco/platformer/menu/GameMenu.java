@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import wtf.choco.platformer.client.Window;
+import wtf.choco.platformer.engine.client.render.RenderingContext;
 import wtf.choco.platformer.menu.button.Button;
 
 public abstract class GameMenu {
@@ -61,7 +62,7 @@ public abstract class GameMenu {
 
     public void tick() { }
 
-    public void render(Graphics graphics) {
+    public void render(Graphics graphics, RenderingContext context) {
         this.renderBackground(graphics);
         this.buttons.forEach(b -> b.render(graphics));
         this.renderForeground(graphics);

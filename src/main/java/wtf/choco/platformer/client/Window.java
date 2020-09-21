@@ -1,23 +1,40 @@
 package wtf.choco.platformer.client;
 
+import java.awt.AWTException;
+import java.awt.BufferCapabilities;
+import java.awt.BufferCapabilities.FlipContents;
+import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.ImageCapabilities;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.FocusEvent.Cause;
+import java.awt.image.BufferStrategy;
+import java.util.function.Consumer;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import wtf.choco.platformer.Game;
-import wtf.choco.platformer.client.render.GameRenderBase;
-import wtf.choco.platformer.client.render.texture.Texture;
+import wtf.choco.platformer.client.render.Textures;
+import wtf.choco.platformer.engine.client.render.IPrimaryRenderer;
+import wtf.choco.platformer.engine.client.render.RenderingContext;
 
 public class Window {
 
     private String title;
     private int width, height;
 
+    private int fps, localFPS;
+
+    private IPrimaryRenderer renderer;
+    private RenderingContext renderingContext;
+
     private final JFrame frame;
+    private final Canvas canvas;
 
     public Window(Game game, String title, int width, int height) {
         this.title = title;
@@ -29,7 +46,7 @@ public class Window {
         this.frame.setSize(width, height);
         this.frame.setMinimumSize(new Dimension(width, height));
         this.frame.setLocationRelativeTo(null);
-        this.frame.setIconImage(Texture.GENERIC_ICON.asImage());
+        this.frame.setIconImage(Textures.GENERIC_ICON.asImage());
         this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.frame.setVisible(true);
 
@@ -61,10 +78,50 @@ public class Window {
             public void componentShown(ComponentEvent event) { }
 
         });
+
+        // Initialize the drawing canvas
+        this.canvas = new Canvas();
+        this.frame.add(canvas);
+
+        this.canvas.setFocusable(true);
+        this.canvas.requestFocus(Cause.ACTIVATION);
+
+        if (canvas.getBufferStrategy() == null) {
+            try {
+                this.canvas.createBufferStrategy(2, new BufferCapabilities(new ImageCapabilities(true), new ImageCapabilities(true), FlipContents.BACKGROUND));
+            } catch (AWTException e) {
+                System.err.println("Defaulting to buffer strategy with no capabilities");
+                this.canvas.createBufferStrategy(2); // Default to unspecified capabilities
+            }
+        }
+
+        this.canvas.setBackground(Color.BLACK);
     }
 
-    public void bindRenderer(GameRenderBase renderer) {
-        this.frame.add(renderer);
+    public void bindRenderer(IPrimaryRenderer renderer) {
+        this.renderer = renderer;
+        this.renderingContext = renderer.getContextSupplier().get();
+    }
+
+    public void init() {
+        if (renderer != null) {
+            this.renderer.init(renderingContext);
+        }
+    }
+
+    public void render() {
+        BufferStrategy bufferStrategy = canvas.getBufferStrategy();
+        Graphics graphics = bufferStrategy.getDrawGraphics();
+
+        this.renderer.render(graphics, renderingContext);
+        this.localFPS++;
+
+        bufferStrategy.show();
+        graphics.dispose();
+    }
+
+    public void acceptListeners(Consumer<Component> consumer) {
+        consumer.accept(canvas);
     }
 
     public String getTitle() {
@@ -77,6 +134,15 @@ public class Window {
 
     public int getHeight() {
         return height;
+    }
+
+    public void saveFPS() {
+        this.fps = localFPS;
+        this.localFPS = 0;
+    }
+
+    public int getFPS() {
+        return fps;
     }
 
 }

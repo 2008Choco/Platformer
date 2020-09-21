@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
 import wtf.choco.platformer.client.Window;
-import wtf.choco.platformer.client.render.RenderManager;
+import wtf.choco.platformer.client.render.PrimaryGameRenderer;
 
 public abstract class Button {
 
@@ -136,7 +136,7 @@ public abstract class Button {
         graphics.fillRect(x, y, width, height);
 
         if (text != null) {
-            graphics.setFont(RenderManager.FONT_COMICSANSMS_BOLD_29);
+            graphics.setFont(PrimaryGameRenderer.FONT_COMICSANSMS_BOLD_29);
             graphics.setColor(textColour);
             graphics.drawString(text, x + ((width / 2) - (graphics.getFontMetrics().stringWidth(text) / 2)), y + ((height / 2) + (int) (graphics.getFontMetrics().getStringBounds(text, graphics).getHeight() / 4)));
         }

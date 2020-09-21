@@ -3,8 +3,8 @@ package wtf.choco.platformer.client.render.tile;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-import wtf.choco.platformer.client.render.IRenderer;
-import wtf.choco.platformer.client.render.texture.Texture;
+import wtf.choco.platformer.engine.client.render.IRenderer;
+import wtf.choco.platformer.engine.client.render.texture.Texture;
 import wtf.choco.platformer.tile.Tile;
 import wtf.choco.platformer.utils.TilePos;
 

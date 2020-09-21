@@ -4,7 +4,8 @@ import wtf.choco.platformer.client.Window;
 import wtf.choco.platformer.client.keybind.KeybindRegistry;
 import wtf.choco.platformer.client.keybind.Keyboard;
 import wtf.choco.platformer.client.listener.CursorListener;
-import wtf.choco.platformer.client.render.GameRenderBase;
+import wtf.choco.platformer.client.render.PrimaryGameRenderer;
+import wtf.choco.platformer.engine.client.render.IPrimaryRenderer;
 import wtf.choco.platformer.entity.Player;
 import wtf.choco.platformer.level.Level;
 import wtf.choco.platformer.menu.GameMenu;
@@ -30,7 +31,6 @@ public final class Game {
     private int tps = 0;
 
     private final Window window;
-    private final GameRenderBase gameRenderer;
 
     private Game() {
         Runtime.getRuntime().addShutdownHook(new Thread(this::onShutdown));
@@ -38,18 +38,19 @@ public final class Game {
         CursorListener mouseListener = new CursorListener(this);
 
         this.window = new Window(this, TITLE, 1080, 720);
-        this.gameRenderer = new GameRenderBase(this, window);
-        this.gameRenderer.addKeyListener(new Keyboard.Listener());
-        this.gameRenderer.addMouseListener(mouseListener);
-        this.gameRenderer.addMouseMotionListener(mouseListener);
-        this.window.bindRenderer(gameRenderer);
+        IPrimaryRenderer renderer = new PrimaryGameRenderer(this, window);
+        this.window.bindRenderer(renderer);
+        this.window.acceptListeners(component -> {
+            component.addKeyListener(new Keyboard.Listener());
+            component.addMouseListener(mouseListener);
+            component.addMouseMotionListener(mouseListener);
+        });
 
         this.start();
     }
 
     private void init() {
         KeybindRegistry.init();
-        this.gameRenderer.init();
         this.activeMenu = MainMenu.create(this);
 
         Level.create("level_1", ImageUtils.loadImage("/textures/levels/level.png"));
@@ -99,7 +100,7 @@ public final class Game {
             // Render
             deltaFPS += (now - lastTime) / nsFPS;
             while (deltaFPS >= 1) {
-                this.gameRenderer.render();
+                this.window.render();
                 deltaFPS--;
             }
 
@@ -108,7 +109,7 @@ public final class Game {
             // Per second calculations
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                this.gameRenderer.saveFrameCount();
+                this.window.saveFPS();
                 this.tps = ticks;
                 ticks = 0;
             }
@@ -129,10 +130,6 @@ public final class Game {
 
     public Window getWindow() {
         return window;
-    }
-
-    public GameRenderBase getGameRenderer() {
-        return gameRenderer;
     }
 
     public void loadLevel(Level level) {

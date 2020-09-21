@@ -3,7 +3,7 @@ package wtf.choco.platformer.client.render.entity;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import wtf.choco.platformer.client.render.IRenderer;
+import wtf.choco.platformer.engine.client.render.IRenderer;
 import wtf.choco.platformer.entity.Entity;
 import wtf.choco.platformer.utils.BoundingBox;
 import wtf.choco.platformer.utils.Location;
