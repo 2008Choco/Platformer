@@ -21,12 +21,16 @@ import javax.swing.WindowConstants;
 import wtf.choco.platformer.engine.client.render.IPrimaryRenderer;
 import wtf.choco.platformer.engine.client.render.IRenderContext;
 
+/**
+ * Represents a window to which a renderer may draw content.
+ *
+ * @param <C> the render context implementation
+ * @param <R> the primary renderer implementation
+ */
 public class RenderableWindow<C extends IRenderContext<C>, R extends IPrimaryRenderer<C>> {
 
     private String title;
     private int width, height;
-
-    private int fps, localFPS;
 
     private R renderer;
     private C renderingContext;
@@ -36,6 +40,14 @@ public class RenderableWindow<C extends IRenderContext<C>, R extends IPrimaryRen
     private final JFrame frame;
     private final Canvas canvas;
 
+    /**
+     * Construct a new window with a given title, width, height and primary renderer.
+     *
+     * @param title the window title
+     * @param width the window width in pixels
+     * @param height the window height in pixels
+     * @param renderer the primary renderer
+     */
     public RenderableWindow(String title, int width, int height, R renderer) {
         this.title = title;
         this.width = width;
@@ -100,50 +112,74 @@ public class RenderableWindow<C extends IRenderContext<C>, R extends IPrimaryRen
         this.renderingContext = renderer.getContextSupplier().get();
     }
 
+    /**
+     * Initialize this window.
+     */
     public void init() {
         if (renderer != null) {
             this.renderer.init(renderingContext);
         }
     }
 
+    /**
+     * Render this window.
+     */
     public void render() {
         BufferStrategy bufferStrategy = canvas.getBufferStrategy();
         Graphics graphics = bufferStrategy.getDrawGraphics();
 
         this.renderer.render(graphics, renderingContext);
-        this.localFPS++;
 
         bufferStrategy.show();
         graphics.dispose();
     }
 
+    /**
+     * Accept listeners for this window.
+     *
+     * @param consumer the consumer
+     *
+     * @deprecated Soon to be hidden behind the engine. Should not be called by implementations.
+     */
+    @Deprecated
     public void acceptListeners(Consumer<Component> consumer) {
         consumer.accept(canvas);
     }
 
+    /**
+     * Set the callback to be invoked when the window is resized.
+     *
+     * @param resizeCallback the resize callback
+     */
     public void setResizeCallback(WindowResizeCallback resizeCallback) {
         this.resizeCallback = resizeCallback;
     }
 
+    /**
+     * Get this window's title.
+     *
+     * @return the title
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Get this window's width.
+     *
+     * @return the width
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Get this window's height.
+     *
+     * @return the height
+     */
     public int getHeight() {
         return height;
-    }
-
-    public void saveFPS() {
-        this.fps = localFPS;
-        this.localFPS = 0;
-    }
-
-    public int getFPS() {
-        return fps;
     }
 
 }

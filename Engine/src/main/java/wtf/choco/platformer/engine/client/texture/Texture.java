@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import wtf.choco.platformer.engine.util.ImageUtils;
-import wtf.choco.platformer.engine.util.LazySupplier;
+import wtf.choco.platformer.engine.util.LazyValue;
 
 /**
  * Represents a localized texture file.
@@ -14,10 +14,10 @@ public class Texture {
 
     private static final Map<String, Texture> TEXTURE_BUFFER = new HashMap<>();
 
-    private final LazySupplier<BufferedImage> textureSupplier;
+    private final LazyValue<BufferedImage> textureSupplier;
 
 	private Texture(String path) {
-	    this.textureSupplier = new LazySupplier<>(() -> ImageUtils.loadImage(path));
+	    this.textureSupplier = new LazyValue<>(() -> ImageUtils.loadImage(path));
 	}
 
 	/**
