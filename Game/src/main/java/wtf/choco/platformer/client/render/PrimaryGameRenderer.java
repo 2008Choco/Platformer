@@ -45,10 +45,7 @@ public final class PrimaryGameRenderer implements IPrimaryRenderer<PrimaryRender
         if (Game.Debug.debugInformation) {
             graphics.setFont(FONT_ARIAL_BOLD_16);
             graphics.setColor(window.getFPS() >= 60 ? Color.GREEN : (window.getFPS() >= 30 ? Color.YELLOW : Color.RED));
-            graphics.drawString("FPS: " + window.getFPS(), 5, 16);
-
-            graphics.setColor(Color.YELLOW);
-            graphics.drawString("TPS: " + game.getTPS(), 5, 32);
+            graphics.drawString("FPS: " + (int) Math.floor(game.getTimer().getFpsLast()), 5, 16);
 
             // Player debug information
             if (game.player != null) {

@@ -24,9 +24,9 @@ public class Background {
 	    this.x = y = 0;
 	}
 
-	public void tick() {
-		this.x += deltaX;
-		this.y += deltaY;
+	public void tick(float deltaTime) {
+		this.x += deltaX * deltaTime;
+		this.y += deltaY * deltaTime;
 
 		var window = game.getWindow();
 		if (x >= window.getWidth() || x <= -window.getWidth()) {

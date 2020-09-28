@@ -105,9 +105,9 @@ public abstract class Entity {
     }
 
     public float getGravity() {
-        return 2.5F;
+        return 0.25F;
     }
 
-    public void tick() { }
+    public void update(float deltaTime) { }
 
 }

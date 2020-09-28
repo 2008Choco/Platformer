@@ -96,17 +96,17 @@ public class MainMenu extends GameMenu {
     }
 
     @Override
-    public void tick() {
-        this.background.tick();
+    public void update(float deltaTime) {
+        this.background.tick(deltaTime);
     }
 
     @Override
-    protected void renderBackground(Graphics graphics) {
+    protected void renderBackground(Graphics graphics, PrimaryRenderingContext context) {
         this.background.render(graphics);
     }
 
     @Override
-    protected void renderForeground(Graphics graphics) {
+    protected void renderForeground(Graphics graphics, PrimaryRenderingContext context) {
         graphics.setFont(PrimaryGameRenderer.FONT_COMICSANSMS_BOLD_29);
         graphics.setColor(Color.WHITE);
 
@@ -120,7 +120,7 @@ public class MainMenu extends GameMenu {
     }
 
     public static MainMenu create(Game game) {
-        return new MainMenu(game, new Background(game, Textures.GUI_BACKGROUND_MAIN.asImage(), -0.5F, 0.0F));
+        return new MainMenu(game, new Background(game, Textures.GUI_BACKGROUND_MAIN.asImage(), -50F, 0.0F));
     }
 
 }

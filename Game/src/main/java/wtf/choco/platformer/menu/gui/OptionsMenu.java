@@ -47,7 +47,7 @@ public class OptionsMenu extends GameMenu {
 	}
 
 	@Override
-	protected void renderBackground(Graphics graphics) {
+	protected void renderBackground(Graphics graphics, PrimaryRenderingContext context) {
 	    var window = game.getWindow();
 
         graphics.setColor(Color.BLACK);
@@ -55,7 +55,7 @@ public class OptionsMenu extends GameMenu {
 	}
 
 	@Override
-	protected void renderForeground(Graphics graphics) {
+	protected void renderForeground(Graphics graphics, PrimaryRenderingContext context) {
 	    var window = game.getWindow();
 
         graphics.setColor(Color.WHITE);
@@ -64,5 +64,8 @@ public class OptionsMenu extends GameMenu {
         String string = "Options are a work in progress";
         graphics.drawString(string, (window.getWidth() / 2) - NumberUtils.center(graphics, string), (window.getHeight() / 2) - 50);
 	}
+
+	@Override
+	public void update(float deltaTime) { }
 
 }

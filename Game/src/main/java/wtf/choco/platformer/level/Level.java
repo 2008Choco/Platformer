@@ -67,12 +67,12 @@ public class Level {
         this.entityTracker.forEach(e -> context.getRenderer(e.getClass()).render(graphics, e));
     }
 
-	public void tick() {
+	public void update(float deltaTime) {
 	    this.tiles.forEach((pos, tile) -> tile.tick(this, pos));
 
 	    for (Entity entity : entityTracker) {
 	        entity.setVelocityY(entity.getVelocityY() + entity.getGravity());
-            entity.tick();
+            entity.update(deltaTime);
 
             Location currentLocation = entity.getLocation();
             Location futureLocation = currentLocation.offset(entity.getVelocityX() / 32.0F, entity.getVelocityY()  / 32.0F);

@@ -9,8 +9,8 @@ public final class KeybindListenerGameplay implements KeybindListener {
 
     public static final KeybindListener INSTANCE = new KeybindListenerGameplay();
 
-    private static final float JUMP_POWER = 40.0F;
-    private static final float SPEED = 8.0F;
+    private static final float JUMP_POWER = 500.0F;
+    private static final float SPEED = 100.0F;
 
     private KeybindListenerGameplay() { }
 

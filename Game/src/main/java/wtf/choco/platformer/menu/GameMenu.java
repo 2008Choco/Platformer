@@ -61,26 +61,28 @@ public abstract class GameMenu {
         this.buttons.add(button);
     }
 
-    public void tick() { }
-
     public void render(Graphics graphics, PrimaryRenderingContext context) {
-        this.renderBackground(graphics);
+        this.renderBackground(graphics, context);
         this.buttons.forEach(b -> b.render(graphics));
-        this.renderForeground(graphics);
+        this.renderForeground(graphics, context);
     }
 
     /**
      * Called by the render function to render the background of this menu (before the buttons).
      *
      * @param graphics the graphics context
+     * @param context the rendering context
      */
-    protected void renderBackground(Graphics graphics) { }
+    protected abstract void renderBackground(Graphics graphics, PrimaryRenderingContext context);
 
     /**
      * Called by the render function to render the foreground of this menu (after the buttons).
      *
      * @param graphics the graphics context
+     * @param context the rendering context
      */
-    protected void renderForeground(Graphics graphics) { }
+    protected abstract void renderForeground(Graphics graphics, PrimaryRenderingContext context);
+
+    public abstract void update(float deltaTime);
 
 }
