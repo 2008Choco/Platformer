@@ -79,6 +79,8 @@ cmake-build-debug/
 # Javadoc Paths
 /doc/
 /docs/
+**/doc
+**/docs/
 
 # Package Files #
 *.jar
