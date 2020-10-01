@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 
 import wtf.choco.platformer.engine.client.render.IRenderer;
 import wtf.choco.platformer.engine.client.texture.Texture;
+import wtf.choco.platformer.registry.Registry;
 import wtf.choco.platformer.tile.Tile;
 import wtf.choco.platformer.utils.TilePos;
 
@@ -15,7 +16,7 @@ public class BasicTileRenderer implements IRenderer<TilePos> {
 
     public BasicTileRenderer(Tile tile) {
         this.tile = tile;
-        this.texture = Texture.fetch("/textures/tiles/" + tile.getId() + ".png");
+        this.texture = Texture.fetch("/textures/tiles/" + Registry.TILE.getId(tile) + ".png");
     }
 
     @Override

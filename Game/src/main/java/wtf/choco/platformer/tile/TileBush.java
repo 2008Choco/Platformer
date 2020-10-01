@@ -7,10 +7,6 @@ import wtf.choco.platformer.utils.TilePos;
 
 public class TileBush extends Tile {
 
-    public TileBush(String id) {
-        super(id);
-    }
-
     @Override
     public boolean isCollidable() {
         return false;

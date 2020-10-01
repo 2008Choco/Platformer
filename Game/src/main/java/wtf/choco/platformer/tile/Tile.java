@@ -10,16 +10,6 @@ public class Tile {
 
     private static final Rectangle CUBOID = new Rectangle(1, 1);
 
-    private final String id;
-
-    public Tile(String id) {
-        this.id = id;
-    }
-
-    public final String getId() {
-        return id;
-    }
-
     public final boolean isEmpty() {
         return this == Tiles.AIR;
     }

@@ -1,17 +1,18 @@
 package wtf.choco.platformer.tile;
 
+import wtf.choco.platformer.registry.Registry;
+
 public class Tiles {
 
-    public static final Tile AIR = register(new Tile("air"));
+    public static final Tile AIR = register("air", new Tile());
 
-    public static final Tile GRASS = register(new Tile("grass"));
-    public static final Tile DIRT = register(new Tile("dirt"));
-    public static final Tile STONE = register(new Tile("stone"));
-    public static final Tile BUSH = register(new TileBush("bush"));
+    public static final Tile GRASS = register("grass", new Tile());
+    public static final Tile DIRT = register("dirt", new Tile());
+    public static final Tile STONE = register("stone", new Tile());
+    public static final Tile BUSH = register("bush", new TileBush());
 
-    private static Tile register(Tile tile) {
-        // TODO: Register the tile
-        return tile;
+    private static Tile register(String key, Tile tile) {
+        return Registry.TILE.register(key, tile);
     }
 
 }
