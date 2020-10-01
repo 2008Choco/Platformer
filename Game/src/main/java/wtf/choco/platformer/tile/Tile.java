@@ -43,12 +43,4 @@ public class Tile {
      */
     public void onCollide(Level level, TilePos pos, Entity entity) { }
 
-    /**
-     * Tick this tile. This method is called once every tick.
-     *
-     * @param level the level on which the ticking occurs
-     * @param pos the tile's position
-     */
-    public void tick(Level level, TilePos pos) { }
-
 }

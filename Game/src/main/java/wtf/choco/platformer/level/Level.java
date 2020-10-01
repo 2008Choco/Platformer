@@ -11,6 +11,7 @@ import wtf.choco.platformer.engine.util.ImageUtils;
 import wtf.choco.platformer.entity.Enemy;
 import wtf.choco.platformer.entity.Entity;
 import wtf.choco.platformer.entity.Player;
+import wtf.choco.platformer.tile.ITickableTile;
 import wtf.choco.platformer.tile.Tile;
 import wtf.choco.platformer.tile.Tiles;
 import wtf.choco.platformer.utils.Location;
@@ -26,6 +27,7 @@ public class Level {
 
 	private final String name;
 	private final Map<TilePos, Tile> tiles = new HashMap<>();
+	private final Map<TilePos, ITickableTile> tickableTiles = new HashMap<>();
 	private final LevelEntityTracker entityTracker;
 
 	public Level(String name) {
@@ -44,6 +46,11 @@ public class Level {
 
     public void setTile(TilePos pos, Tile tile) {
         this.tiles.put(pos, tile);
+        this.tickableTiles.remove(pos);
+
+        if (tile instanceof ITickableTile) {
+            this.tickableTiles.put(pos, (ITickableTile) tile);
+        }
     }
 
     public void setTile(int x, int y, Tile tile) {
@@ -68,7 +75,7 @@ public class Level {
     }
 
 	public void update(float deltaTime) {
-	    this.tiles.forEach((pos, tile) -> tile.tick(this, pos));
+	    this.tickableTiles.forEach((pos, tile) -> tile.tick(this, pos, random));
 
 	    for (Entity entity : entityTracker) {
 	        entity.setVelocityY(entity.getVelocityY() + entity.getGravity());
