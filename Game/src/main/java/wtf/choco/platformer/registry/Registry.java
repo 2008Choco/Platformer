@@ -1,5 +1,6 @@
 package wtf.choco.platformer.registry;
 
+import wtf.choco.platformer.sound.Sound;
 import wtf.choco.platformer.tile.Tile;
 import wtf.choco.platformer.tile.Tiles;
 
@@ -15,6 +16,11 @@ public interface Registry<T> extends Iterable<T> {
      * The {@link Tile} registry.
      */
     public static final Registry<Tile> TILE = new DefaultedRegistry<>(() -> Tiles.AIR);
+
+    /**
+     * The {@link Sound} registry.
+     */
+    public static final Registry<Sound> SOUND = new SimpleRegistry<>();
 
 
     /**

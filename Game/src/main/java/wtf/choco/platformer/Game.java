@@ -27,10 +27,6 @@ public final class Game extends GameBase {
 
     private RenderableWindow<PrimaryRenderingContext, PrimaryGameRenderer> window;
 
-    public RenderableWindow<PrimaryRenderingContext, PrimaryGameRenderer> getWindow() {
-        return window;
-    }
-
     @Override
     public void init() {
         super.init();
@@ -80,6 +76,10 @@ public final class Game extends GameBase {
     public void shutdown() {
         super.shutdown();
         Sound.releaseResources();
+    }
+
+    public RenderableWindow<PrimaryRenderingContext, PrimaryGameRenderer> getWindow() {
+        return window;
     }
 
     public void loadLevel(Level level) {

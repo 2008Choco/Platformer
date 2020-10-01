@@ -1,9 +1,5 @@
 package wtf.choco.platformer.registry;
 
-import java.util.HashMap;
-import java.util.IdentityHashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.function.Supplier;
 
 /**
@@ -12,10 +8,7 @@ import java.util.function.Supplier;
  *
  * @param <T> the registered object type
  */
-public final class DefaultedRegistry<T> implements Registry<T> {
-
-    private final Map<String, T> values = new HashMap<>();
-    private final Map<T, String> keys = new IdentityHashMap<>();
+public final class DefaultedRegistry<T> extends SimpleRegistry<T> {
 
     private final Supplier<T> defaultSupplier;
 
@@ -30,32 +23,8 @@ public final class DefaultedRegistry<T> implements Registry<T> {
     }
 
     @Override
-    public T register(String key, T value) {
-        this.values.put(key, value);
-        this.keys.put(value, key);
-
-        return value;
-    }
-
-    @Override
     public T get(String key) {
         return values.getOrDefault(key, defaultSupplier.get());
-    }
-
-    @Override
-    public String getId(T value) {
-        return keys.get(value);
-    }
-
-    @Override
-    public void clear() {
-        this.values.clear();
-        this.keys.clear();
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return values.values().iterator();
     }
 
 }

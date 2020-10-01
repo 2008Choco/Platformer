@@ -2,24 +2,19 @@ package wtf.choco.platformer.sound;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import wtf.choco.platformer.registry.Registry;
+
 public class Sound {
-
-    private static final List<Sound> SOUNDS = new ArrayList<>();
-
-	public static final Sound GUI_BUTTON_HOVER = new Sound("gui/button/button_hover");
-	public static final Sound TILE_BUSH_WALK = new Sound("tile/bush_walk");
 
 	private Clip clip = null;
 
-	private Sound(String path) {
+	Sound(String path) {
 	    path = "/sounds/" + path.concat(".wav");
 
 		try {
@@ -33,8 +28,6 @@ public class Sound {
         } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
             e.printStackTrace();
         }
-
-		SOUNDS.add(this);
 	}
 
 	public void play() {
@@ -63,7 +56,7 @@ public class Sound {
 	}
 
 	public static void releaseResources() {
-	    SOUNDS.forEach(Sound::release);
+	    Registry.SOUND.forEach(Sound::release);
 	}
 
 }

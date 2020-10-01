@@ -12,7 +12,7 @@ import wtf.choco.platformer.level.Level;
 import wtf.choco.platformer.menu.Background;
 import wtf.choco.platformer.menu.GameMenu;
 import wtf.choco.platformer.menu.button.GraphicGUIButton;
-import wtf.choco.platformer.sound.Sound;
+import wtf.choco.platformer.sound.Sounds;
 import wtf.choco.platformer.utils.NumberUtils;
 
 public class MainMenu extends GameMenu {
@@ -31,7 +31,7 @@ public class MainMenu extends GameMenu {
             @Override
             public void onMouseEnter(int mouseX, int mouseY, float deltaX, float deltaY) {
                 super.onMouseEnter(mouseX, mouseY, deltaX, deltaY);
-                Sound.GUI_BUTTON_HOVER.play();
+                Sounds.GUI_BUTTON_HOVER.play();
             }
 
             @Override
@@ -53,7 +53,7 @@ public class MainMenu extends GameMenu {
             @Override
             public void onMouseEnter(int mouseX, int mouseY, float deltaX, float deltaY) {
                 super.onMouseEnter(mouseX, mouseY, deltaX, deltaY);
-                Sound.GUI_BUTTON_HOVER.play();
+                Sounds.GUI_BUTTON_HOVER.play();
             }
 
             @Override
@@ -74,7 +74,7 @@ public class MainMenu extends GameMenu {
             @Override
             public void onMouseEnter(int mouseX, int mouseY, float deltaX, float deltaY) {
                 super.onMouseEnter(mouseX, mouseY, deltaX, deltaY);
-                Sound.GUI_BUTTON_HOVER.play();
+                Sounds.GUI_BUTTON_HOVER.play();
             }
 
             @Override
