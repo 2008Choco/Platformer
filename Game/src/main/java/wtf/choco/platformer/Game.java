@@ -27,6 +27,14 @@ public final class Game extends GameBase {
 
     private RenderableWindow<PrimaryRenderingContext, PrimaryGameRenderer> window;
 
+    Game() {
+        if (Game.instance != null) {
+            throw new IllegalStateException("Cannot create more than one instance of " + getClass().getName());
+        }
+
+        Game.instance = this;
+    }
+
     @Override
     public void init() {
         super.init();
@@ -88,7 +96,7 @@ public final class Game extends GameBase {
     }
 
     public static Game get() {
-        return instance != null ? instance : (instance = new Game());
+        return instance;
     }
 
     public static final class Debug {
